@@ -1,0 +1,1361 @@
+/* Reset & globals */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body, html {
+  height: 100%;
+  font-family: Arial, sans-serif;
+}
+
+/* Glass-like header */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1000;
+}
+.navbar {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar .logo img {
+  height: 50px;
+}
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+.nav-links li a {
+  text-decoration: none;
+  color: #111;
+  font-weight: 500;
+}
+
+/* Burger menu (mobile) */
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+.burger div {
+  width: 25px;
+  height: 3px;
+  background: #111;
+}
+
+/* Hero section */
+.hero {
+  height: 100vh;
+  background: url('https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg') center/cover no-repeat;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 1rem;
+}
+.hero .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+.hero .hero-logo {
+  position: relative;
+  width: 150px;
+  margin-bottom: 1rem;
+}
+.hero h1 {
+  position: relative;
+  color: #fff;
+  font-size: 2.5rem;
+  max-width: 90%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .nav-links {
+    position: fixed;
+    top: 70px;
+    right: -100%;
+    flex-direction: column;
+    background: rgba(255,255,255,0.9);
+    width: 200px;
+    padding: 1rem;
+    transition: right 0.3s ease;
+  }
+  .nav-links.open {
+    right: 0;
+  }
+  .burger {
+    display: flex;
+  }
+}
+/* ——— About EULSS Section ——— */
+.about-eulss {
+  position: relative;
+  background: #fff;
+  padding: 100px 0;
+  overflow: visible;
+}
+
+/* full-width blue band behind content */
+.about-eulss .blue-rect {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 100%;
+  height: 250px;
+  background: #001851;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+/* container to center and flex the picture + text */
+.about-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  z-index: 2;
+  gap: 2rem;
+}
+
+/* picture on left, overlapping band */
+.about-picture img {
+  display: block;
+  height: 350px;        /* picture taller than band */
+  width: auto;
+  margin-top: -50px;    /* pull up 50px */
+  margin-bottom: -50px; /* pull down 50px */
+  border-radius: 4px;
+  margin-right: 0;
+  padding-right: 0;
+}
+
+/* text on right, colored white */
+.about-content {
+  flex: 1;
+  color: #fff;
+}
+.about-content h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.5rem;
+  margin-top: 2rem;
+  margin-bottom: 0.1rem;
+  position: relative;
+}
+/* thin white “label” line pointing at the first letter */
+.about-content h2::before {
+  content: "";
+  position: absolute;
+  left: -80px;
+  top: 50%;
+  width: 60px;
+  height: 3px;
+  background: #fff;
+  transform: translateY(-50%);
+}
+.about-content p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+/* Mobile: stack image above text */
+@media (max-width: 768px) {
+  .about-container {
+    flex-direction: column;
+    text-align: center;
+  }
+  .about-picture img {
+    margin: -30px auto 0;
+    height: 250px;
+  }
+  .about-content h2::before {
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
+
+
+/* ——— News & Events Section ——— */
+.news-events {
+  background: #fff;
+  padding: 4rem 2rem;
+}
+
+.news-events .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.news-events h2 {
+  font-size: 2rem;
+  color: #004080;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* grid of cards */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+/* individual card */
+.card {
+  /* let the card size itself to content */
+  position: static;
+  height: auto;
+  overflow: hidden;
+  border-radius: 0;    /* sharp corners */
+  box-shadow: none;     /* optional: remove any drop-shadow */
+  transition: transform 0.2s ease;
+}
+
+
+/* square image */
+.card-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;   /* forces a perfect square */
+  background-size: cover;
+  background-position: center;
+  border-radius: 0;      /* sharp corners */
+}
+
+
+/* text area */
+.card-content {
+  position: static;
+  width: auto;
+  height: auto;
+  background: transparent;  /* so text sits on page background */
+  padding: 1rem 0;          /* space above & below text */
+  display: block;
+}
+
+.card-category {
+  display: inline-block;
+  font-size: 0.85rem;
+  color: #555;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+.card-content h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #004080;
+}
+
+/* responsive tweak */
+@media (max-width: 768px) {
+  .news-events {
+    padding: 2rem 1rem;
+  }
+  .news-events h2 {
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+  }
+}
+/* ——— Slider viewport: center track vertically & flush it right ——— */
+.slider {
+  display: flex;              /* lay out children in a row */
+  align-items: center;        /* vertical‐center the slide‐track */
+  justify-content: flex-end;  /* push the track to the right edge */
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ——— Track of slides: no wrapping, auto-width, vertical centering ——— */
+.slide-track {
+  display: flex;              /* keep slides in one row */
+  flex: 0 0 auto;             /* don’t shrink or grow—width = content */
+  align-items: center;        /* vertical center each logo */
+  animation: scroll 12s linear infinite;
+}
+/* make both subtitles and titles center-aligned */
+.partners-subtitle,
+.partners-title {
+  width: 100%;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* optional: give the subtitle a little spacing below */
+.partners-subtitle {
+  margin-bottom: 0.5rem;
+}
+/* ——— Faculty Arms Section ——— */
+.faculty-arms {
+  background: #fff;  /* or whatever backdrop you prefer */
+  padding: 4rem 2rem;
+}
+
+.faculty-arms .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+/* Individual card */
+.role-card {
+  flex: 1;
+  text-align: center;
+}
+
+.role-card img {
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+  display: block;
+  margin: 0 auto 1rem;
+}
+
+.role-card h3 {
+  font-size: 1.25rem;
+  margin: 0.5rem 0 0.25rem;
+  color: #2E2E3A;
+}
+
+.role-card .role-title {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0;
+}
+
+/* Responsive: stack vertically on small screens */
+@media (max-width: 768px) {
+  .faculty-arms .container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .role-card {
+    margin-bottom: 2rem;
+  }
+  .role-card img {
+    max-width: 60%;
+  }
+}
+/* ——— Footer ——— */
+.footer {
+  display: flex;
+  flex-wrap: wrap;}
+/* Left half (blue) */
+.footer-left {
+  flex: 4 0.3 150px;
+  background: #001851;
+  color: #fff;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.footer-logo {
+  width: 80px;
+  margin-bottom: 1.5rem;
+}
+.footer-links.major a {
+  display: block;
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.footer-links.major a:hover {
+  opacity: 0.8;
+}
+.social-links {
+  margin-top: 2rem;
+}
+.social-links a {
+  color: #fff;
+  font-size: 1.25rem;
+  margin-right: 1rem;
+  transition: opacity 0.2s;
+}
+.social-links a:hover {
+  opacity: 0.7;
+}
+
+/* ——— Employability Hub Hero ——— */
+.employability-hero {
+  padding: 4rem 4rem;
+  background: #fff;
+}
+
+.employability-hero h1 {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom:2rem;
+  margin-top: 10%;
+  color: #2E2E3A;
+}
+
+/* Layout: text on left, image on right */
+.employability-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+/* Left block: text + blue bar */
+.employability-text {
+  flex: 1 1 320px;
+}
+.employability-text .bar {
+  display: block;
+  width: 4ch;               /* exactly as wide as four characters */
+  height: 3px;
+  background: #0066CC;      /* your brand blue */
+  margin-bottom: 1rem;
+}
+.employability-text p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  color: #444;
+  font-size: 1.1rem;
+}
+
+/* Right block: responsive image */
+.employability-image {
+  flex: 0 0 40%;
+  text-align: right;
+}
+.employability-image img {
+  max-width: 70%;
+  height: auto;
+  display: inline-block;
+  border-radius: 2px;
+  margin-right: 20%;
+}
+
+/* Mobile stack */
+@media (max-width: 768px) {
+  .employability-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  .employability-image {
+    text-align: center;
+    margin-top: 2rem;
+  }
+}
+/* ——— Glass-like header (copy this verbatim) ——— */
+.header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1000;
+}
+.navbar {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.navbar .logo img {
+  height: 50px;
+}
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+.nav-links li a {
+  text-decoration: none;
+  color: #111;
+  font-weight: 500;
+}
+
+/* Burger menu (mobile) */
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+.burger div {
+  width: 25px;
+  height: 3px;
+  background: #111;
+}
+
+/* Mobile nav toggle */
+@media (max-width: 768px) {
+  .nav-links {
+    position: fixed;
+    top: 70px;
+    right: -100%;
+    flex-direction: column;
+    background: rgba(255,255,255,0.9);
+    width: 200px;
+    padding: 1rem;
+    transition: right 0.3s ease;
+  }
+  .nav-links.open {
+    right: 0;
+  }
+  .burger {
+    display: flex;
+  }
+}
+
+/* ——— Employability Hub Hero ——— */
+.employability-hero {
+  padding: 4rem 2rem;
+  background: #fff;
+}
+
+.employability-hero h1 {
+  font-size: 3rem;
+  text-align: center;
+  margin-bottom: 3rem;
+  color: #2E2E3A;
+}
+
+/* Layout: text on left, image on right */
+.employability-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+/* Left block: text + blue bar */
+.employability-text {
+  flex: 1 1 320px;
+}
+.employability-text .bar {
+  display: block;
+  width: 4ch;               /* exactly as wide as four characters */
+  height: 3px;
+  background: #0066CC;      /* your brand blue */
+  margin-bottom: 1rem;
+}
+.employability-text p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  color: #444;
+  font-size: 1.1rem;
+}
+
+/* Right block: responsive image */
+.employability-image {
+  flex: 1 1 320px;
+  text-align: right;
+}
+.employability-image img {
+  max-width: autoS;
+  height: 100%;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+/* Mobile stack */
+@media (max-width: 768px) {
+  .employability-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  .employability-image {
+    text-align: center;
+    margin-top: 2rem;
+  }
+}
+/* ——— Resources Section ——— */
+.resources {
+  background: #f5f5f5;
+  padding: 4rem 2rem;
+}
+.resources .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Heading with little blue bar above first 3 letters */
+.resources h2 {
+  position: relative;
+  font-size: 2rem;
+  color: #2e2e3a;
+  margin-bottom: 2rem;
+  padding-left: 0.5ch; /* shift text right so bar sits over */
+}
+.resources h2 .blue-line {
+  position: absolute;
+  top: -0.5rem;
+  left: 0.5ch;
+  display: block;
+  width: 3ch;       /* exactly as wide as three characters */
+  height: 4px;
+  background: #0066CC;
+}
+
+/* Grid of cards */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+/* Individual card */
+.card {
+  position: relative;
+  height: 360px;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Full‐bleed background image */
+.card-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+/* White bottom half overlay */
+.card-content {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 50%;
+  background: #fff;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Card title */
+.card-content h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #2e2e3a;
+}
+
+/* Button */
+.btn {
+  display: inline-block;
+  background: #0066CC;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+.btn:hover {
+  background: #004999;
+}
+
+/* Mobile stacking tweak */
+@media (max-width: 600px) {
+  .card {
+    height: 320px;
+  }
+}
+/* ——— .career-guidsguids ——— */
+.career-guids {
+  background: #fff;  /* or whatever backdrop you prefer */
+  padding: 4rem 2rem;
+}
+
+.career-guids .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem;
+}
+
+/* Individual card */
+.role-card {
+  flex: 1;
+  text-align: center;
+}
+
+.role-card img {
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+  display: block;
+  margin: 0 auto 1rem;
+}
+
+.role-card h3 {
+  font-size: 1.25rem;
+  margin: 0.5rem 0 0.25rem;
+  color: #2E2E3A;
+}
+
+.role-card .role-title {
+  font-size: 0.95rem;
+  color: #555;
+  margin: 0;
+}
+
+/* Responsive: stack vertically on small screens */
+@media (max-width: 768px) {
+  .career-guids .container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .role-card {
+    margin-bottom: 2rem;
+  }
+  .role-card img {
+    max-width: 60%;
+  }
+}
+/* ——— Footer ——— */
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+  min-height: 250px;
+  color: #fff;
+}
+
+/* Left half (blue) */
+.footer-left {
+  flex: 1 1 300px;
+  background: #0066CC;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+.footer-logo {
+  width: 80px;
+  margin-bottom: 1rem;
+}
+.footer-copy {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+.social-links a {
+  color: #fff;
+  font-size: 1.25rem;
+  margin-right: 1rem;
+  transition: opacity 0.2s;
+}
+.social-links a:hover {
+  opacity: 0.7;
+}
+
+/* Right half (white) */
+.footer-right {
+  flex: 2 1 600px;
+  background: #fafafa;
+  color: #2e2e3a;
+  display: flex;
+  padding: 2rem;
+}
+.footer-column {
+  flex: 1;
+}
+.footer-column ul {
+  list-style: none;
+  padding: 0;
+}
+.footer-column li {
+  margin-bottom: 0.75rem;
+}
+.footer-column a {
+  text-decoration: none;
+  color: inherit;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+.footer-column a:hover {
+  color: #0066CC;
+}
+
+/* Responsive: stack vertically */
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+  }
+  .footer-right {
+    flex-direction: column;
+    padding-top: 1rem;
+  }
+  .footer-column {
+    margin-bottom: 1.5rem;
+  }
+}
+/* ——— Root & Global Styles ——— */
+:root {
+  --primary: #001851;
+  --secondary: #DAA520;
+  --text: #333;
+  --bg-light: #fafafa;
+}
+* {
+  margin: 0; padding: 0;
+  box-sizing: border-box;
+}
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: var(--text);
+  background: #fff;
+}
+
+/* ——— Utilities ——— */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* ——— Header/Nav (copy from index.html) ——— */
+.header {
+  position: fixed; top: 0; width: 100%;
+  background: rgba(255,255,255,0.25);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+}
+.navbar {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  max-width: 1200px; margin:0 auto;
+  padding: 1rem 2rem;
+}
+.navbar .logo img {
+  height: 50px;
+}
+.nav-links {
+  list-style: none;
+  display: flex; gap: 1.5rem;
+}
+.nav-links li a {
+  text-decoration: none;
+  color: var(--primary);
+  font-weight: 600;
+  transition: color 0.2s;
+}
+.nav-links li a:hover,
+.nav-links li a.active {
+  color: var(--secondary);
+}
+.burger {
+  display: none;
+  flex-direction: column; gap: 5px;
+  cursor: pointer;
+}
+.burger div {
+  width: 25px; height: 3px; background: var(--primary);
+}
+@media (max-width: 768px) {
+  .burger { display: flex; }
+  .nav-links {
+    position: fixed; top: 70px; right: -100%;
+    flex-direction: column;
+    background: rgba(255,255,255,0.9);
+    width: 200px; padding:1rem;
+    transition: right 0.3s ease;
+  }
+  .nav-links.open { right: 0; }
+}
+
+/* ——— News & Blog Section ——— */
+.news-blog {
+  padding: 8rem 0 4rem;   /* account for fixed header */
+  background: var(--bg-light);
+}
+.news-blog h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.5rem;
+  color: var(--primary);
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+/* Featured story layout */
+.featured {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.featured-text {
+  flex: 1 1 400px;
+}
+.highlight {
+  display: block;
+  width: 3ch;   /* three-character width */
+  height: 4px;
+  background: var(--primary);
+  margin-bottom: 0.75rem;
+}
+.featured-text h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 1.75rem;
+  color: var(--primary);
+  margin-bottom: 1rem;
+}
+.featured-text p {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+/* Image side */
+.featured-image {
+  flex: 1 1 400px;
+  text-align: right;
+}
+.featured-image img {
+  max-width: 80%;
+  height: auto;
+  border-radius: 4px;
+  padding-right: 18%;
+}
+
+/* ——— Responsive ——— */
+@media (max-width: 768px) {
+  .news-blog {
+    padding-top: 6rem;
+  }
+  .featured {
+    flex-direction: column;
+    text-align: center;
+  }
+  .featured-image {
+    text-align: center;
+    margin-top: 2rem;
+  }
+}
+/* ——— Recent Stories Carousel ——— */
+.recent-stories {
+  padding: 3rem 0;
+  background: #fff;
+}
+.recent-stories h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  color: var(--primary);
+  margin-bottom: 1.5rem;
+}
+
+/* wrapper for overflow & gradient fade */
+.carousel-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+/* gradient fade on right edge (desktop only) */
+@media (min-width: 769px) {
+  .carousel-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; right: 0;
+    width: 20%; /* covers the partial card */
+    background: linear-gradient(to left, #fff, rgba(255,255,255,0));
+    pointer-events: none;
+  }
+}
+
+/* the track */
+.carousel {
+  overflow: hidden;
+}
+.carousel-track {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+/* each item */
+.carousel-item {
+  flex: 0.8 0.8 28%;  /* two full (80%) + partial third (20%) */
+  margin-right: 1rem;
+  text-align: left;
+}
+.carousel-item img {
+  width: 100%;
+  display: block;
+  border-radius: 4px;
+}
+.carousel-item h3 {
+  margin: 0.75rem 0 0;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.1rem;
+  color: var(--primary);
+}
+
+/* remove right margin on last slide */
+.carousel-item:last-child {
+  margin-right: 0;
+}
+
+/* arrows */
+.carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+  z-index: 10;
+}
+.carousel-btn:hover {
+  opacity: 1;
+}
+.carousel-btn.prev {
+  left: 0.5rem;
+}
+.carousel-btn.next {
+  right: 0.5rem;
+}
+
+/* MOBILE: 2 cards at once, no peek, no fade */
+@media (max-width: 768px) {
+  .carousel-wrapper::after { display: none; }
+  .carousel-item { flex: 0 0 50%; margin-right: 0.75rem; }
+  .carousel-item:last-child { margin-right: 0.75rem; }
+}
+/* ——— Quote Section ——— */
+.quote-section {
+  background: #fff;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+.quote-section blockquote {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin: 0 auto 1rem;
+  max-width: 800px;
+  line-height: 1.2;
+}
+.quote-section cite {
+  display: block;
+  margin-top: 1rem;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.1rem;
+  color: var(--text);
+  opacity: 0.8;
+}
+/* ——— Footer ——— */
+.footer {
+  display: flex;
+  flex-wrap: wrap;
+/* Left half (blue) */
+.footer-left {
+  flex: 4 0.3 150px;
+  background: #001851;
+  color: #fff;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.footer-logo {
+  width: 80px;
+  margin-bottom: 1.5rem;
+}
+.footer-links.major a {
+  display: block;
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.footer-links.major a:hover {
+  opacity: 0.8;
+}
+.social-links {
+  margin-top: 2rem;
+}
+.social-links a {
+  color: #fff;
+  font-size: 1.25rem;
+  margin-right: 1rem;
+  transition: opacity 0.2s;
+}
+.social-links a:hover {
+  opacity: 0.7;
+}
+
+/* Right half (white) */
+.footer-right {
+  flex: 2 1 600px;
+  background: #F5F5F5;
+  padding: 2rem;
+}
+.footer-links.minor a {
+  display: block;
+  color: #001851;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-links.minor a:hover {
+  color: #004080;
+}
+
+/* Responsive: stack left above right */
+@media (max-width: 768px) {
+  .footer {
+    flex-direction: column;
+  }
+  .footer-right {
+    padding-top: 1rem;
+  }
+  .social-links {
+    margin-top: 1.5rem;
+  }
+}
+}
+/* ——— Alumni Hero Section ——— */
+.alumni-hero {
+  position: relative;
+  height: 75vh;
+  background: url('https://i.ibb.co/V0yvxMdy/Figplc0-Xk-AIz6wa.jpg')
+    center/cover no-repeat;
+  display: flex;
+  align-items: flex-end;   /* align overlay at bottom */
+  padding: 0 2rem 2rem;     /* space for overlay */
+  margin-top: 4rem;         /* if header is fixed */
+}
+
+.hero-overlay {
+  background: #fff;
+  padding: 2rem;
+  max-width: 360px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.hero-overlay h2 {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--primary);
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+.hero-overlay p {
+  font-family: 'Open Sans', sans-serif;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+.hero-overlay .btn {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  text-decoration: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.hero-overlay .btn:hover {
+  background: #003366;
+}
+
+/* Responsive: full-width overlay on mobile */
+@media (max-width: 768px) {
+  .alumni-hero {
+    padding: 0;
+    margin-top: 6rem;
+    height: auto;
+  }
+  .hero-overlay {
+    width: 90%;
+    max-width: none;
+    margin: 2rem auto;
+  }
+}
+/* ——— Alumni Detail Section ——— */
+.alumni-body {
+  background: #fff;
+  padding: 4rem 2rem;
+}
+.alumni-body-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.alumni-text {
+  flex: 1 1 400px;
+}
+.alumni-text h2 {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--primary);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.alumni-text p {
+  font-family: 'Open Sans', sans-serif;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+/* Image block */
+.alumni-image {
+  flex: 0 0 300px;
+}
+.alumni-image img {
+  width: 100%;
+  display: block;
+  border-radius: 4px;
+  transition: transform 0.3s;
+}
+.alumni-image a:hover img {
+  transform: scale(1.02);
+}
+
+/* Mobile: stack image below text */
+@media (max-width: 768px) {
+  .alumni-body-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  .alumni-image {
+    margin-top: 2rem;
+    flex: 1 1 100%;
+  }
+}
+/* ——— Committees Hero (same as Alumni Hero) ——— */
+.committees-hero {
+  position: relative;
+  height: 75vh;
+  background: url('https://i.ibb.co/V0yvxMdy/Figplc0-Xk-AIz6wa.jpg')
+    center/cover no-repeat;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 2rem 2rem;
+  margin-top: 4rem; /* adjust if you changed header height */
+}
+
+.committees-hero .hero-overlay {
+  background: #fff;
+  padding: 2rem;
+  max-width: 360px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+.committees-hero .hero-overlay h2 {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--primary);
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+.committees-hero .hero-overlay p {
+  font-family: 'Open Sans', sans-serif;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+.committees-hero .hero-overlay .btn {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  text-decoration: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.committees-hero .hero-overlay .btn:hover {
+  background: #003366;
+}
+
+@media (max-width: 768px) {
+  .committees-hero {
+    padding: 0;
+    margin-top: 6rem;
+    height: auto;
+  }
+  .committees-hero .hero-overlay {
+    width: 90%;
+    margin: 2rem auto;
+    max-width: none;
+  }
+}
+
+/* ——— Committees Body (same as Alumni Body) ——— */
+.committees-body {
+  background: #fff;
+  padding: 4rem 2rem;
+}
+.committees-body-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+.committees-text {
+  flex: 1 1 400px;
+}
+.committees-text h2 {
+  font-family: 'Montserrat', sans-serif;
+  color: var(--primary);
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.committees-text p {
+  font-family: 'Open Sans', sans-serif;
+  color: var(--text);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+.committees-image {
+  flex: 0 0 300px;
+}
+.committees-image img {
+  width: 100%;
+  display: block;
+  border-radius: 4px;
+  transition: transform 0.3s;
+}
+.committees-image a:hover img {
+  transform: scale(1.02);
+}
+@media (max-width: 768px) {
+  .committees-body-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  .committees-image {
+    margin-top: 2rem;
+    flex: 1 1 100%;
+  }
+}

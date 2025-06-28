@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>EULSS</title>
+  <link rel="stylesheet" href="../css/styles.css"/>
+</head>
+<body>
+
+  <!-- Header / Navigation -->
+  <header class="header">
+    <nav class="navbar">
+      <!-- Logo -->
+      <div class="logo">
+        <img src="https://i.ibb.co/vC2RJvsS/D9zp-LELy-400x400.jpg" alt="EULSS Logo" />
+      </div>
+
+      <!-- Nav links -->
+      <ul class="nav-links">
+        <li><a href="../html/index.html">Home</a></li>
+        <li><a href="../html/Employabilityhub.html">Employability Hub</a></li>
+        <li><a href="">Resources</a></li>
+        <li><a href="../html/News&Blog.html">News &amp; Blog</a></li>
+        <li><a href="../html/comimittees.html">Committees</a></li>
+        <li><a href="../html/Alumni.html">Alumni</a></li>
+      </ul>
+
+      <!-- Burger icon -->
+      <div class="burger">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="overlay"></div>
+    <img class="hero-logo"
+         src="https://i.ibb.co/vC2RJvsS/D9zp-LELy-400x400.jpg"
+         alt="EULSS Logo" />
+    <h1>Elizade University Law Students Society</h1>
+  </section>
+
+  <script>
+    // Mobile menu toggle
+    const burger = document.querySelector('.burger');
+    const navLinks = document.querySelector('.nav-links');
+    burger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+  </script>
+<!-- ========== About EULSS Section ========== -->
+<section class="about-eulss">
+  <!-- blue band behind everything -->
+  <div class="blue-rect"></div>
+
+  <!-- content container -->
+  <div class="about-container">
+    <!-- left: picture, overlapping the band -->
+    <div class="about-picture">
+      <img
+        src="https://i.ibb.co/V0yvxMdy/Figplc0-Xk-AIz6wa.jpg"
+        alt="EULSS Students"
+      />
+    </div>
+
+    <!-- right: heading + text on the blue -->
+    <div class="about-content">
+      <h2>About EULSS</h2>
+      <p>
+        The Elizade University Law Students Society (EULSS) is the
+        heartbeat of our law faculty—empowering students through events,
+        advocacy, and community service since its founding in 2010.
+      </p>
+      <p>
+        Our mission is to nurture leadership, legal excellence, and
+        lasting connections that extend far beyond Graduation, EULSS is your platform to grow and give back.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ========== News & Events Section ========== -->
+<section class="news-events">
+  <div class="container">
+    <h2>News &amp; Events</h2>
+    <div class="cards-grid">
+
+      <!-- Card 1: Upcoming Event -->
+      <div class="card">
+        <div
+          class="card-image"
+          style="background-image:url('https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg');"
+        ></div>
+        <div class="card-content">
+          <span class="card-category">Upcoming Event</span>
+          <h3>Moot Court Championship 2025</h3>
+        </div>
+      </div>
+
+      <!-- Card 2: Latest Announcement -->
+      <div class="card">
+        <div
+          class="card-image"
+          style="background-image:url('https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg');"
+        ></div>
+        <div class="card-content">
+          <span class="card-category">Latest Announcement</span>
+          <h3>Induction Ceremony Schedule Released</h3>
+        </div>
+      </div>
+
+      <!-- Card 3: Featured Article -->
+      <div class="card">
+        <div
+          class="card-image"
+          style="background-image:url('https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg');"
+        ></div>
+        <div class="card-content">
+          <span class="card-category">Featured Article</span>
+          <h3>Alumni Spotlight: Justice Musa Ogun</h3>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<!-- ========== Partners Slider Section ========== -->
+<section class="partners-slider">
+  <p class="partners-subtitle">Official Partners</p>
+  <h2 class="partners-title">Our Partners</h2>
+
+  <div class="slider">
+    <div class="slide-track">
+      <!-- Unique logos -->
+      <div class="slide">
+        <img src="http://alsaonline.org/wp-content/uploads/2022/12/04.png" alt="ALS Online Logo 04" />
+      </div>
+      <div class="slide">
+        <img src="http://alsaonline.org/wp-content/uploads/2022/12/02.png" alt="ALS Online Logo 02" />
+      </div>
+      <div class="slide">
+        <img src="http://alsaonline.org/wp-content/uploads/2022/12/01.png" alt="ALS Online Logo 01" />
+      </div>
+      <!-- Duplicates for seamless loop -->
+      <div class="slide">
+        <img src="http://alsaonline.org/wp-content/uploads/2022/12/04.png" alt="ALS Online Logo 04" />
+      </div>
+      <div class="slide">
+        <img src="http://alsaonline.org/wp-content/uploads/2022/12/02.png" alt="ALS Online Logo 02" />
+      </div>
+      <div class="slide">
+        <img src="http://alsaonline.org/wp-content/uploads/2022/12/01.png" alt="ALS Online Logo 01" />
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ========== Faculty Arms Section ========== -->
+<section class="faculty-arms">
+  <div class="container">
+    <div class="role-card">
+      <img
+        src="https://i.pinimg.com/736x/3b/4d/f2/3b4df2c3b38546056d3e268e9243bad4.jpg"
+        alt="Legislative Speaker"
+      />
+      <h3>Hon. Chiamaka Obi</h3>
+      <p class="role-title">Legislative Speaker</p>
+    </div>
+
+    <div class="role-card">
+      <img
+        src="https://i.pinimg.com/736x/4b/29/28/4b2928f4f979c4cccdd9703ca0835716.jpg""
+        alt="President"
+      />
+      <h3>Abdulrahman Yusuf</h3>
+      <p class="role-title">Society President</p>
+    </div>
+
+    <div class="role-card">
+      <img
+        src="https://i.pinimg.com/736x/51/e0/d5/51e0d5aa27808ce689e3dd5a5cd7685a.jpg"
+        alt="Chief Judge"
+      />
+      <h3>Nnenna Okoye</h3>
+      <p class="role-title">Chief Judge</p>
+    </div>
+  </div>
+</section>
+<footer class="footer">
+  <!-- Left: blue background, logo & socials -->
+  <div class="footer-left">
+    <img
+      src="https://i.ibb.co/vC2RJvsS/D9zp-LELy-400x400.jpg"
+      alt="EULSS Logo"
+      class="footer-logo"
+    />
+    <p class="footer-copy">© 2025 Elizade University Law Students Society</p>
+    <div class="social-links">
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="mailto:info@elizade.edu.ng" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+    </div>
+  </div>
+
+  <!-- Right: white background, link lists -->
+  <div class="footer-right">
+    <div class="footer-column">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">News &amp; Blog</a></li>
+        <li><a href="#">Committees</a></li>
+        <li><a href="#">Resources</a></li>
+      </ul>
+    </div>
+    <div class="footer-column">
+      <ul>
+        <li><a href="#">Employability Hub</a></li>
+        <li><a href="#">Gallery</a></li>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">FAQs</a></li>
+        <li><a href="#">Alumni Network</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="social-links">
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="mailto:info@elizade.edu.ng" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+      </div>
+    </div>
+    
+</footer>
+
+</body>
+</html>

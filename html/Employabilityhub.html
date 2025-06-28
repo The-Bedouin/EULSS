@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+/>
+
+  <title>Employability Hub – EULSS</title>
+
+  <!-- Correct path up one level into css/ -->
+  <link rel="stylesheet" href="../css/styles.css" />
+</head>
+<body>
+
+  <!-- ========== Shared Header / Navigation ========== -->
+  <header class="header">
+    <nav class="navbar">
+      <!-- Logo -->
+      <div class="logo">
+        <img
+          src="https://i.ibb.co/vC2RJvsS/D9zp-LELy-400x400.jpg"
+          alt="EULSS Logo"
+        />
+      </div>
+
+      <!-- Nav links -->
+      <ul class="nav-links">
+        <li><a href="../html/index.html">Home</a></li>
+        <li><a href="../html/Employabilityhub.html">Employability Hub</a></li>
+        <li><a href="../html/">Resources</a></li>
+              <li><a href="../html/News&Blog.html">News &amp; Blog</a></li>
+        <li><a href="../html/comimittees.html">Committees</a></li>
+        <li><a href="../html/Alumni.html">Alumni</a></li>
+      </ul>
+
+      <!-- Burger icon for mobile -->
+      <div class="burger">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- ========== Employability Hub Hero ========== -->
+  <section class="employability-hero">
+    <h1>Employability Hub</h1>
+
+    <div class="employability-content">
+      <div class="employability-text">
+        <!-- thin blue bar exactly as wide as 4 characters -->
+        <span class="bar"></span>
+
+        <p>
+          At EULSS, we’re dedicated to equipping our members with the skills,
+          networks, and opportunities they need to launch successful legal
+          careers.
+        </p>
+        <p>
+          Explore our toolkit of CV workshops, mentorship pairings, interview
+          prep guides, and alumni panels—designed to help you discover and
+          reach your full potential.
+        </p>
+      </div>
+
+      <div class="employability-image">
+        <img
+          src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg"
+          alt="Students collaborating in the Employability Hub"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Burger toggle script -->
+  <script>
+    const burger = document.querySelector('.burger');
+    const navLinks = document.querySelector('.nav-links');
+    burger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+    });
+  </script>
+</body>
+<!-- ========== Footer ========== -->
+<footer class="footer">
+  <!-- Left column: logo + social icons -->
+  <div class="footer-left">
+    <img
+      src="https://i.ibb.co/vC2RJvsS/D9zp-LELy-400x400.jpg"
+      alt="EULSS Logo"
+      class="footer-logo"
+    />
+    <div class="social-links">
+      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+      <a href="mailto:info@elizade.edu.ng" aria-label="Email"><i class="fas fa-envelope"></i></a>
+      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+    </div>
+  </div>
+
+  <!-- Right column: site links -->
+  <div class="footer-right">
+    <nav class="footer-links minor">
+      <a href="index.html">Home</a>
+      <a href="News&Blog.html">News &amp; Blog</a>
+      <a href="resources.html">Resources</a>
+      <a href="committees.html">Committees</a>
+      <a href="gallery.html">Gallery</a>
+      <a href="ContactUs.html">Contact Us</a>
+      <a href="FAQs.html">FAQs</a>
+      <a href="alumni.html">Alumni Network</a>
+    </nav>
+  </div>
+</footer>
+
+</html>
