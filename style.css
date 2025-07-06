@@ -81,6 +81,15 @@ body, html {
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
 }
+.hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This ensures the video covers the whole section */
+  z-index: -1; /* Place video behind other content */
+}
 .hero .hero-logo {
   position: relative;
   width: 150px;
@@ -271,6 +280,7 @@ body, html {
   margin: 0;
   font-size: 1.25rem;
   color: #004080;
+  padding-top: -100px;
 }
 
 /* responsive tweak */
@@ -1157,114 +1167,6 @@ body {
   }
 }
 }
-/* ——— Alumni Hero Section ——— */
-.alumni-hero {
-  position: relative;
-  height: 75vh;
-  background: url('https://i.ibb.co/V0yvxMdy/Figplc0-Xk-AIz6wa.jpg')
-    center/cover no-repeat;
-  display: flex;
-  align-items: flex-end;   /* align overlay at bottom */
-  padding: 0 2rem 2rem;     /* space for overlay */
-  margin-top: 4rem;         /* if header is fixed */
-}
-
-.hero-overlay {
-  background: #fff;
-  padding: 2rem;
-  max-width: 360px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-.hero-overlay h2 {
-  font-family: 'Montserrat', sans-serif;
-  color: var(--primary);
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-}
-.hero-overlay p {
-  font-family: 'Open Sans', sans-serif;
-  color: var(--text);
-  margin-bottom: 1rem;
-}
-.hero-overlay .btn {
-  display: inline-block;
-  background: var(--primary);
-  color: #fff;
-  text-decoration: none;
-  padding: 0.6rem 1.2rem;
-  border-radius: 4px;
-  font-weight: 600;
-  transition: background 0.2s;
-}
-.hero-overlay .btn:hover {
-  background: #003366;
-}
-
-/* Responsive: full-width overlay on mobile */
-@media (max-width: 768px) {
-  .alumni-hero {
-    padding: 0;
-    margin-top: 6rem;
-    height: auto;
-  }
-  .hero-overlay {
-    width: 90%;
-    max-width: none;
-    margin: 2rem auto;
-  }
-}
-/* ——— Alumni Detail Section ——— */
-.alumni-body {
-  background: #fff;
-  padding: 4rem 2rem;
-}
-.alumni-body-content {
-  display: flex;
-  align-items: flex-start;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-.alumni-text {
-  flex: 1 1 400px;
-}
-.alumni-text h2 {
-  font-family: 'Montserrat', sans-serif;
-  color: var(--primary);
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-.alumni-text p {
-  font-family: 'Open Sans', sans-serif;
-  color: var(--text);
-  line-height: 1.6;
-  margin-bottom: 1.25rem;
-}
-
-/* Image block */
-.alumni-image {
-  flex: 0 0 300px;
-}
-.alumni-image img {
-  width: 100%;
-  display: block;
-  border-radius: 4px;
-  transition: transform 0.3s;
-}
-.alumni-image a:hover img {
-  transform: scale(1.02);
-}
-
-/* Mobile: stack image below text */
-@media (max-width: 768px) {
-  .alumni-body-content {
-    flex-direction: column;
-    text-align: center;
-  }
-  .alumni-image {
-    margin-top: 2rem;
-    flex: 1 1 100%;
-  }
-}
 /* ——— Committees Hero (same as Alumni Hero) ——— */
 .committees-hero {
   position: relative;
@@ -1367,5 +1269,161 @@ body {
   .committees-image {
     margin-top: 2rem;
     flex: 1 1 100%;
+  }
+}
+/* ——— Hero: Alumni Network New ——— */
+.alumni-hero-new {
+  position: relative;
+  height: 100vh;
+  background: url(naruto.jpeg) center/cover no-repeat;
+  overflow: hidden;
+}
+
+/* Large white info box */
+.hero-box-large {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 50%;             /* covers half the width on desktop */
+  height: 25vh;           /* 25% of hero’s height */
+  background: #fff;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.hero-box-large h1 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  color: #001851;
+}
+.hero-box-large p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+.hero-box-large .btn {
+  align-self: start;
+  background: #001851;
+  color: #fff;
+  text-decoration: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 4px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+.hero-box-large .btn:hover {
+  background: #003366;
+}
+
+/* Decorative thin bar at bottom-right */
+.hero-box-small {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 25%;            /* a quarter width on desktop */
+  height: 25vh;          /* same height as the large box */
+  background: #fff;
+}
+
+/* ——— Responsive: stack & hide small bar ——— */
+@media (max-width: 768px) {
+  .hero-box-large {
+    position: static;
+    width: 90%;
+    height: auto;
+    margin: 2rem auto;
+    box-shadow: none;
+  }
+  .hero-box-small {
+    display: none;
+  }
+}
+/* ——— Alumni Testimonial Section ——— */
+.alumni-testimonial {
+  background: var(--primary);
+  padding: 4rem 2rem;
+  color: #fff;
+}
+.alumni-testimonial .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.testimonial-content {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+/* Photo block */
+.testimonial-image {
+  flex: 1 1 45%;
+}
+.testimonial-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+}
+
+/* Text block */
+.testimonial-text {
+  flex: 1 1 45%;
+}
+.testimonial-text blockquote {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 2rem;
+  margin: 0 0 1rem;
+  line-height: 1.3;
+}
+.testimonial-text hr {
+  border: 0;
+  height: 2px;
+  background: #fff;
+  opacity: 0.5;
+  margin: 0 0 1rem;
+}
+.testimonial-text cite {
+  display: block;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+/* Button */
+.testimonial-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #64B5F6; /* light-blue */
+  color: #fff;
+  text-decoration: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: background 0.2s, box-shadow 0.2s;
+}
+.testimonial-btn:hover {
+  background: #3f8ece;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Mobile: text first, then image */
+@media (max-width: 768px) {
+  .testimonial-content {
+    flex-direction: column;
+    text-align: center;
+  }
+  .testimonial-text {
+    order: 1;
+  }
+  .testimonial-image {
+    order: 2;
+    margin-top: 2rem;
   }
 }
