@@ -2,19 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
-  <link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-/>
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Employability Hub – EULSS</title>
-
-  <!-- Correct path up one level into css/ -->
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap"
+    rel="stylesheet">
 </head>
 <body>
 
@@ -23,10 +19,9 @@
     <nav class="navbar">
       <!-- Logo -->
       <div class="logo">
-        <img
-          src="../EULSS_logo-removebg-preview.png"
-          alt="EULSS Logo"
-        />
+        <a href="/index.html">
+          <img src="../EULSS_logo-removebg-preview.png" alt="EULSS Logo" />
+        </a>
       </div>
 
       <!-- Nav links -->
@@ -48,75 +43,494 @@
     </nav>
   </header>
 
-  <!-- ========== Employability Hub Hero ========== -->
-  <section class="employability-hero">
-    <h1>Employability Hub</h1>
-
-    <div class="employability-content">
-      <div class="employability-text">
-        <!-- thin blue bar exactly as wide as 4 characters -->
-        <span class="bar"></span>
-
-        <p>
-          At EULSS, we’re dedicated to equipping our members with the skills,
-          networks, and opportunities they need to launch successful legal
-          careers.
+  <!-- ========== Employability Hub Hero Section ========== -->
+  <section class="employability-hero-modern">
+    <div class="hero-overlay">
+      <div class="hero-content">
+        <div class="section-tag">
+          <i class="fas fa-briefcase"></i>
+          <span>Career Development</span>
+        </div>
+        <h1 class="hero-title">
+          Employability <span class="highlight-text">Hub</span>
+        </h1>
+        <p class="hero-description">
+          At EULSS, we're dedicated to equipping our members with the skills, networks, and opportunities they need to launch successful legal careers.
         </p>
-        <p>
-          Explore our toolkit of CV workshops, mentorship pairings, interview
-          prep guides, and alumni panels—designed to help you discover and
-          reach your full potential.
-        </p>
+        <div class="hero-cta">
+          <a href="#services" class="cta-button primary">
+            <span>Explore Services</span>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+          <a href="#resources" class="cta-button secondary">
+            <span>View Resources</span>
+            <i class="fas fa-book"></i>
+          </a>
+        </div>
       </div>
+      <div class="hero-visual">
+        <div class="hero-image-container">
+          <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Students collaborating in the Employability Hub" />
+          <div class="hero-image-overlay">
+            <div class="overlay-content">
+              <h3>Building Tomorrow's Legal Leaders</h3>
+              <p>Join our vibrant community of law students</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-bg-pattern"></div>
+  </section>
 
-      <div class="employability-image">
-        <img
-          src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg"
-          alt="Students collaborating in the Employability Hub"
-        />
+  <!-- ========== Stats Section ========== -->
+  <section class="employability-stats">
+    <div class="stats-container">
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="stat-number">200+</div>
+          <div class="stat-label">Students Placed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-handshake"></i>
+          </div>
+          <div class="stat-number">50+</div>
+          <div class="stat-label">Partner Firms</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-graduation-cap"></i>
+          </div>
+          <div class="stat-number">95%</div>
+          <div class="stat-label">Success Rate</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">
+            <i class="fas fa-calendar-check"></i>
+          </div>
+          <div class="stat-number">25+</div>
+          <div class="stat-label">Annual Events</div>
+        </div>
       </div>
     </div>
   </section>
+
+  <!-- ========== Services Section ========== -->
+  <section id="services" class="employability-services">
+    <div class="services-container">
+      <div class="section-header">
+        <div class="section-tag">
+          <i class="fas fa-cogs"></i>
+          <span>Our Services</span>
+        </div>
+        <h2 class="section-title">
+          Career Development <span class="highlight-text">Services</span>
+        </h2>
+        <p class="section-description">
+          Comprehensive support to help you build a successful legal career
+        </p>
+      </div>
+
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-file-alt"></i>
+          </div>
+          <h3>CV & Resume Workshops</h3>
+          <p>Professional guidance to craft compelling resumes and CVs that stand out in the competitive legal market.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> One-on-one consultations</li>
+            <li><i class="fas fa-check"></i> Industry-specific templates</li>
+            <li><i class="fas fa-check"></i> Mock interview preparation</li>
+          </ul>
+          <a href="#" class="service-link">
+            <span>Learn More</span>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-user-graduate"></i>
+          </div>
+          <h3>Mentorship Program</h3>
+          <p>Connect with experienced legal professionals and alumni for personalized career guidance and networking.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Industry expert mentors</li>
+            <li><i class="fas fa-check"></i> Regular check-ins</li>
+            <li><i class="fas fa-check"></i> Career path guidance</li>
+          </ul>
+          <a href="#" class="service-link">
+            <span>Learn More</span>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-chalkboard-teacher"></i>
+          </div>
+          <h3>Interview Preparation</h3>
+          <p>Comprehensive interview training including mock sessions, common questions, and professional etiquette.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Mock interview sessions</li>
+            <li><i class="fas fa-check"></i> Legal industry insights</li>
+            <li><i class="fas fa-check"></i> Feedback and improvement</li>
+          </ul>
+          <a href="#" class="service-link">
+            <span>Learn More</span>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-network-wired"></i>
+          </div>
+          <h3>Networking Events</h3>
+          <p>Exclusive networking opportunities with legal professionals, firms, and industry leaders.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Industry meetups</li>
+            <li><i class="fas fa-check"></i> Alumni networking</li>
+            <li><i class="fas fa-check"></i> Professional conferences</li>
+          </ul>
+          <a href="#" class="service-link">
+            <span>Learn More</span>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-briefcase"></i>
+          </div>
+          <h3>Internship Placement</h3>
+          <p>Access to exclusive internship opportunities with top law firms and legal organizations.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Partner firm placements</li>
+            <li><i class="fas fa-check"></i> Summer programs</li>
+            <li><i class="fas fa-check"></i> Career development</li>
+          </ul>
+          <a href="#" class="service-link">
+            <span>Learn More</span>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-icon">
+            <i class="fas fa-certificate"></i>
+          </div>
+          <h3>Professional Certifications</h3>
+          <p>Access to professional development courses and certifications to enhance your legal skills.</p>
+          <ul class="service-features">
+            <li><i class="fas fa-check"></i> Online courses</li>
+            <li><i class="fas fa-check"></i> Industry certifications</li>
+            <li><i class="fas fa-check"></i> Skill development</li>
+          </ul>
+          <a href="#" class="service-link">
+            <span>Learn More</span>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Resources Section ========== -->
+  <section id="resources" class="employability-resources">
+    <div class="resources-container">
+      <div class="section-header">
+        <div class="section-tag">
+          <i class="fas fa-book"></i>
+          <span>Learning Resources</span>
+        </div>
+        <h2 class="section-title">
+          Career <span class="highlight-text">Resources</span>
+        </h2>
+        <p class="section-description">
+          Access our comprehensive library of career development materials and tools
+        </p>
+      </div>
+
+      <div class="resources-grid">
+        <div class="resource-card">
+          <div class="resource-image">
+            <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Legal Research Guide" />
+          </div>
+          <div class="resource-content">
+            <h3>Legal Research Guide</h3>
+            <p>Comprehensive guide to legal research methodologies and tools.</p>
+            <div class="resource-meta">
+              <span class="resource-type"><i class="fas fa-file-pdf"></i> PDF Guide</span>
+              <span class="resource-pages">45 pages</span>
+            </div>
+            <a href="#" class="resource-download">
+              <i class="fas fa-download"></i>
+              <span>Download</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="resource-card">
+          <div class="resource-image">
+            <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Interview Preparation" />
+          </div>
+          <div class="resource-content">
+            <h3>Interview Preparation Kit</h3>
+            <p>Complete toolkit for legal job interviews including questions and tips.</p>
+            <div class="resource-meta">
+              <span class="resource-type"><i class="fas fa-video"></i> Video Series</span>
+              <span class="resource-duration">2 hours</span>
+            </div>
+            <a href="#" class="resource-download">
+              <i class="fas fa-play"></i>
+              <span>Watch</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="resource-card">
+          <div class="resource-image">
+            <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="CV Templates" />
+          </div>
+          <div class="resource-content">
+            <h3>CV Templates Collection</h3>
+            <p>Professional CV templates tailored for legal professionals.</p>
+            <div class="resource-meta">
+              <span class="resource-type"><i class="fas fa-file-word"></i> Templates</span>
+              <span class="resource-count">15 templates</span>
+            </div>
+            <a href="#" class="resource-download">
+              <i class="fas fa-download"></i>
+              <span>Download</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Testimonials Section ========== -->
+  <section class="employability-testimonials">
+    <div class="testimonials-container">
+      <div class="section-header">
+        <div class="section-tag">
+          <i class="fas fa-quote-left"></i>
+          <span>Success Stories</span>
+        </div>
+        <h2 class="section-title">
+          What Our <span class="highlight-text">Alumni Say</span>
+        </h2>
+        <p class="section-description">
+          Hear from our successful graduates about their journey and how EULSS helped shape their careers
+        </p>
+      </div>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="testimonial-quote">
+              <i class="fas fa-quote-left"></i>
+              <p>"EULSS's employability hub was instrumental in my career development. The mentorship program connected me with industry leaders who guided me through my early career decisions."</p>
+            </div>
+            <div class="testimonial-author">
+              <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Sarah Johnson" />
+              <div class="author-info">
+                <h4>Sarah Johnson</h4>
+                <p>Associate Attorney, Johnson & Associates</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="testimonial-quote">
+              <i class="fas fa-quote-left"></i>
+              <p>"The CV workshops and interview preparation sessions gave me the confidence and skills I needed to secure my dream job at a top law firm."</p>
+            </div>
+            <div class="testimonial-author">
+              <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Michael Chen" />
+              <div class="author-info">
+                <h4>Michael Chen</h4>
+                <p>Legal Counsel, TechCorp International</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="testimonial-quote">
+              <i class="fas fa-quote-left"></i>
+              <p>"The networking events organized by EULSS opened doors I never thought possible. I'm now working with some of the most respected legal professionals in the country."</p>
+            </div>
+            <div class="testimonial-author">
+              <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Aisha Patel" />
+              <div class="author-info">
+                <h4>Aisha Patel</h4>
+                <p>Senior Associate, Patel & Partners</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA Section ========== -->
+  <section class="employability-cta">
+    <div class="cta-container">
+      <div class="cta-content">
+        <h2>Ready to Launch Your Legal Career?</h2>
+        <p>Join our employability hub today and take the first step towards your successful legal career.</p>
+        <div class="cta-buttons">
+          <a href="#" class="cta-button primary">
+            <span>Get Started</span>
+            <i class="fas fa-rocket"></i>
+          </a>
+          <a href="#" class="cta-button secondary">
+            <span>Contact Us</span>
+            <i class="fas fa-envelope"></i>
+          </a>
+        </div>
+      </div>
+      <div class="cta-visual">
+        <div class="cta-image">
+          <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Career Success" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== Footer ========== -->
+  <footer class="footer">
+    <div class="footer-container">
+      <!-- Brand Section -->
+      <div class="footer-section footer-brand">
+        <a href="/index.html">
+          <img src="../EULSS_logo-removebg-preview.png" alt="EULSS Logo" class="footer-logo" />
+        </a>
+        <h3>Elizade University Law Students Society</h3>
+        <p>Empowering legal minds through excellence, advocacy, and community service since 2010.</p>
+        <div class="social-links">
+          <a href="#" aria-label="Instagram" class="social-icon">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" aria-label="Twitter" class="social-icon">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="mailto:info@elizade.edu.ng" aria-label="Email" class="social-icon">
+            <i class="fas fa-envelope"></i>
+          </a>
+          <a href="#" aria-label="LinkedIn" class="social-icon">
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/Employabilityhub.html">Employability Hub</a></li>
+          <li><a href="/comimittees.html">Committees</a></li>
+          <li><a href="/News&Blog.html">News & Blog</a></li>
+          <li><a href="/Alumni.html">Alumni Network</a></li>
+        </ul>
+      </div>
+
+      <!-- Resources -->
+      <div class="footer-section">
+        <h4>Resources</h4>
+        <ul class="footer-links">
+          <li><a href="#">Legal Research</a></li>
+          <li><a href="#">Career Guidance</a></li>
+          <li><a href="#">Study Materials</a></li>
+          <li><a href="#">Event Calendar</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="footer-section">
+        <h4>Contact Us</h4>
+        <div class="contact-info">
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <p>Elizade University,<br>Ilara-Mokin, Ondo State, Nigeria</p>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <p>+234 (0) 803 XXX XXXX</p>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <p>info@elizade.edu.ng</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Newsletter -->
+      <div class="footer-section footer-newsletter">
+        <h4>Stay Connected</h4>
+        <p>Get the latest updates on events, news, and opportunities.</p>
+        <form class="newsletter-form">
+          <div class="newsletter-input">
+            <input type="email" placeholder="Your email address" required />
+            <button type="submit">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Footer Bottom Info -->
+      <div class="footer-section footer-bottom-integrated">
+        <div class="footer-copyright">
+          <p>&copy; 2025 Elizade University Law Students Society. All rights reserved.</p>
+          <div class="footer-legal-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Cookie Policy</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
 
   <!-- Burger toggle script -->
   <script>
     const burger = document.querySelector('.burger');
     const navLinks = document.querySelector('.nav-links');
+    
     burger.addEventListener('click', () => {
       navLinks.classList.toggle('open');
+      burger.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking on a link
+    const navLinksItems = document.querySelectorAll('.nav-links a');
+    navLinksItems.forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        burger.classList.remove('active');
+      });
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!burger.contains(e.target) && !navLinks.contains(e.target)) {
+        navLinks.classList.remove('open');
+        burger.classList.remove('active');
+      }
     });
   </script>
 </body>
-<!-- ========== Footer ========== -->
-<footer class="footer">
-  <!-- Left column: logo + social icons -->
-  <div class="footer-left">
-    <img
-      src="../EULSS_logo-removebg-preview.png"
-      alt="EULSS Logo"
-      class="footer-logo"
-    />
-    <div class="social-links">
-      <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-      <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-      <a href="mailto:info@elizade.edu.ng" aria-label="Email"><i class="fas fa-envelope"></i></a>
-      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
-    </div>
-  </div>
-
-  <!-- Right column: site links -->
-  <div class="footer-right">
-    <nav class="footer-links minor">
-      <a href="index.html">Home</a>
-      <a href="News&Blog.html">News &amp; Blog</a>
-      <a href="resources.html">Resources</a>
-      <a href="committees.html">Committees</a>
-      <a href="gallery.html">Gallery</a>
-      <a href="ContactUs.html">Contact Us</a>
-      <a href="FAQs.html">FAQs</a>
-      <a href="alumni.html">Alumni Network</a>
-    </nav>
-  </div>
-</footer>
-
 </html>

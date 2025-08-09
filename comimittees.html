@@ -2,217 +2,601 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Committees – EULSS</title>
 
-
-    <!-- Mobile burger -->
-    <div class="burger">
-      <div></div><div></div><div></div>
-    </div>
-  </nav>
-</header>
-
-
-  <title>Alumni Network – EULSS</title>
-
-  <!-- Google Fonts already in your project -->
-  <link
-    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&family=Open+Sans:wght@400;600&display=swap"
-    rel="stylesheet"
-  />
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <!-- Main stylesheet -->
-  <link rel="stylesheet" href="style.css"/>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-
-  <!-- ——— Header/Nav ——— -->
+  <!-- ========== Header/Navigation ========== -->
   <header class="header">
     <nav class="navbar">
       <div class="logo">
-        <img
-          src="../EULSS_logo-removebg-preview.png"
-          alt="EULSS Logo"
-        />
+        <a href="/index.html">
+          <img src="../EULSS_logo-removebg-preview.png" alt="EULSS Logo" />
+        </a>
       </div>
       <ul class="nav-links">
         <li><a href="/index.html">Home</a></li>
         <li><a href="/Employabilityhub.html">Employability Hub</a></li>
-        <li><a href=".#">Resources</a></li>
+        <li><a href="#">Resources</a></li>
         <li><a href="/News&Blog.html">News &amp; Blog</a></li>
-        <li><a href="/comimittees.html">Committees</a></li>
+        <li><a href="/comimittees.html" class="active">Committees</a></li>
         <li><a href="/Alumni.html">Alumni</a></li>
       </ul>
       <div class="burger">
-        <div></div><div></div><div></div>
+        <div></div>
+        <div></div>
+        <div></div>
       </div>
     </nav>
   </header>
 
-  <!-- ——— Alumni Hero Section ——— -->
-  <section class="committees-hero">
+  <!-- ========== Committees Hero Section ========== -->
+  <section class="committees-hero-modern">
     <div class="hero-overlay">
-      <h2>Alumni Network</h2>
-      <p>A lifelong network</p>
-      <a href="#" class="btn">Join other committees</a>
+      <div class="hero-content">
+        <div class="section-tag">
+          <i class="fas fa-users"></i>
+          <span>Student Leadership</span>
+        </div>
+        <h1 class="hero-title">
+          EULSS <span class="highlight-text">Committees</span>
+        </h1>
+        <p class="hero-description">
+          Discover the diverse committees that drive our society forward. Each committee plays a vital role in shaping the EULSS experience and fostering leadership development among our members.
+        </p>
+        <div class="hero-cta">
+          <a href="#committees" class="cta-button primary">
+            <span>Explore Committees</span>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+          <a href="#join" class="cta-button secondary">
+            <span>Join a Committee</span>
+            <i class="fas fa-handshake"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-bg-pattern"></div>
+  </section>
+
+  <!-- ========== Committees Overview Section ========== -->
+  <section class="committees-overview">
+    <div class="overview-container">
+      <div class="section-header">
+        <div class="section-tag">
+          <i class="fas fa-star"></i>
+          <span>Our Committees</span>
+  </div>
+        <h2 class="section-title">
+          Driving <span class="highlight-text">Excellence</span> Together
+        </h2>
+        <p class="section-description">
+          Our committees are the backbone of EULSS, each with a unique mission to enhance the student experience and prepare future legal professionals.
+        </p>
+      </div>
+
+      <div class="committees-grid">
+        <!-- Electoral Committee (LSEC) -->
+        <div class="committee-item featured" id="lsec">
+          <!-- Large Group Picture Outside Card -->
+          <div class="committee-group-picture">
+            <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="LSEC Committee Members Group" />
+            <div class="group-picture-overlay">
+              <h4>Electoral Committee (LSEC) Members</h4>
+              <p>Our dedicated team ensuring fair and transparent elections</p>
+            </div>
+          </div>
+          
+          <!-- Committee Card -->
+          <div class="committee-card featured">
+            <div class="committee-header">
+              <div class="committee-icon">
+                <i class="fas fa-vote-yea"></i>
+              </div>
+              <div class="committee-badge">Featured</div>
+            </div>
+            <div class="committee-content">
+              <h3>Electoral Committee (LSEC)</h3>
+              <p>Oversees all electoral processes, ensuring fair and transparent elections for EULSS leadership positions.</p>
+              
+              <!-- Committee Head Section -->
+              <div class="committee-head-section">
+                <h4>Committee Head</h4>
+                <div class="committee-head">
+                  <div class="headshot">
+                    <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="LSEC Committee Head" />
+                  </div>
+                  <div class="head-info">
+                    <h5>Name TBD</h5>
+                    <p>Electoral Committee Head</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Committee Members Section -->
+              <div class="committee-members-section">
+                <h4>Committee Members</h4>
+                <div class="committee-members">
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 1" />
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 2" />
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 3" />
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 4" />
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 5" />
+                  <div class="member-count">+3 more</div>
+                </div>
+              </div>
+
+              <div class="committee-features">
+                <span class="feature-tag">Elections</span>
+                <span class="feature-tag">Transparency</span>
+                <span class="feature-tag">Leadership</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Moot and Mock Committee -->
+        <div class="committee-item">
+          <!-- Large Group Picture Outside Card -->
+          <div class="committee-group-picture">
+            <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Moot & Mock Committee Members Group" />
+            <div class="group-picture-overlay">
+              <h4>Moot & Mock Committee Members</h4>
+              <p>Our team organizing competitions and developing advocacy skills</p>
+            </div>
+          </div>
+          
+          <!-- Committee Card -->
+          <div class="committee-card">
+            <div class="committee-header">
+              <div class="committee-icon">
+                <i class="fas fa-gavel"></i>
+              </div>
+            </div>
+            <div class="committee-content">
+              <h3>Moot & Mock Committee</h3>
+              <p>Organizes moot court competitions and mock trials to develop practical legal skills and advocacy.</p>
+              
+              <!-- Committee Head Section -->
+              <div class="committee-head-section">
+                <h4>Committee Head</h4>
+                <div class="committee-head">
+                  <div class="headshot">
+                    <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Moot & Mock Committee Head" />
+                  </div>
+                  <div class="head-info">
+                    <h5>Name TBD</h5>
+                    <p>Moot & Mock Committee Head</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Committee Members Section -->
+              <div class="committee-members-section">
+                <h4>Committee Members</h4>
+                <div class="committee-members">
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 1" />
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 2" />
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 3" />
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 4" />
+                  <div class="member-count">+2 more</div>
+                </div>
+              </div>
+
+              <div class="committee-features">
+                <span class="feature-tag">Competitions</span>
+                <span class="feature-tag">Advocacy</span>
+                <span class="feature-tag">Skills</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Law Students Representative Council (LSRC) -->
+        <div class="committee-item">
+          <!-- Large Group Picture Outside Card -->
+          <div class="committee-group-picture">
+            <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="LSRC Committee Members Group" />
+            <div class="group-picture-overlay">
+              <h4>LSRC Committee Members</h4>
+              <p>Our representatives advocating for student interests</p>
+            </div>
+          </div>
+          
+          <!-- Committee Card -->
+          <div class="committee-card">
+            <div class="committee-header">
+              <div class="committee-icon">
+                <i class="fas fa-users-cog"></i>
+              </div>
+            </div>
+            <div class="committee-content">
+              <h3>Law Students Representative Council (LSRC)</h3>
+              <p>Represents student interests and concerns to the faculty and administration.</p>
+              
+              <!-- Committee Head Section -->
+              <div class="committee-head-section">
+                <h4>Committee Head</h4>
+                <div class="committee-head">
+                  <div class="headshot">
+                    <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="LSRC Committee Head" />
+                  </div>
+                  <div class="head-info">
+                    <h5>Name TBD</h5>
+                    <p>LSRC Committee Head</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Committee Members Section -->
+              <div class="committee-members-section">
+                <h4>Committee Members</h4>
+                <div class="committee-members">
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 1" />
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 2" />
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 3" />
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 4" />
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 5" />
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 6" />
+                  <div class="member-count">+4 more</div>
+                </div>
+              </div>
+
+              <div class="committee-features">
+                <span class="feature-tag">Representation</span>
+                <span class="feature-tag">Advocacy</span>
+                <span class="feature-tag">Student Voice</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Judiciary -->
+        <div class="committee-item">
+          <!-- Large Group Picture Outside Card -->
+          <div class="committee-group-picture">
+            <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Judiciary Committee Members Group" />
+            <div class="group-picture-overlay">
+              <h4>Judiciary Committee Members</h4>
+              <p>Our team ensuring justice and constitutional adherence</p>
+            </div>
+          </div>
+          
+          <!-- Committee Card -->
+          <div class="committee-card">
+            <div class="committee-header">
+              <div class="committee-icon">
+                <i class="fas fa-balance-scale"></i>
+              </div>
+            </div>
+            <div class="committee-content">
+              <h3>Judiciary</h3>
+              <p>Handles internal disputes and ensures adherence to EULSS constitution and bylaws.</p>
+              
+              <!-- Committee Head Section -->
+              <div class="committee-head-section">
+                <h4>Committee Head</h4>
+                <div class="committee-head">
+                  <div class="headshot">
+                    <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Judiciary Committee Head" />
+                  </div>
+                  <div class="head-info">
+                    <h5>Name TBD</h5>
+                    <p>Judiciary Committee Head</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Committee Members Section -->
+              <div class="committee-members-section">
+                <h4>Committee Members</h4>
+                <div class="committee-members">
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 1" />
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 2" />
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 3" />
+                  <div class="member-count">+1 more</div>
+                </div>
+              </div>
+
+              <div class="committee-features">
+                <span class="feature-tag">Justice</span>
+                <span class="feature-tag">Dispute Resolution</span>
+                <span class="feature-tag">Constitution</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Executives -->
+        <div class="committee-item">
+          <!-- Large Group Picture Outside Card -->
+          <div class="committee-group-picture">
+            <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Executives Committee Members Group" />
+            <div class="group-picture-overlay">
+              <h4>Executives Committee Members</h4>
+              <p>Our leadership team driving EULSS forward</p>
+            </div>
+          </div>
+          
+          <!-- Committee Card -->
+          <div class="committee-card">
+            <div class="committee-header">
+              <div class="committee-icon">
+                <i class="fas fa-crown"></i>
+              </div>
+            </div>
+            <div class="committee-content">
+              <h3>Executives</h3>
+              <p>Provides strategic leadership and oversees the overall direction of EULSS activities.</p>
+              
+              <!-- Committee Head Section -->
+              <div class="committee-head-section">
+                <h4>Committee Head</h4>
+                <div class="committee-head">
+                  <div class="headshot">
+                    <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Executives Committee Head" />
+                  </div>
+                  <div class="head-info">
+                    <h5>Name TBD</h5>
+                    <p>Executives Committee Head</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Committee Members Section -->
+              <div class="committee-members-section">
+                <h4>Committee Members</h4>
+                <div class="committee-members">
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 1" />
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 2" />
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 3" />
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 4" />
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 5" />
+                  <div class="member-count">+2 more</div>
+                </div>
+              </div>
+
+              <div class="committee-features">
+                <span class="feature-tag">Leadership</span>
+                <span class="feature-tag">Strategy</span>
+                <span class="feature-tag">Management</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Academic Committee -->
+        <div class="committee-item">
+          <!-- Large Group Picture Outside Card -->
+          <div class="committee-group-picture">
+            <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Academic Committee Members Group" />
+            <div class="group-picture-overlay">
+              <h4>Academic Committee Members</h4>
+              <p>Our team promoting academic excellence</p>
+            </div>
+          </div>
+          
+          <!-- Committee Card -->
+          <div class="committee-card">
+            <div class="committee-header">
+              <div class="committee-icon">
+                <i class="fas fa-graduation-cap"></i>
+              </div>
+            </div>
+            <div class="committee-content">
+              <h3>Academic Committee</h3>
+              <p>Promotes academic excellence through study groups, workshops, and educational programs.</p>
+              
+              <!-- Committee Head Section -->
+              <div class="committee-head-section">
+                <h4>Committee Head</h4>
+                <div class="committee-head">
+                  <div class="headshot">
+                    <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Academic Committee Head" />
+                  </div>
+                  <div class="head-info">
+                    <h5>Name TBD</h5>
+                    <p>Academic Committee Head</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Committee Members Section -->
+              <div class="committee-members-section">
+                <h4>Committee Members</h4>
+                <div class="committee-members">
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 1" />
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 2" />
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 3" />
+                  <img src="https://i.ibb.co/q3yTpr76/GC0m-EPr-WIAEo7-Zb.jpg" alt="Committee Member 4" />
+                  <div class="member-count">+3 more</div>
+                </div>
+              </div>
+
+              <div class="committee-features">
+                <span class="feature-tag">Education</span>
+                <span class="feature-tag">Excellence</span>
+                <span class="feature-tag">Learning</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
-  <!-- ========== Alumni Network Detail Section ========== -->
-<section class="committees-body">
-  <div class="container">
-    <div class="committees-body-content">
-      <!-- Left: Text -->
-      <div class="committees-text">
-        <h2>A Community for Life</h2>
-        <p>
-          Our EULSS Alumni Network brings together graduates from every year, forging
-          connections that last a lifetime.  
-          From your first moot-court teammate to your final capstone partner, these
-          relationships continue to support and inspire.
-        </p>
-        <p>
-          Through mentorship circles, social events, and professional workshops, you’ll
-          find countless opportunities to learn from—and give back to—fellow committees.
-        </p>
-        <p>
-          Whether you’re seeking career guidance, personal growth, or simply a familiar
-          face at gatherings, our network is here for you—today and always.
-        </p>
-      </div>
 
-      <!-- Right: Static Image linking to gallery -->
-      <div class="committees-image">
-        <a href="gallery.html">
-          <img
-            src="https://i.ibb.co/V0yvxMdy/Figplc0-Xk-AIz6wa.jpg"
-            alt="EULSS committees event"
-          />
-        </a>
+  <!-- ========== Join Committees CTA Section ========== -->
+  <section class="join-committees-cta" id="join">
+    <div class="cta-container">
+      <div class="cta-content">
+        <h2>Ready to Make a Difference?</h2>
+        <p>Join one of our committees and contribute to the growth and success of EULSS. Develop leadership skills, build networks, and make lasting impact.</p>
+        <div class="cta-buttons">
+          <a href="#" class="cta-button primary">
+            <span>Apply Now</span>
+            <i class="fas fa-arrow-right"></i>
+          </a>
+          <a href="#" class="cta-button secondary">
+            <span>Learn More</span>
+            <i class="fas fa-info-circle"></i>
+          </a>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
-<!-- ========== Alumni Network Detail Section ========== -->
-<section class="committees-body">
-  <div class="container">
-    <div class="committees-body-content">
-      <!-- Left: Text -->
-      <div class="committees-text">
-        <h2>A Community for Life</h2>
-        <p>
-          Our EULSS Alumni Network brings together graduates from every year, forging
-          connections that last a lifetime.  
-          From your first moot-court teammate to your final capstone partner, these
-          relationships continue to support and inspire.
-        </p>
-        <p>
-          Through mentorship circles, social events, and professional workshops, you’ll
-          find countless opportunities to learn from—and give back to—fellow committees.
-        </p>
-        <p>
-          Whether you’re seeking career guidance, personal growth, or simply a familiar
-          face at gatherings, our network is here for you—today and always.
-        </p>
-      </div>
-
-      <!-- Right: Static Image linking to gallery -->
-      <div class="committees-image">
-        <a href="gallery.html">
-          <img
-            src="https://i.ibb.co/V0yvxMdy/Figplc0-Xk-AIz6wa.jpg"
-            alt="EULSS committees event"
-          />
-        </a>
+      <div class="cta-visual">
+        <div class="cta-image">
+          <img src="https://i.ibb.co/V0yvxMdy/Figplc0-Xk-AIz6wa.jpg" alt="Join EULSS Committees" />
       </div>
     </div>
   </div>
 </section>
 
-<!-- ========== Alumni Network Detail Section ========== -->
-<section class="committees-body">
-  <div class="container">
-    <div class="committees-body-content">
-      <!-- Left: Text -->
-      <div class="committees-text">
-        <h2>A Community for Life</h2>
-        <p>
-          Our EULSS Alumni Network brings together graduates from every year, forging
-          connections that last a lifetime.  
-          From your first moot-court teammate to your final capstone partner, these
-          relationships continue to support and inspire.
-        </p>
-        <p>
-          Through mentorship circles, social events, and professional workshops, you’ll
-          find countless opportunities to learn from—and give back to—fellow committees.
-        </p>
-        <p>
-          Whether you’re seeking career guidance, personal growth, or simply a familiar
-          face at gatherings, our network is here for you—today and always.
-        </p>
-      </div>
-
-      <!-- Right: Static Image linking to gallery -->
-      <div class="committees-image">
-        <a href="gallery.html">
-          <img
-            src="https://i.ibb.co/V0yvxMdy/Figplc0-Xk-AIz6wa.jpg"
-            alt="EULSS committees event"
-          />
-        </a>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-
-  <!-- (You can add more sections here) -->
-
-  <!-- ——— Footer ——— -->
+  <!-- ========== Footer ========== -->
   <footer class="footer">
-    <div class="footer-left">
-      <img
-        src="../EULSS_logo-removebg-preview.png"
-        alt="EULSS Logo"
-        class="footer-logo"
-      />
-      <nav class="footer-links major">
-        <a href="#">Committees</a>
-        <a href="#">Resources</a>
-        <a href="#">Employability Hub</a>
-        <a href="#">Home</a>
-        <a href="#">Alumni Network</a>
-        <a href="#">Contact Us</a>
-      </nav>
+    <div class="footer-container">
+      <!-- Brand Section -->
+      <div class="footer-section footer-brand">
+        <a href="/index.html">
+          <img src="../EULSS_logo-removebg-preview.png" alt="EULSS Logo" class="footer-logo" />
+        </a>
+        <h3>Elizade University Law Students Society</h3>
+        <p>Empowering legal minds through excellence, advocacy, and community service since 2010.</p>
       <div class="social-links">
-        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
-        <a href="mailto:info@elizade.edu.ng" aria-label="Email"><i class="fas fa-envelope"></i></a>
-        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+          <a href="#" aria-label="Instagram" class="social-icon">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" aria-label="Twitter" class="social-icon">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="mailto:info@elizade.edu.ng" aria-label="Email" class="social-icon">
+            <i class="fas fa-envelope"></i>
+          </a>
+          <a href="#" aria-label="LinkedIn" class="social-icon">
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
       </div>
-    </div>
-    <div class="footer-right">
-      <nav class="footer-links minor">
-        <a href="#">News &amp; Blog</a>
-        <a href="#">Events</a>
-        <a href="#">FAQs</a>
-        <a href="#">Gallery</a>
-        <a href="#">About Us</a>
-      </nav>
+
+      <!-- Quick Links -->
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul class="footer-links">
+          <li><a href="/">Home</a></li>
+          <li><a href="/Employabilityhub.html">Employability Hub</a></li>
+          <li><a href="/comimittees.html">Committees</a></li>
+          <li><a href="/News&Blog.html">News & Blog</a></li>
+          <li><a href="/Alumni.html">Alumni Network</a></li>
+        </ul>
+      </div>
+
+      <!-- Resources -->
+      <div class="footer-section">
+        <h4>Resources</h4>
+        <ul class="footer-links">
+          <li><a href="#">Legal Research</a></li>
+          <li><a href="#">Career Guidance</a></li>
+          <li><a href="#">Study Materials</a></li>
+          <li><a href="#">Event Calendar</a></li>
+          <li><a href="#">FAQs</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="footer-section">
+        <h4>Contact Us</h4>
+        <div class="contact-info">
+          <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <p>Elizade University,<br>Ilara-Mokin, Ondo State, Nigeria</p>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <p>+234 (0) 803 XXX XXXX</p>
+          </div>
+          <div class="contact-item">
+            <i class="fas fa-envelope"></i>
+            <p>info@elizade.edu.ng</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Newsletter -->
+      <div class="footer-section footer-newsletter">
+        <h4>Stay Connected</h4>
+        <p>Get the latest updates on events, news, and opportunities.</p>
+        <form class="newsletter-form">
+          <div class="newsletter-input">
+            <input type="email" placeholder="Your email address" required />
+            <button type="submit">
+              <i class="fas fa-paper-plane"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Footer Bottom Info -->
+      <div class="footer-section footer-bottom-integrated">
+        <div class="footer-copyright">
+          <p>&copy; 2025 Elizade University Law Students Society. All rights reserved.</p>
+          <div class="footer-legal-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Cookie Policy</a>
+          </div>
+        </div>
+      </div>
     </div>
   </footer>
 
-  <!-- Burger toggle script -->
+  <!-- ========== JavaScript ========== -->
   <script>
+    // Mobile menu toggle
     const burger = document.querySelector('.burger');
     const navLinks = document.querySelector('.nav-links');
+    
     burger.addEventListener('click', () => {
       navLinks.classList.toggle('open');
+      burger.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking on a link
+    const navLinksItems = document.querySelectorAll('.nav-links a');
+    navLinksItems.forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        burger.classList.remove('active');
+      });
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!burger.contains(e.target) && !navLinks.contains(e.target)) {
+        navLinks.classList.remove('open');
+        burger.classList.remove('active');
+      }
+    });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
     });
   </script>
-
 </body>
 </html>

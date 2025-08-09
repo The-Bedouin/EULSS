@@ -21,7 +21,9 @@
     <nav class="navbar">
       <!-- Logo -->
       <div class="logo">
-        <img src="../EULSS_logo-removebg-preview.png" alt="EULSS Logo" />
+        <a href="/index.html">
+          <img src="../EULSS_logo-removebg-preview.png" alt="EULSS Logo" />
+        </a>
       </div>
 
       <!-- Nav links -->
@@ -65,8 +67,27 @@
     // Mobile menu toggle
     const burger = document.querySelector('.burger');
     const navLinks = document.querySelector('.nav-links');
+    
     burger.addEventListener('click', () => {
       navLinks.classList.toggle('open');
+      burger.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking on a link
+    const navLinksItems = document.querySelectorAll('.nav-links a');
+    navLinksItems.forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        burger.classList.remove('active');
+      });
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!burger.contains(e.target) && !navLinks.contains(e.target)) {
+        navLinks.classList.remove('open');
+        burger.classList.remove('active');
+      }
     });
   </script>
   <!-- ========== About EULSS Section ========== -->
@@ -506,7 +527,9 @@
     <div class="footer-container">
       <!-- Brand Section -->
       <div class="footer-section footer-brand">
-        <img src="../EULSS_logo-removebg-preview.png" alt="EULSS Logo" class="footer-logo" />
+        <a href="/index.html">
+          <img src="../EULSS_logo-removebg-preview.png" alt="EULSS Logo" class="footer-logo" />
+        </a>
         <h3>Elizade University Law Students Society</h3>
         <p>Empowering legal minds through excellence, advocacy, and community service since 2010.</p>
         <div class="social-links">
