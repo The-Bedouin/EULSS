@@ -164,9 +164,44 @@
       font-weight: 500;
     }
 
-    .auth-links a:hover {
-      text-decoration: underline;
-    }
+            .auth-links a:hover {
+          text-decoration: underline;
+        }
+
+        /* Demo Styles */
+        .demo-info {
+          background: #f7fafc;
+          border-radius: 12px;
+          padding: 20px;
+          margin: 20px 0;
+          border: 1px solid #e2e8f0;
+        }
+
+        .demo-feature {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-bottom: 12px;
+          color: #4a5568;
+          font-weight: 500;
+        }
+
+        .demo-feature:last-child {
+          margin-bottom: 0;
+        }
+
+        .demo-feature i {
+          color: #48bb78;
+          font-size: 1.1rem;
+        }
+
+        .demo-btn {
+          background: linear-gradient(135deg, #48bb78, #38a169);
+        }
+
+        .demo-btn:hover {
+          background: linear-gradient(135deg, #38a169, #2f855a);
+        }
 
     /* User Dashboard Styles */
     .user-dashboard {
@@ -1462,18 +1497,39 @@
 
       // Firebase Configuration (Replace with your own Firebase config)
       const firebaseConfig = {
-        apiKey: "your-api-key",
-        authDomain: "your-project.firebaseapp.com",
-        projectId: "your-project-id",
-        storageBucket: "your-project.appspot.com",
-        messagingSenderId: "your-sender-id",
-        appId: "your-app-id"
+        apiKey: "AIzaSyBXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+        authDomain: "your-project-name.firebaseapp.com",
+        projectId: "your-project-name",
+        storageBucket: "your-project-name.appspot.com",
+        messagingSenderId: "123456789012",
+        appId: "1:123456789012:web:abcdef1234567890"
       };
 
       // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      const auth = firebase.auth();
-      const db = firebase.firestore();
+      let auth, db;
+      try {
+        firebase.initializeApp(firebaseConfig);
+        auth = firebase.auth();
+        db = firebase.firestore();
+      } catch (error) {
+        console.warn('Firebase not configured. Running in demo mode only.');
+        // Create mock Firebase objects for demo mode
+        auth = {
+          onAuthStateChanged: (callback) => callback(null),
+          signInWithEmailAndPassword: () => Promise.reject(new Error('Firebase not configured')),
+          createUserWithEmailAndPassword: () => Promise.reject(new Error('Firebase not configured')),
+          signOut: () => Promise.resolve()
+        };
+        db = {
+          collection: () => ({
+            doc: () => ({
+              set: () => Promise.reject(new Error('Firebase not configured')),
+              update: () => Promise.reject(new Error('Firebase not configured')),
+              get: () => Promise.reject(new Error('Firebase not configured'))
+            })
+          })
+        };
+      }
 
       // Authentication Manager
       class AuthManager {
@@ -1511,6 +1567,9 @@
           
           // Sync button
           document.getElementById('syncData').addEventListener('click', () => this.syncData());
+          
+          // Demo button
+          document.getElementById('startDemo').addEventListener('click', () => this.startDemo());
         }
 
         switchTab(tabName) {
@@ -1566,9 +1625,16 @@
 
         async handleLogout() {
           try {
-            await auth.signOut();
-            this.showNotification('Signed out successfully!', 'success');
-            activeRecallTool.showSubjects();
+            if (this.currentUser && this.currentUser.email === 'demo@eulss.com') {
+              // Demo mode logout
+              this.currentUser = null;
+              this.showAuth();
+              this.showNotification('Demo session ended. Create an account to save your data!', 'info');
+            } else {
+              // Real user logout
+              await auth.signOut();
+              this.showNotification('Signed out successfully!', 'success');
+            }
           } catch (error) {
             this.showNotification(error.message, 'error');
           }
@@ -1576,6 +1642,11 @@
 
         async syncData() {
           if (!this.currentUser) return;
+          
+          if (this.currentUser.email === 'demo@eulss.com') {
+            this.showNotification('Demo mode: Data is saved locally only. Create an account to sync with cloud!', 'info');
+            return;
+          }
           
           try {
             // Save current data to cloud
@@ -1616,8 +1687,19 @@
 
         updateUserInfo() {
           if (this.currentUser) {
-            document.getElementById('userName').textContent = this.currentUser.displayName || 'User';
+            const isDemo = this.currentUser.email === 'demo@eulss.com';
+            document.getElementById('userName').textContent = (this.currentUser.displayName || 'User') + (isDemo ? ' (Demo)' : '');
             document.getElementById('userEmail').textContent = this.currentUser.email;
+            
+            // Add demo indicator styling
+            const userNameElement = document.getElementById('userName');
+            if (isDemo) {
+              userNameElement.style.color = '#48bb78';
+              userNameElement.style.fontWeight = 'bold';
+            } else {
+              userNameElement.style.color = 'white';
+              userNameElement.style.fontWeight = 'normal';
+            }
           }
         }
 
@@ -1629,6 +1711,71 @@
         showAuth() {
           document.getElementById('authSection').style.display = 'block';
           document.getElementById('userDashboard').style.display = 'none';
+        }
+
+        startDemo() {
+          // Set demo mode
+          this.currentUser = { displayName: 'Demo User', email: 'demo@eulss.com' };
+          
+          // Load sample data
+          activeRecallTool.subjects = {
+            'Contract Law': [
+              {
+                id: 1,
+                topic: 'Contract Law',
+                subtopic: 'Formation of Contract',
+                caseSection: 'Carlill v Carbolic Smoke Ball Co [1893] 1 QB 256',
+                content: 'An offer can be made to the world at large. The advertisement constituted a unilateral offer which could be accepted by anyone who performed the conditions. Consideration was provided by the act of using the smoke ball as directed.'
+              },
+              {
+                id: 2,
+                topic: 'Contract Law',
+                subtopic: 'Consideration',
+                caseSection: 'Currie v Misa [1875] LR 10 Ex 153',
+                content: 'Consideration is a right, interest, profit, or benefit accruing to one party, or some forbearance, detriment, loss, or responsibility given, suffered, or undertaken by the other.'
+              }
+            ],
+            'Tort Law': [
+              {
+                id: 3,
+                topic: 'Tort Law',
+                subtopic: 'Negligence',
+                caseSection: 'Donoghue v Stevenson [1932] AC 562',
+                content: 'The neighbour principle: you must take reasonable care to avoid acts or omissions which you can reasonably foresee would be likely to injure your neighbour. A manufacturer owes a duty of care to the ultimate consumer.'
+              },
+              {
+                id: 4,
+                topic: 'Tort Law',
+                subtopic: 'Duty of Care',
+                caseSection: 'Caparo Industries plc v Dickman [1990] 2 AC 605',
+                content: 'The three-stage test for duty of care: 1) Foreseeability of damage, 2) Proximity of relationship, 3) Fair, just and reasonable to impose duty.'
+              }
+            ],
+            'Criminal Law': [
+              {
+                id: 5,
+                topic: 'Criminal Law',
+                subtopic: 'Mens Rea',
+                caseSection: 'R v Cunningham [1957] 2 QB 396',
+                content: 'Recklessness requires the defendant to have foreseen that some harm might result from their actions and to have gone ahead anyway. The test is subjective - what did the defendant actually foresee?'
+              },
+              {
+                id: 6,
+                topic: 'Criminal Law',
+                subtopic: 'Actus Reus',
+                caseSection: 'R v Miller [1983] 2 AC 161',
+                content: 'A person who creates a dangerous situation and fails to take steps to prevent harm may be liable for the consequences of their omission.'
+              }
+            ]
+          };
+          
+          // Show dashboard and render subjects
+          this.showDashboard();
+          activeRecallTool.renderSubjects();
+          this.updateUserInfo();
+          
+          // Show demo notification
+          this.showNotification('Demo mode activated! You can explore all features with sample data.', 'success');
         }
 
         showNotification(message, type = 'info') {
