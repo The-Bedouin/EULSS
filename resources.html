@@ -989,6 +989,8 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      overflow: hidden;
+      box-sizing: border-box;
     }
 
     .flashcard-front {
@@ -1007,6 +1009,11 @@
       font-size: 1.5rem;
       margin-bottom: 20px;
       line-height: 1.4;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      hyphens: auto;
+      max-width: 100%;
+      text-align: center;
     }
 
     .card-hint {
@@ -1017,11 +1024,17 @@
     .card-details {
       text-align: left;
       margin-top: 20px;
+      max-width: 100%;
+      overflow: hidden;
     }
 
     .card-details p {
       margin-bottom: 8px;
       font-size: 0.95rem;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      hyphens: auto;
+      line-height: 1.3;
     }
 
     .flashcard-actions {
@@ -1116,19 +1129,1108 @@
       }
     }
 
+    /* Modern Phones and Tablets */
+    @media (max-width: 600px) {
+      .resources-hero h1 {
+        font-size: 2.3rem;
+      }
+      
+      .resources-hero p {
+        font-size: 1.2rem;
+      }
+      
+      .auth-section {
+        margin: 20px;
+        padding: 30px 25px;
+      }
+      
+      .user-header {
+        padding: 30px 25px;
+      }
+      
+      .subject-section {
+        padding: 30px 25px;
+      }
+      
+      .input-section,
+      .table-section,
+      .flashcard-section {
+        padding: 30px 25px;
+      }
+      
+      .flashcard {
+        height: 240px;
+        max-width: 420px;
+      }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .resources-hero h1 {
+        font-size: 2.5rem;
+      }
+      
+      .form-row {
+        grid-template-columns: 1fr;
+        gap: 15px;
+      }
+      
+      .table-controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      
+      .search-input {
+        max-width: none;
+      }
+      
+      .flashcard {
+        width: 100%;
+        max-width: 400px;
+        height: 250px;
+      }
+      
+      .flashcard-controls {
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+      
+      .input-section,
+      .table-section,
+      .flashcard-section {
+        padding: 30px 20px;
+      }
+
+      .subjects-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+
+      .subject-stats {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .subject-controls {
+        padding: 20px;
+        margin-bottom: 30px;
+      }
+
+      .subject-input-group {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .subject-card {
+        padding: 25px;
+      }
+
+      .subject-actions {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+
     @media (max-width: 480px) {
       .flashcard {
         height: 200px;
+        width: 100%;
+        max-width: 350px;
+      }
+      
+      .flashcard-front,
+      .flashcard-back {
+        padding: 20px;
       }
       
       .flashcard-front h3,
       .flashcard-back h3 {
         font-size: 1.2rem;
+        margin-bottom: 15px;
+      }
+      
+      .card-details {
+        margin-top: 15px;
+      }
+      
+      .card-details p {
+        font-size: 0.85rem;
+        margin-bottom: 6px;
       }
       
       .action-buttons {
         flex-direction: column;
         gap: 5px;
+      }
+    }
+
+    /* Enhanced Mobile Responsiveness for Modern Phones */
+    @media (max-width: 414px) {
+      .resources-hero h1 {
+        font-size: 2.2rem;
+      }
+      
+      .resources-hero p {
+        font-size: 1.1rem;
+      }
+      
+      .auth-section {
+        margin: 15px;
+        padding: 25px 20px;
+      }
+      
+      .auth-form h3 {
+        font-size: 1.5rem;
+      }
+      
+      .auth-form .form-group input {
+        padding: 14px 16px;
+        font-size: 1rem;
+      }
+      
+      .auth-btn {
+        padding: 16px 24px;
+        font-size: 1.1rem;
+      }
+      
+      .user-header {
+        padding: 25px 20px;
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+      }
+      
+      .user-avatar {
+        font-size: 3rem;
+      }
+      
+      .user-details h3 {
+        font-size: 1.4rem;
+      }
+      
+      .user-details p {
+        font-size: 1rem;
+      }
+      
+      .user-actions {
+        justify-content: center;
+        gap: 15px;
+      }
+      
+      .sync-btn, .logout-btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+      }
+      
+      .subject-section {
+        padding: 25px 20px;
+      }
+      
+      .subject-section h2 {
+        font-size: 1.7rem;
+      }
+      
+      .subject-controls {
+        padding: 20px;
+        margin-bottom: 25px;
+      }
+      
+      .subject-input {
+        padding: 14px 16px;
+        font-size: 1rem;
+      }
+      
+      .add-subject-btn {
+        padding: 14px 20px;
+        font-size: 1rem;
+      }
+      
+      .subject-card {
+        padding: 25px 20px;
+      }
+      
+      .subject-card h3 {
+        font-size: 1.3rem;
+        gap: 10px;
+      }
+      
+      .subject-card h3 i {
+        font-size: 1.2rem;
+      }
+      
+      .concept-count,
+      .last-updated {
+        padding: 8px 12px;
+        font-size: 0.9rem;
+      }
+      
+      .subject-action-btn {
+        padding: 12px 18px;
+        font-size: 0.9rem;
+      }
+      
+      .input-section,
+      .table-section,
+      .flashcard-section {
+        padding: 25px 20px;
+      }
+      
+      .input-section h3,
+      .table-section h3,
+      .flashcard-section h2 {
+        font-size: 1.5rem;
+      }
+      
+      .form-group input,
+      .form-group textarea {
+        padding: 12px 14px;
+        font-size: 1rem;
+      }
+      
+      .submit-btn {
+        padding: 14px 28px;
+        font-size: 1.1rem;
+      }
+      
+      .search-input {
+        padding: 12px 14px;
+        font-size: 1rem;
+      }
+      
+      .flashcard-btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+      }
+      
+      .control-btn {
+        padding: 10px 18px;
+        font-size: 1rem;
+      }
+      
+      .card-counter {
+        font-size: 1.1rem;
+        min-width: 70px;
+      }
+      
+      .action-btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+      }
+      
+      /* Flashcard improvements for modern phones */
+      .flashcard {
+        height: 220px;
+        width: 100%;
+        max-width: 380px;
+      }
+      
+      .flashcard-front,
+      .flashcard-back {
+        padding: 25px;
+      }
+      
+      .flashcard-front h3,
+      .flashcard-back h3 {
+        font-size: 1.3rem;
+        margin-bottom: 15px;
+        line-height: 1.4;
+      }
+      
+      .card-hint {
+        font-size: 0.9rem;
+      }
+      
+      .card-details {
+        margin-top: 15px;
+      }
+      
+      .card-details p {
+        font-size: 0.9rem;
+        margin-bottom: 6px;
+        line-height: 1.3;
+      }
+    }
+
+    /* iPhone 12 Pro and similar devices (390px) */
+    @media (max-width: 390px) {
+      .resources-hero h1 {
+        font-size: 2.1rem;
+      }
+      
+      .resources-hero p {
+        font-size: 1.1rem;
+      }
+      
+      .auth-section {
+        margin: 12px;
+        padding: 22px 18px;
+      }
+      
+      .auth-form h3 {
+        font-size: 1.45rem;
+      }
+      
+      .auth-form .form-group input {
+        padding: 13px 15px;
+        font-size: 0.95rem;
+      }
+      
+      .auth-btn {
+        padding: 15px 22px;
+        font-size: 1.05rem;
+      }
+      
+      .user-header {
+        padding: 22px 18px;
+        flex-direction: column;
+        gap: 18px;
+        text-align: center;
+      }
+      
+      .user-avatar {
+        font-size: 2.8rem;
+      }
+      
+      .user-details h3 {
+        font-size: 1.35rem;
+      }
+      
+      .user-details p {
+        font-size: 0.95rem;
+      }
+      
+      .user-actions {
+        justify-content: center;
+        gap: 12px;
+      }
+      
+      .sync-btn, .logout-btn {
+        padding: 9px 14px;
+        font-size: 0.85rem;
+      }
+      
+      .subject-section {
+        padding: 22px 18px;
+      }
+      
+      .subject-section h2 {
+        font-size: 1.65rem;
+      }
+      
+      .subject-controls {
+        padding: 18px;
+        margin-bottom: 22px;
+      }
+      
+      .subject-input {
+        padding: 13px 15px;
+        font-size: 0.95rem;
+      }
+      
+      .add-subject-btn {
+        padding: 13px 18px;
+        font-size: 0.95rem;
+      }
+      
+      .subject-card {
+        padding: 22px 18px;
+      }
+      
+      .subject-card h3 {
+        font-size: 1.25rem;
+        gap: 9px;
+      }
+      
+      .subject-card h3 i {
+        font-size: 1.15rem;
+      }
+      
+      .concept-count,
+      .last-updated {
+        padding: 7px 11px;
+        font-size: 0.85rem;
+      }
+      
+      .subject-action-btn {
+        padding: 11px 17px;
+        font-size: 0.9rem;
+      }
+      
+      .input-section,
+      .table-section,
+      .flashcard-section {
+        padding: 22px 18px;
+      }
+      
+      .input-section h3,
+      .table-section h3,
+      .flashcard-section h2 {
+        font-size: 1.45rem;
+      }
+      
+      .form-group input,
+      .form-group textarea {
+        padding: 11px 13px;
+        font-size: 0.95rem;
+      }
+      
+      .submit-btn {
+        padding: 13px 26px;
+        font-size: 1.05rem;
+      }
+      
+      .search-input {
+        padding: 11px 13px;
+        font-size: 0.95rem;
+      }
+      
+      .flashcard-btn {
+        padding: 11px 18px;
+        font-size: 0.95rem;
+      }
+      
+      .control-btn {
+        padding: 9px 16px;
+        font-size: 0.95rem;
+      }
+      
+      .card-counter {
+        font-size: 1.05rem;
+        min-width: 65px;
+      }
+      
+      .action-btn {
+        padding: 11px 18px;
+        font-size: 0.95rem;
+      }
+      
+      /* Flashcard for iPhone 12 Pro */
+      .flashcard {
+        height: 210px;
+        width: 100%;
+        max-width: 360px;
+      }
+      
+      .flashcard-front,
+      .flashcard-back {
+        padding: 22px;
+      }
+      
+      .flashcard-front h3,
+      .flashcard-back h3 {
+        font-size: 1.25rem;
+        margin-bottom: 13px;
+        line-height: 1.35;
+      }
+      
+      .card-hint {
+        font-size: 0.85rem;
+      }
+      
+      .card-details {
+        margin-top: 13px;
+      }
+      
+      .card-details p {
+        font-size: 0.85rem;
+        margin-bottom: 5px;
+        line-height: 1.25;
+      }
+    }
+
+    @media (max-width: 375px) {
+      .resources-hero h1 {
+        font-size: 2rem;
+      }
+      
+      .resources-hero p {
+        font-size: 1.1rem;
+      }
+      
+      .auth-section {
+        margin: 10px;
+        padding: 20px 15px;
+      }
+      
+      .auth-form h3 {
+        font-size: 1.4rem;
+      }
+      
+      .auth-form .form-group input {
+        padding: 12px 14px;
+        font-size: 0.9rem;
+      }
+      
+      .auth-btn {
+        padding: 14px 20px;
+        font-size: 1rem;
+      }
+      
+      .user-header {
+        padding: 20px 15px;
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+      
+      .user-avatar {
+        font-size: 2.5rem;
+      }
+      
+      .user-details h3 {
+        font-size: 1.3rem;
+      }
+      
+      .user-details p {
+        font-size: 0.9rem;
+      }
+      
+      .user-actions {
+        justify-content: center;
+        gap: 10px;
+      }
+      
+      .sync-btn, .logout-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+      }
+      
+      .subject-section {
+        padding: 20px 15px;
+      }
+      
+      .subject-section h2 {
+        font-size: 1.6rem;
+      }
+      
+      .subject-controls {
+        padding: 15px;
+        margin-bottom: 20px;
+      }
+      
+      .subject-input {
+        padding: 12px 14px;
+        font-size: 0.9rem;
+      }
+      
+      .add-subject-btn {
+        padding: 12px 16px;
+        font-size: 0.9rem;
+      }
+      
+      .subject-card {
+        padding: 20px 15px;
+      }
+      
+      .subject-card h3 {
+        font-size: 1.2rem;
+        gap: 8px;
+      }
+      
+      .subject-card h3 i {
+        font-size: 1.1rem;
+      }
+      
+      .concept-count,
+      .last-updated {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+      }
+      
+      .subject-action-btn {
+        padding: 10px 16px;
+        font-size: 0.85rem;
+      }
+      
+      .input-section,
+      .table-section,
+      .flashcard-section {
+        padding: 20px 15px;
+      }
+      
+      .input-section h3,
+      .table-section h3,
+      .flashcard-section h2 {
+        font-size: 1.4rem;
+      }
+      
+      .form-group input,
+      .form-group textarea {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+      }
+      
+      .submit-btn {
+        padding: 12px 24px;
+        font-size: 1rem;
+      }
+      
+      .search-input {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+      }
+      
+      .flashcard-btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+      }
+      
+      .control-btn {
+        padding: 8px 16px;
+        font-size: 0.9rem;
+      }
+      
+      .card-counter {
+        font-size: 1rem;
+        min-width: 60px;
+      }
+      
+      .action-btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .resources-hero h1 {
+        font-size: 1.8rem;
+      }
+      
+      .resources-hero p {
+        font-size: 1rem;
+      }
+      
+      .auth-section {
+        margin: 5px;
+        padding: 15px 10px;
+      }
+      
+      .auth-form h3 {
+        font-size: 1.3rem;
+      }
+      
+      .auth-form .form-group input {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+      }
+      
+      .auth-btn {
+        padding: 12px 18px;
+        font-size: 0.9rem;
+      }
+      
+      .user-header {
+        padding: 15px 10px;
+      }
+      
+      .user-avatar {
+        font-size: 2rem;
+      }
+      
+      .user-details h3 {
+        font-size: 1.2rem;
+      }
+      
+      .user-details p {
+        font-size: 0.8rem;
+      }
+      
+      .sync-btn, .logout-btn {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+      }
+      
+      .subject-section {
+        padding: 15px 10px;
+      }
+      
+      .subject-section h2 {
+        font-size: 1.4rem;
+      }
+      
+      .subject-controls {
+        padding: 10px;
+        margin-bottom: 15px;
+      }
+      
+      .subject-input {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+      }
+      
+      .add-subject-btn {
+        padding: 10px 14px;
+        font-size: 0.85rem;
+      }
+      
+      .subject-card {
+        padding: 15px 10px;
+      }
+      
+      .subject-card h3 {
+        font-size: 1.1rem;
+        gap: 6px;
+      }
+      
+      .subject-card h3 i {
+        font-size: 1rem;
+      }
+      
+      .concept-count,
+      .last-updated {
+        padding: 5px 8px;
+        font-size: 0.75rem;
+      }
+      
+      .subject-action-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+      }
+      
+      .input-section,
+      .table-section,
+      .flashcard-section {
+        padding: 15px 10px;
+      }
+      
+      .input-section h3,
+      .table-section h3,
+      .flashcard-section h2 {
+        font-size: 1.3rem;
+      }
+      
+      .form-group input,
+      .form-group textarea {
+        padding: 8px 10px;
+        font-size: 0.85rem;
+      }
+      
+      .submit-btn {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+      }
+      
+      .search-input {
+        padding: 8px 10px;
+        font-size: 0.85rem;
+      }
+      
+      .flashcard-btn {
+        padding: 8px 14px;
+        font-size: 0.85rem;
+      }
+      
+      .control-btn {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+      }
+      
+      .card-counter {
+        font-size: 0.9rem;
+        min-width: 50px;
+      }
+      
+      .action-btn {
+        padding: 8px 14px;
+        font-size: 0.85rem;
+      }
+      
+      /* Flashcard improvements for very small screens */
+      .flashcard {
+        height: 180px;
+        width: 100%;
+        max-width: 300px;
+      }
+      
+      .flashcard-front,
+      .flashcard-back {
+        padding: 15px;
+      }
+      
+      .flashcard-front h3,
+      .flashcard-back h3 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+        line-height: 1.3;
+      }
+      
+      .card-hint {
+        font-size: 0.8rem;
+      }
+      
+      .card-details {
+        margin-top: 10px;
+      }
+      
+      .card-details p {
+        font-size: 0.75rem;
+        margin-bottom: 4px;
+        line-height: 1.2;
+      }
+    }
+
+    /* Extra small screens (iPhone SE, etc.) */
+    @media (max-width: 280px) {
+      .resources-hero h1 {
+        font-size: 1.6rem;
+      }
+      
+      .resources-hero p {
+        font-size: 0.9rem;
+      }
+      
+      .auth-section {
+        margin: 2px;
+        padding: 10px 8px;
+      }
+      
+      .auth-form h3 {
+        font-size: 1.2rem;
+      }
+      
+      .auth-form .form-group input {
+        padding: 8px 10px;
+        font-size: 0.8rem;
+      }
+      
+      .auth-btn {
+        padding: 10px 16px;
+        font-size: 0.85rem;
+      }
+      
+      .user-header {
+        padding: 10px 8px;
+      }
+      
+      .user-avatar {
+        font-size: 1.8rem;
+      }
+      
+      .user-details h3 {
+        font-size: 1.1rem;
+      }
+      
+      .user-details p {
+        font-size: 0.75rem;
+      }
+      
+      .sync-btn, .logout-btn {
+        padding: 5px 8px;
+        font-size: 0.7rem;
+      }
+      
+      .subject-section {
+        padding: 10px 8px;
+      }
+      
+      .subject-section h2 {
+        font-size: 1.3rem;
+      }
+      
+      .subject-controls {
+        padding: 8px;
+        margin-bottom: 10px;
+      }
+      
+      .subject-input {
+        padding: 8px 10px;
+        font-size: 0.8rem;
+      }
+      
+      .add-subject-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+      }
+      
+      .subject-card {
+        padding: 12px 8px;
+      }
+      
+      .subject-card h3 {
+        font-size: 1rem;
+        gap: 5px;
+      }
+      
+      .subject-card h3 i {
+        font-size: 0.9rem;
+      }
+      
+      .concept-count,
+      .last-updated {
+        padding: 4px 6px;
+        font-size: 0.7rem;
+      }
+      
+      .subject-action-btn {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+      }
+      
+      .input-section,
+      .table-section,
+      .flashcard-section {
+        padding: 10px 8px;
+      }
+      
+      .input-section h3,
+      .table-section h3,
+      .flashcard-section h2 {
+        font-size: 1.2rem;
+      }
+      
+      .form-group input,
+      .form-group textarea {
+        padding: 6px 8px;
+        font-size: 0.8rem;
+      }
+      
+      .submit-btn {
+        padding: 8px 16px;
+        font-size: 0.85rem;
+      }
+      
+      .search-input {
+        padding: 6px 8px;
+        font-size: 0.8rem;
+      }
+      
+      .flashcard-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+      }
+      
+      .control-btn {
+        padding: 5px 10px;
+        font-size: 0.8rem;
+      }
+      
+      .card-counter {
+        font-size: 0.85rem;
+        min-width: 40px;
+      }
+      
+      .action-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+      }
+      
+      /* Flashcard for extremely small screens */
+      .flashcard {
+        height: 160px;
+        width: 100%;
+        max-width: 280px;
+      }
+      
+      .flashcard-front,
+      .flashcard-back {
+        padding: 12px;
+      }
+      
+      .flashcard-front h3,
+      .flashcard-back h3 {
+        font-size: 1rem;
+        margin-bottom: 8px;
+        line-height: 1.2;
+      }
+      
+      .card-hint {
+        font-size: 0.75rem;
+      }
+      
+      .card-details {
+        margin-top: 8px;
+      }
+      
+      .card-details p {
+        font-size: 0.7rem;
+        margin-bottom: 3px;
+        line-height: 1.1;
+      }
+    }
+
+    /* Device-Specific Optimizations */
+    /* iPhone 14 Pro Max, iPhone 13 Pro Max, iPhone 12 Pro Max */
+    @media (max-width: 428px) {
+      .flashcard {
+        height: 230px;
+        max-width: 390px;
+      }
+    }
+
+    /* iPhone 14, iPhone 13, iPhone 12 */
+    @media (max-width: 390px) {
+      .flashcard {
+        height: 210px;
+        max-width: 360px;
+      }
+    }
+
+    /* iPhone 14 Plus, iPhone 13, iPhone 12 */
+    @media (max-width: 414px) {
+      .flashcard {
+        height: 220px;
+        max-width: 380px;
+      }
+    }
+
+    /* Samsung Galaxy S21, S20, Note 20 */
+    @media (max-width: 360px) {
+      .flashcard {
+        height: 200px;
+        max-width: 340px;
+      }
+    }
+
+    /* iPhone SE (2nd gen), iPhone 8, iPhone 7 */
+    @media (max-width: 375px) {
+      .flashcard {
+        height: 200px;
+        max-width: 350px;
+      }
+    }
+
+    /* iPhone SE (1st gen), iPhone 5 */
+    @media (max-width: 320px) {
+      .flashcard {
+        height: 180px;
+        max-width: 300px;
+      }
+    }
+
+    /* Landscape orientation adjustments */
+    @media (max-height: 500px) and (orientation: landscape) {
+      .resources-hero {
+        padding: 60px 0 40px;
+      }
+      
+      .resources-hero h1 {
+        font-size: 2rem;
+      }
+      
+      .flashcard {
+        height: 180px;
+        max-width: 300px;
+      }
+      
+      .flashcard-front,
+      .flashcard-back {
+        padding: 15px;
+      }
+      
+      .flashcard-front h3,
+      .flashcard-back h3 {
+        font-size: 1.1rem;
+        margin-bottom: 10px;
+      }
+      
+      .card-details {
+        margin-top: 8px;
+      }
+      
+      .card-details p {
+        font-size: 0.8rem;
+        margin-bottom: 3px;
       }
     }
   </style>
@@ -1163,7 +2265,7 @@
     <!-- Hero Section -->
   <section class="resources-hero">
     <div class="resources-container">
-      <h1>Active Recall Tool</h1>
+      <h1>Hindu Recall</h1>
       <p>Master legal concepts through active recall with our interactive flashcard system.</p>
     </div>
   </section>
