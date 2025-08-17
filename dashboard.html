@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hindu Recall Dashboard - EULSS</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+</head>
+<body class="dashboard-body">
+  <!-- Dashboard Header -->
+  <header class="dashboard-header">
+    <div class="dashboard-header-content">
+      <div class="dashboard-brand">
+        <div class="dashboard-badge">
+          <i class="fas fa-brain"></i>
+          <span>Hindu Recall Technology</span>
+        </div>
+      </div>
+      
+      <div class="dashboard-user-menu">
+        <div class="user-info">
+          <div class="user-avatar">
+            <i class="fas fa-user-circle"></i>
+          </div>
+          <div class="user-details">
+            <span id="userName">Welcome!</span>
+            <small id="userEmail">Loading...</small>
+          </div>
+        </div>
+        <div class="user-actions">
+          <button class="sync-btn" id="syncBtn" title="Sync Data">
+            <i class="fas fa-sync-alt"></i>
+          </button>
+          <button class="logout-btn" id="logoutBtn" title="Logout">
+            <i class="fas fa-sign-out-alt"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dashboard Layout -->
+  <div class="dashboard-layout">
+    <!-- Sidebar Navigation -->
+    <aside class="dashboard-sidebar">
+      <nav class="sidebar-nav">
+        <ul class="sidebar-menu">
+          <li class="sidebar-item active">
+            <a href="#subjects" class="sidebar-link" data-section="subjects">
+              <i class="fas fa-book"></i>
+              <span>Subjects</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#concepts" class="sidebar-link" data-section="concepts">
+              <i class="fas fa-lightbulb"></i>
+              <span>Concepts</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#flashcards" class="sidebar-link" data-section="flashcards">
+              <i class="fas fa-cards-blank"></i>
+              <span>Flashcards</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#progress" class="sidebar-link" data-section="progress">
+              <i class="fas fa-chart-line"></i>
+              <span>Progress</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#settings" class="sidebar-link" data-section="settings">
+              <i class="fas fa-cog"></i>
+              <span>Settings</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="dashboard-main">
+      <!-- Dashboard Overview -->
+      <section class="dashboard-overview" id="overview">
+        <div class="overview-header">
+          <h1>Welcome to Hindu Recall</h1>
+          <p>Master legal concepts with our advanced spaced repetition system</p>
+        </div>
+        
+        <div class="overview-stats">
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-book"></i>
+            </div>
+            <div class="stat-content">
+              <h3 id="totalSubjects">0</h3>
+              <p>Total Subjects</p>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <div class="stat-content">
+              <h3 id="totalConcepts">0</h3>
+              <p>Total Concepts</p>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-cards-blank"></i>
+            </div>
+            <div class="stat-content">
+              <h3 id="totalFlashcards">0</h3>
+              <p>Flashcards Created</p>
+            </div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-icon">
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="stat-content">
+              <h3 id="studyTime">0h</h3>
+              <p>Study Time</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="quick-actions">
+          <button class="quick-action-btn" id="createSubjectBtn">
+            <i class="fas fa-plus"></i>
+            <span>Create New Subject</span>
+          </button>
+          <button class="quick-action-btn" id="startStudyBtn">
+            <i class="fas fa-play"></i>
+            <span>Start Study Session</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- Subjects Section -->
+      <section class="dashboard-section" id="subjects" style="display: none;">
+        <div class="section-header">
+          <h2>Your Subjects</h2>
+          <button class="add-btn" id="addSubjectBtn">
+            <i class="fas fa-plus"></i>
+            Add Subject
+          </button>
+        </div>
+        
+        <div class="subjects-grid" id="subjectsGrid">
+          <!-- Subjects will be dynamically added here -->
+        </div>
+      </section>
+
+      <!-- Concepts Section -->
+      <section class="dashboard-section" id="concepts" style="display: none;">
+        <div class="section-header">
+          <h2 id="currentSubjectTitle">Subject Concepts</h2>
+          <div class="section-actions">
+            <button class="back-btn" id="backToSubjects">
+              <i class="fas fa-arrow-left"></i>
+              Back to Subjects
+            </button>
+            <button class="add-btn" id="addConceptBtn">
+              <i class="fas fa-plus"></i>
+              Add Concept
+            </button>
+          </div>
+        </div>
+        
+        <div class="concepts-table-container">
+          <table class="concepts-table" id="conceptsTable">
+            <thead>
+              <tr>
+                <th>Topic</th>
+                <th>Subtopic</th>
+                <th>Case Section</th>
+                <th>Content</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="conceptsTableBody">
+              <!-- Concepts will be dynamically added here -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Flashcards Section -->
+      <section class="dashboard-section" id="flashcards" style="display: none;">
+        <div class="section-header">
+          <h2>Flashcards</h2>
+          <div class="section-actions">
+            <button class="back-btn" id="backToConcepts">
+              <i class="fas fa-arrow-left"></i>
+              Back to Concepts
+            </button>
+            <button class="create-btn" id="createFlashcardsBtn">
+              <i class="fas fa-cards-blank"></i>
+              Create Flashcards
+            </button>
+          </div>
+        </div>
+        
+        <div class="flashcard-container">
+          <div class="flashcard" id="flashcard">
+            <div class="flashcard-inner">
+              <div class="flashcard-front">
+                <h3 id="flashcardQuestion">Question</h3>
+              </div>
+              <div class="flashcard-back">
+                <p id="flashcardAnswer">Answer</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flashcard-controls">
+          <button id="prevCard" class="control-btn">
+            <i class="fas fa-chevron-left"></i>
+            Previous
+          </button>
+          <span id="cardCounter" class="card-counter">1 / 1</span>
+          <button id="nextCard" class="control-btn">
+            Next
+            <i class="fas fa-chevron-right"></i>
+          </button>
+          <button id="flipCard" class="control-btn">
+            <i class="fas fa-sync-alt"></i>
+            Flip
+          </button>
+          <button id="shuffleCards" class="control-btn">
+            <i class="fas fa-random"></i>
+            Shuffle
+          </button>
+          <button id="closeFlashcards" class="control-btn">
+            <i class="fas fa-times"></i>
+            Close
+          </button>
+        </div>
+      </section>
+
+      <!-- Progress Section -->
+      <section class="dashboard-section" id="progress" style="display: none;">
+        <div class="section-header">
+          <h2>Study Progress</h2>
+        </div>
+        
+        <div class="progress-overview">
+          <div class="progress-card">
+            <h3>Overall Progress</h3>
+            <div class="progress-bar">
+              <div class="progress-fill" style="width: 65%"></div>
+            </div>
+            <p>65% Complete</p>
+          </div>
+          
+          <div class="progress-stats">
+            <div class="progress-stat">
+              <h4>Concepts Mastered</h4>
+              <span id="masteredConcepts">0</span>
+            </div>
+            <div class="progress-stat">
+              <h4>Study Sessions</h4>
+              <span id="studySessions">0</span>
+            </div>
+            <div class="progress-stat">
+              <h4>Average Score</h4>
+              <span id="averageScore">0%</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Settings Section -->
+      <section class="dashboard-section" id="settings" style="display: none;">
+        <div class="section-header">
+          <h2>Settings</h2>
+        </div>
+        
+        <div class="settings-content">
+          <div class="setting-group">
+            <h3>Account Settings</h3>
+            <div class="setting-item">
+              <label>Display Name</label>
+              <input type="text" id="displayName" placeholder="Your display name">
+            </div>
+            <div class="setting-item">
+              <label>Email</label>
+              <input type="email" id="userEmail" readonly>
+            </div>
+          </div>
+          
+          <div class="setting-group">
+            <h3>Study Preferences</h3>
+            <div class="setting-item">
+              <label>Daily Study Goal (minutes)</label>
+              <input type="number" id="studyGoal" value="30" min="10" max="180">
+            </div>
+            <div class="setting-item">
+              <label>Flashcards per Session</label>
+              <input type="number" id="cardsPerSession" value="20" min="5" max="50">
+            </div>
+          </div>
+          
+          <div class="setting-group">
+            <h3>Data Management</h3>
+            <button class="sync-btn" id="syncDataBtn">
+              <i class="fas fa-sync-alt"></i>
+              Sync Data
+            </button>
+            <button class="export-btn" id="exportDataBtn">
+              <i class="fas fa-download"></i>
+              Export Data
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Modals -->
+  <div class="modal" id="subjectModal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Add New Subject</h3>
+        <button class="modal-close" id="closeSubjectModal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="subjectInput">Subject Name</label>
+          <input type="text" id="subjectInput" placeholder="Enter subject name (e.g., Contract Law)">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" id="cancelSubject">Cancel</button>
+        <button class="btn-primary" id="saveSubject">Add Subject</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="conceptModal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Add New Concept</h3>
+        <button class="modal-close" id="closeConceptModal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="topicInput">Topic</label>
+          <input type="text" id="topicInput" placeholder="Topic (e.g., Formation of Contract)">
+        </div>
+        <div class="form-group">
+          <label for="subtopicInput">Subtopic</label>
+          <input type="text" id="subtopicInput" placeholder="Subtopic (e.g., Offer and Acceptance)">
+        </div>
+        <div class="form-group">
+          <label for="caseSectionInput">Case Section</label>
+          <input type="text" id="caseSectionInput" placeholder="Case Section (e.g., Carlill v Carbolic Smoke Ball Co)">
+        </div>
+        <div class="form-group">
+          <label for="contentInput">Content/Notes</label>
+          <textarea id="contentInput" placeholder="Content/Notes" rows="4"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" id="cancelConcept">Cancel</button>
+        <button class="btn-primary" id="saveConcept">Add Concept</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Firebase Configuration (Replace with your actual config)
+    const firebaseConfig = {
+      apiKey: "your-api-key",
+      authDomain: "your-auth-domain",
+      projectId: "your-project-id",
+      storageBucket: "your-storage-bucket",
+      messagingSenderId: "your-messaging-sender-id",
+      appId: "your-app-id"
+    };
+
+    // Initialize Firebase
+    if (typeof firebase !== 'undefined') {
+      firebase.initializeApp(firebaseConfig);
+    } else {
+      // Mock Firebase for demo
+      window.firebase = {
+        auth: () => ({
+          onAuthStateChanged: (callback) => callback({ uid: 'demo-user', email: 'demo@example.com' }),
+          signOut: () => Promise.resolve(),
+          currentUser: { uid: 'demo-user', email: 'demo@example.com' }
+        }),
+        firestore: () => ({
+          collection: () => ({
+            doc: () => ({
+              set: () => Promise.resolve(),
+              get: () => Promise.resolve({ data: () => null }),
+              update: () => Promise.resolve()
+            })
+          })
+        })
+      };
+    }
+
+    // Dashboard Class
+    class Dashboard {
+      constructor() {
+        this.auth = firebase.auth();
+        this.db = firebase.firestore();
+        this.currentUser = null;
+        this.subjects = {};
+        this.currentSubject = null;
+        this.flashcards = [];
+        this.currentFlashcardIndex = 0;
+        this.init();
+      }
+
+      init() {
+        this.loadFromLocalStorage();
+        this.addSampleData();
+        this.setupEventListeners();
+        this.checkAuth();
+        this.updateStats();
+      }
+
+      checkAuth() {
+        this.auth.onAuthStateChanged((user) => {
+          if (user) {
+            this.currentUser = user;
+            this.updateUserInfo();
+            this.loadUserData();
+          } else {
+            // Check if we're in demo mode (from localStorage)
+            const demoMode = localStorage.getItem('demoMode');
+            if (demoMode === 'true') {
+              this.currentUser = { displayName: 'Demo User', email: 'demo@eulss.com' };
+              this.updateUserInfo();
+              this.loadUserData();
+            } else {
+              window.location.href = 'resources.html';
+            }
+          }
+        });
+      }
+
+      updateUserInfo() {
+        const userName = document.getElementById('userName');
+        const userEmail = document.getElementById('userEmail');
+        
+        if (this.currentUser) {
+          const isDemo = this.currentUser.email === 'demo@eulss.com';
+          userName.textContent = (this.currentUser.displayName || 'User') + (isDemo ? ' (Demo)' : '');
+          userEmail.textContent = this.currentUser.email;
+          
+          // Add demo indicator styling
+          if (isDemo) {
+            userName.style.color = '#48bb78';
+            userName.style.fontWeight = 'bold';
+          } else {
+            userName.style.color = 'white';
+            userName.style.fontWeight = 'normal';
+          }
+        }
+      }
+
+      setupEventListeners() {
+        // Navigation
+        document.querySelectorAll('.sidebar-link').forEach(link => {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const section = e.currentTarget.getAttribute('data-section');
+            this.showSection(section);
+          });
+        });
+
+        // Quick actions
+        document.getElementById('createSubjectBtn').addEventListener('click', () => this.showModal('subjectModal'));
+        document.getElementById('startStudyBtn').addEventListener('click', () => this.startStudySession());
+
+        // User actions
+        document.getElementById('syncBtn').addEventListener('click', () => this.syncData());
+        document.getElementById('logoutBtn').addEventListener('click', () => this.handleLogout());
+
+        // Modal events
+        document.getElementById('closeSubjectModal').addEventListener('click', () => this.hideModal('subjectModal'));
+        document.getElementById('closeConceptModal').addEventListener('click', () => this.hideModal('conceptModal'));
+        document.getElementById('saveSubject').addEventListener('click', () => this.addSubject());
+        document.getElementById('saveConcept').addEventListener('click', () => this.addConcept());
+        document.getElementById('cancelSubject').addEventListener('click', () => this.hideModal('subjectModal'));
+        document.getElementById('cancelConcept').addEventListener('click', () => this.hideModal('conceptModal'));
+
+        // Flashcard controls
+        document.getElementById('prevCard').addEventListener('click', () => this.previousCard());
+        document.getElementById('nextCard').addEventListener('click', () => this.nextCard());
+        document.getElementById('flipCard').addEventListener('click', () => this.flipCard());
+        document.getElementById('shuffleCards').addEventListener('click', () => this.shuffleCards());
+        document.getElementById('closeFlashcards').addEventListener('click', () => this.closeFlashcards());
+      }
+
+      showSection(sectionName) {
+        // Hide all sections
+        document.querySelectorAll('.dashboard-section, #overview').forEach(section => {
+          section.style.display = 'none';
+        });
+
+        // Show selected section
+        if (sectionName === 'overview') {
+          document.getElementById('overview').style.display = 'block';
+        } else {
+          document.getElementById(sectionName).style.display = 'block';
+        }
+
+        // Update active nav item
+        document.querySelectorAll('.sidebar-item').forEach(item => {
+          item.classList.remove('active');
+        });
+        document.querySelector(`[data-section="${sectionName}"]`).parentElement.classList.add('active');
+
+        // Load section-specific content
+        if (sectionName === 'subjects') {
+          this.renderSubjects();
+        } else if (sectionName === 'concepts' && this.currentSubject) {
+          this.renderConcepts();
+        }
+      }
+
+      showModal(modalId) {
+        document.getElementById(modalId).style.display = 'flex';
+      }
+
+      hideModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+        // Clear form inputs
+        if (modalId === 'subjectModal') {
+          document.getElementById('subjectInput').value = '';
+        } else if (modalId === 'conceptModal') {
+          document.getElementById('topicInput').value = '';
+          document.getElementById('subtopicInput').value = '';
+          document.getElementById('caseSectionInput').value = '';
+          document.getElementById('contentInput').value = '';
+        }
+      }
+
+      addSubject() {
+        const subjectName = document.getElementById('subjectInput').value.trim();
+        if (subjectName) {
+          this.subjects[subjectName] = [];
+          this.saveToLocalStorage();
+          this.renderSubjects();
+          this.updateStats();
+          this.hideModal('subjectModal');
+          this.showNotification('Subject added successfully!', 'success');
+        }
+      }
+
+      addConcept() {
+        const topic = document.getElementById('topicInput').value.trim();
+        const subtopic = document.getElementById('subtopicInput').value.trim();
+        const caseSection = document.getElementById('caseSectionInput').value.trim();
+        const content = document.getElementById('contentInput').value.trim();
+
+        if (topic && content && this.currentSubject) {
+          const concept = {
+            id: Date.now(),
+            topic,
+            subtopic,
+            caseSection,
+            content
+          };
+
+          this.subjects[this.currentSubject].push(concept);
+          this.saveToLocalStorage();
+          this.renderConcepts();
+          this.updateStats();
+          this.hideModal('conceptModal');
+          this.showNotification('Concept added successfully!', 'success');
+        }
+      }
+
+      renderSubjects() {
+        const grid = document.getElementById('subjectsGrid');
+        grid.innerHTML = '';
+
+        Object.keys(this.subjects).forEach(subject => {
+          const card = document.createElement('div');
+          card.className = 'subject-card';
+          card.innerHTML = `
+            <h3><i class="fas fa-book"></i> ${subject}</h3>
+            <div class="subject-stats">
+              <div class="concept-count">${this.subjects[subject].length} concepts</div>
+              <div class="last-updated">Last updated: ${this.getLastUpdated(subject)}</div>
+            </div>
+            <div class="subject-actions">
+              <button class="subject-action-btn open-subject-btn" onclick="dashboard.openSubject('${subject}')">
+                <i class="fas fa-folder-open"></i>
+                Open
+              </button>
+              <button class="subject-action-btn delete-subject-btn" onclick="dashboard.deleteSubject('${subject}')">
+                <i class="fas fa-trash"></i>
+                Delete
+              </button>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      }
+
+      openSubject(subject) {
+        this.currentSubject = subject;
+        document.getElementById('currentSubjectTitle').textContent = subject;
+        this.renderConcepts();
+        this.showSection('concepts');
+      }
+
+      renderConcepts() {
+        const tbody = document.getElementById('conceptsTableBody');
+        tbody.innerHTML = '';
+
+        if (this.currentSubject && this.subjects[this.currentSubject]) {
+          this.subjects[this.currentSubject].forEach(concept => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${concept.topic}</td>
+              <td>${concept.subtopic}</td>
+              <td>${concept.caseSection}</td>
+              <td>${concept.content}</td>
+              <td>
+                <button onclick="dashboard.editConcept(${concept.id})" class="edit-btn">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button onclick="dashboard.deleteConcept(${concept.id})" class="delete-btn">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </td>
+            `;
+            tbody.appendChild(row);
+          });
+        }
+      }
+
+      deleteSubject(subject) {
+        if (confirm(`Are you sure you want to delete "${subject}" and all its concepts?`)) {
+          delete this.subjects[subject];
+          this.saveToLocalStorage();
+          this.renderSubjects();
+          this.updateStats();
+          this.showNotification('Subject deleted successfully!', 'success');
+        }
+      }
+
+      editConcept(id) {
+        const concept = this.subjects[this.currentSubject].find(c => c.id === id);
+        if (concept) {
+          document.getElementById('topicInput').value = concept.topic;
+          document.getElementById('subtopicInput').value = concept.subtopic;
+          document.getElementById('caseSectionInput').value = concept.caseSection;
+          document.getElementById('contentInput').value = concept.content;
+          this.deleteConcept(id);
+          this.showModal('conceptModal');
+        }
+      }
+
+      deleteConcept(id) {
+        this.subjects[this.currentSubject] = this.subjects[this.currentSubject].filter(c => c.id !== id);
+        this.saveToLocalStorage();
+        this.renderConcepts();
+        this.updateStats();
+        this.showNotification('Concept deleted successfully!', 'success');
+      }
+
+      startStudySession() {
+        if (Object.keys(this.subjects).length === 0) {
+          this.showNotification('Create some subjects and concepts first!', 'error');
+          return;
+        }
+        this.showSection('flashcards');
+        this.createFlashcards();
+      }
+
+      createFlashcards() {
+        this.flashcards = [];
+        if (this.currentSubject) {
+          this.subjects[this.currentSubject].forEach(concept => {
+            this.flashcards.push({
+              question: `${concept.topic}${concept.subtopic ? ` - ${concept.subtopic}` : ''}${concept.caseSection ? ` (${concept.caseSection})` : ''}`,
+              answer: concept.content
+            });
+          });
+        } else {
+          // Create flashcards from all subjects
+          Object.keys(this.subjects).forEach(subject => {
+            this.subjects[subject].forEach(concept => {
+              this.flashcards.push({
+                question: `${concept.topic}${concept.subtopic ? ` - ${concept.subtopic}` : ''}${concept.caseSection ? ` (${concept.caseSection})` : ''}`,
+                answer: concept.content
+              });
+            });
+          });
+        }
+
+        if (this.flashcards.length > 0) {
+          this.currentFlashcardIndex = 0;
+          this.showFlashcard();
+        } else {
+          this.showNotification('No concepts found to create flashcards!', 'error');
+        }
+      }
+
+      showFlashcard() {
+        if (this.flashcards.length === 0) return;
+        
+        const flashcard = this.flashcards[this.currentFlashcardIndex];
+        document.getElementById('flashcardQuestion').textContent = flashcard.question;
+        document.getElementById('flashcardAnswer').textContent = flashcard.answer;
+        document.getElementById('cardCounter').textContent = `${this.currentFlashcardIndex + 1} / ${this.flashcards.length}`;
+        
+        // Reset card to front
+        document.getElementById('flashcard').classList.remove('flipped');
+      }
+
+      previousCard() {
+        if (this.currentFlashcardIndex > 0) {
+          this.currentFlashcardIndex--;
+          this.showFlashcard();
+        }
+      }
+
+      nextCard() {
+        if (this.currentFlashcardIndex < this.flashcards.length - 1) {
+          this.currentFlashcardIndex++;
+          this.showFlashcard();
+        }
+      }
+
+      flipCard() {
+        document.getElementById('flashcard').classList.toggle('flipped');
+      }
+
+      shuffleCards() {
+        for (let i = this.flashcards.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [this.flashcards[i], this.flashcards[j]] = [this.flashcards[j], this.flashcards[i]];
+        }
+        this.currentFlashcardIndex = 0;
+        this.showFlashcard();
+        this.showNotification('Cards shuffled!', 'success');
+      }
+
+      closeFlashcards() {
+        this.showSection('overview');
+      }
+
+      updateStats() {
+        const totalSubjects = Object.keys(this.subjects).length;
+        const totalConcepts = Object.values(this.subjects).reduce((sum, concepts) => sum + concepts.length, 0);
+        const totalFlashcards = totalConcepts;
+
+        document.getElementById('totalSubjects').textContent = totalSubjects;
+        document.getElementById('totalConcepts').textContent = totalConcepts;
+        document.getElementById('totalFlashcards').textContent = totalFlashcards;
+        document.getElementById('studyTime').textContent = '0h'; // Placeholder
+      }
+
+      getLastUpdated(subject) {
+        const concepts = this.subjects[subject];
+        if (concepts.length === 0) return 'Never';
+        
+        const lastConcept = concepts[concepts.length - 1];
+        return new Date(lastConcept.id).toLocaleDateString();
+      }
+
+      async syncData() {
+        if (!this.currentUser) return;
+        
+        try {
+          await this.db.collection('users').doc(this.currentUser.uid).set({
+            subjects: this.subjects,
+            lastUpdated: new Date()
+          });
+          this.showNotification('Data synced successfully!', 'success');
+        } catch (error) {
+          console.error('Error syncing data:', error);
+          this.showNotification('Failed to sync data', 'error');
+        }
+      }
+
+      async loadUserData() {
+        if (!this.currentUser) return;
+        
+        try {
+          const userDoc = await this.db.collection('users').doc(this.currentUser.uid).get();
+          if (userDoc.exists) {
+            const userData = userDoc.data();
+            if (userData.subjects) {
+              this.subjects = userData.subjects;
+              this.renderSubjects();
+              this.updateStats();
+            }
+          }
+        } catch (error) {
+          console.error('Error loading user data:', error);
+        }
+      }
+
+      async handleLogout() {
+        try {
+          await this.auth.signOut();
+          localStorage.removeItem('demoMode');
+          window.location.href = 'resources.html';
+        } catch (error) {
+          console.error('Error signing out:', error);
+        }
+      }
+
+      loadFromLocalStorage() {
+        const saved = localStorage.getItem('legalSubjects');
+        if (saved) {
+          this.subjects = JSON.parse(saved);
+        }
+      }
+
+      saveToLocalStorage() {
+        localStorage.setItem('legalSubjects', JSON.stringify(this.subjects));
+      }
+
+      addSampleData() {
+        if (Object.keys(this.subjects).length === 0) {
+          this.subjects = {
+            'Contract Law': [
+              {
+                id: 1,
+                topic: 'Contract Law',
+                subtopic: 'Formation of Contract',
+                caseSection: 'Carlill v Carbolic Smoke Ball Co [1893] 1 QB 256',
+                content: 'An offer can be made to the world at large. The advertisement constituted a unilateral offer which could be accepted by anyone who performed the conditions. Consideration was provided by the act of using the smoke ball as directed.'
+              },
+              {
+                id: 2,
+                topic: 'Contract Law',
+                subtopic: 'Consideration',
+                caseSection: 'Currie v Misa [1875] LR 10 Ex 153',
+                content: 'Consideration is a right, interest, profit, or benefit accruing to one party, or some forbearance, detriment, loss, or responsibility given, suffered, or undertaken by the other.'
+              }
+            ],
+            'Tort Law': [
+              {
+                id: 3,
+                topic: 'Tort Law',
+                subtopic: 'Negligence',
+                caseSection: 'Donoghue v Stevenson [1932] AC 562',
+                content: 'The neighbour principle: you must take reasonable care to avoid acts or omissions which you can reasonably foresee would be likely to injure your neighbour. A manufacturer owes a duty of care to the ultimate consumer.'
+              },
+              {
+                id: 4,
+                topic: 'Tort Law',
+                subtopic: 'Duty of Care',
+                caseSection: 'Caparo Industries plc v Dickman [1990] 2 AC 605',
+                content: 'The three-stage test for duty of care: 1) Foreseeability of damage, 2) Proximity of relationship, 3) Fair, just and reasonable to impose duty.'
+              }
+            ],
+            'Criminal Law': [
+              {
+                id: 5,
+                topic: 'Criminal Law',
+                subtopic: 'Mens Rea',
+                caseSection: 'R v Cunningham [1957] 2 QB 396',
+                content: 'Recklessness requires the defendant to have foreseen that some harm might result from their actions and to have gone ahead anyway. The test is subjective - what did the defendant actually foresee?'
+              },
+              {
+                id: 6,
+                topic: 'Criminal Law',
+                subtopic: 'Actus Reus',
+                caseSection: 'R v Miller [1983] 2 AC 161',
+                content: 'A person who creates a dangerous situation and fails to take steps to prevent harm may be liable for the consequences of their omission.'
+              }
+            ]
+          };
+          this.saveToLocalStorage();
+        }
+      }
+
+      showNotification(message, type) {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.innerHTML = `
+          <i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'exclamation-circle' : 'info-circle'}"></i>
+          <span>${message}</span>
+        `;
+        notification.style.cssText = `
+          position: fixed;
+          top: 20px;
+          right: 20px;
+          padding: 15px 20px;
+          border-radius: 10px;
+          color: white;
+          font-weight: 600;
+          z-index: 1000;
+          animation: slideIn 0.3s ease;
+          background: ${type === 'success' ? '#48bb78' : type === 'error' ? '#f56565' : '#4299e1'};
+          box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        `;
+
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          notification.remove();
+        }, 3000);
+      }
+    }
+
+    // Initialize dashboard
+    let dashboard;
+    document.addEventListener('DOMContentLoaded', () => {
+      dashboard = new Dashboard();
+    });
+
+    // Add CSS animation for notifications
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes slideIn {
+        from {
+          transform: translateX(100%);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+  </script>
+</body>
+</html>
