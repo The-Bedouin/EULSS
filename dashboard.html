@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   
+  <!-- Chart.js for Analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
@@ -20,6 +24,20 @@
         <div class="dashboard-badge">
           <i class="fas fa-brain"></i>
           <span>Hindu Recall Technology</span>
+        </div>
+      </div>
+      
+      <!-- Global Search Bar -->
+      <div class="global-search-container">
+        <div class="search-wrapper">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="globalSearch" placeholder="Search concepts, topics, cases..." class="global-search-input">
+          <button class="search-filters-btn" id="searchFiltersBtn" title="Advanced Filters">
+            <i class="fas fa-filter"></i>
+          </button>
+        </div>
+        <div class="search-results" id="searchResults" style="display: none;">
+          <!-- Search results will be populated here -->
         </div>
       </div>
       
@@ -73,6 +91,18 @@
             <a href="#progress" class="sidebar-link" data-section="progress">
               <i class="fas fa-chart-line"></i>
               <span>Progress</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#analytics" class="sidebar-link" data-section="analytics">
+              <i class="fas fa-chart-bar"></i>
+              <span>Analytics</span>
+            </a>
+          </li>
+          <li class="sidebar-item">
+            <a href="#study" class="sidebar-link" data-section="study">
+              <i class="fas fa-graduation-cap"></i>
+              <span>Study Mode</span>
             </a>
           </li>
           <li class="sidebar-item">
@@ -146,6 +176,39 @@
             <span>Start Study Session</span>
           </button>
         </div>
+
+        <!-- Quick Concept Finder -->
+        <div class="quick-finder-section">
+          <div class="finder-header">
+            <h3>Quick Concept Finder</h3>
+            <span class="finder-count" id="finderCount">0 concepts</span>
+          </div>
+          <div class="finder-categories">
+            <button class="finder-category active" data-category="all">
+              <i class="fas fa-th"></i>
+              All
+            </button>
+            <button class="finder-category" data-category="recent">
+              <i class="fas fa-clock"></i>
+              Recent
+            </button>
+            <button class="finder-category" data-category="difficult">
+              <i class="fas fa-exclamation-triangle"></i>
+              Difficult
+            </button>
+            <button class="finder-category" data-category="mastered">
+              <i class="fas fa-check-circle"></i>
+              Mastered
+            </button>
+            <button class="finder-category" data-category="due">
+              <i class="fas fa-calendar"></i>
+              Due Today
+            </button>
+          </div>
+          <div class="finder-results" id="finderResults">
+            <!-- Quick finder results will be populated here -->
+          </div>
+        </div>
       </section>
 
       <!-- Subjects Section -->
@@ -194,6 +257,74 @@
               <!-- Concepts will be dynamically added here -->
             </tbody>
           </table>
+        </div>
+
+        <!-- Inline Flashcard Section -->
+        <div class="inline-flashcard-section" id="inlineFlashcardSection" style="display: none;">
+          <div class="flashcard-header">
+            <h3>Study Flashcards</h3>
+            <div class="flashcard-controls">
+              <button class="flashcard-btn" id="createInlineFlashcards">
+                <i class="fas fa-plus"></i>
+                Create Flashcards
+              </button>
+              <button class="flashcard-btn" id="closeInlineFlashcards">
+                <i class="fas fa-times"></i>
+                Close
+              </button>
+            </div>
+          </div>
+
+          <div class="inline-flashcard-container" id="inlineFlashcardContainer" style="display: none;">
+            <div class="inline-flashcard" id="inlineFlashcard">
+              <div class="flashcard-front">
+                <h4 id="inlineFlashcardQuestion">Question</h4>
+              </div>
+              <div class="flashcard-back">
+                <p id="inlineFlashcardAnswer">Answer</p>
+              </div>
+            </div>
+            
+            <div class="inline-flashcard-controls">
+              <button id="inlinePrevCard" class="control-btn">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <span id="inlineCardCounter" class="card-counter">1 / 1</span>
+              <button id="inlineNextCard" class="control-btn">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+            
+            <div class="inline-flashcard-actions">
+              <button id="inlineFlipCard" class="control-btn">
+                <i class="fas fa-sync-alt"></i>
+                Flip
+              </button>
+              <button id="inlineShuffleCards" class="control-btn">
+                <i class="fas fa-random"></i>
+                Shuffle
+              </button>
+              <button id="inlineResetCards" class="control-btn">
+                <i class="fas fa-redo"></i>
+                Reset
+              </button>
+            </div>
+          </div>
+
+          <div class="flashcard-stats" id="inlineFlashcardStats" style="display: none;">
+            <div class="stat-item">
+              <span class="stat-label">Total Cards:</span>
+              <span class="stat-value" id="inlineTotalCards">0</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Current Position:</span>
+              <span class="stat-value" id="inlineCurrentPosition">0</span>
+            </div>
+            <div class="stat-item">
+              <span class="stat-label">Study Progress:</span>
+              <span class="stat-value" id="inlineStudyProgress">0%</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -261,9 +392,9 @@
           <div class="progress-card">
             <h3>Overall Progress</h3>
             <div class="progress-bar">
-              <div class="progress-fill" style="width: 65%"></div>
+              <div class="progress-fill" id="overallProgressFill" style="width: 0%"></div>
             </div>
-            <p>65% Complete</p>
+            <p id="overallProgressText">0% Complete</p>
           </div>
           
           <div class="progress-stats">
@@ -279,6 +410,246 @@
               <h4>Average Score</h4>
               <span id="averageScore">0%</span>
             </div>
+            <div class="progress-stat">
+              <h4>Total Study Time</h4>
+              <span id="totalStudyTime">0h</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Analytics Section -->
+      <section class="dashboard-section" id="analytics" style="display: none;">
+        <div class="section-header">
+          <h2>Advanced Analytics</h2>
+          <div class="analytics-controls">
+            <select id="timeRange" class="analytics-select">
+              <option value="7">Last 7 Days</option>
+              <option value="30" selected>Last 30 Days</option>
+              <option value="90">Last 3 Months</option>
+              <option value="365">Last Year</option>
+            </select>
+          </div>
+        </div>
+        
+        <div class="analytics-grid">
+          <!-- Study Session Analytics -->
+          <div class="analytics-card">
+            <div class="analytics-header">
+              <h3>Study Session Analytics</h3>
+              <i class="fas fa-clock"></i>
+            </div>
+            <div class="chart-container">
+              <canvas id="studySessionsChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Progress Visualization -->
+          <div class="analytics-card">
+            <div class="analytics-header">
+              <h3>Progress Visualization</h3>
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <div class="chart-container">
+              <canvas id="progressChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Learning Curve Analysis -->
+          <div class="analytics-card">
+            <div class="analytics-header">
+              <h3>Learning Curve Analysis</h3>
+              <i class="fas fa-brain"></i>
+            </div>
+            <div class="chart-container">
+              <canvas id="learningCurveChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Time Spent per Subject -->
+          <div class="analytics-card">
+            <div class="analytics-header">
+              <h3>Time Spent per Subject</h3>
+              <i class="fas fa-book"></i>
+            </div>
+            <div class="chart-container">
+              <canvas id="subjectTimeChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Performance Metrics -->
+          <div class="analytics-card">
+            <div class="analytics-header">
+              <h3>Performance Metrics</h3>
+              <i class="fas fa-trophy"></i>
+            </div>
+            <div class="metrics-grid">
+              <div class="metric-item">
+                <div class="metric-value" id="streakDays">0</div>
+                <div class="metric-label">Day Streak</div>
+              </div>
+              <div class="metric-item">
+                <div class="metric-value" id="weeklyGoal">0%</div>
+                <div class="metric-label">Weekly Goal</div>
+              </div>
+              <div class="metric-item">
+                <div class="metric-value" id="accuracyRate">0%</div>
+                <div class="metric-label">Accuracy Rate</div>
+              </div>
+              <div class="metric-item">
+                <div class="metric-value" id="retentionRate">0%</div>
+                <div class="metric-label">Retention Rate</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Study Insights -->
+          <div class="analytics-card">
+            <div class="analytics-header">
+              <h3>Study Insights</h3>
+              <i class="fas fa-lightbulb"></i>
+            </div>
+            <div class="insights-list" id="insightsList">
+              <div class="insight-item">
+                <i class="fas fa-info-circle"></i>
+                <span>Start studying to see personalized insights</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Study Mode Section -->
+      <section class="dashboard-section" id="study" style="display: none;">
+        <div class="section-header">
+          <h2>Study Mode</h2>
+          <div class="study-controls">
+            <button class="study-btn primary" id="startStudySession">
+              <i class="fas fa-play"></i>
+              Start Session
+            </button>
+            <button class="study-btn secondary" id="pauseStudySession" style="display: none;">
+              <i class="fas fa-pause"></i>
+              Pause
+            </button>
+          </div>
+        </div>
+
+        <!-- Study Session Timer -->
+        <div class="study-timer-container" id="studyTimerContainer" style="display: none;">
+          <div class="timer-display">
+            <div class="timer-circle">
+              <div class="timer-progress">
+                <svg class="timer-svg" viewBox="0 0 120 120">
+                  <circle class="timer-bg" cx="60" cy="60" r="54"></circle>
+                  <circle class="timer-fill" cx="60" cy="60" r="54" id="timerProgress"></circle>
+                </svg>
+                <div class="timer-text">
+                  <div class="timer-time" id="timerDisplay">25:00</div>
+                  <div class="timer-label" id="timerLabel">Study Time</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="timer-controls">
+            <button class="timer-btn" id="resetTimer">
+              <i class="fas fa-redo"></i>
+              Reset
+            </button>
+            <button class="timer-btn" id="skipBreak">
+              <i class="fas fa-forward"></i>
+              Skip Break
+            </button>
+          </div>
+        </div>
+
+        <!-- Study Goals -->
+        <div class="study-goals-section">
+          <div class="goals-header">
+            <h3>Study Goals</h3>
+            <button class="edit-goals-btn" id="editGoalsBtn">
+              <i class="fas fa-edit"></i>
+              Edit Goals
+            </button>
+          </div>
+          
+          <div class="goals-grid">
+            <div class="goal-card daily">
+              <div class="goal-icon">
+                <i class="fas fa-calendar-day"></i>
+              </div>
+              <div class="goal-content">
+                <h4>Daily Goal</h4>
+                <div class="goal-progress">
+                  <div class="goal-bar">
+                    <div class="goal-fill" id="dailyGoalFill" style="width: 0%"></div>
+                  </div>
+                  <span class="goal-text" id="dailyGoalText">0 / 60 min</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="goal-card weekly">
+              <div class="goal-icon">
+                <i class="fas fa-calendar-week"></i>
+              </div>
+              <div class="goal-content">
+                <h4>Weekly Goal</h4>
+                <div class="goal-progress">
+                  <div class="goal-bar">
+                    <div class="goal-fill" id="weeklyGoalFill" style="width: 0%"></div>
+                  </div>
+                  <span class="goal-text" id="weeklyGoalText">0 / 420 min</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="goal-card streak">
+              <div class="goal-icon">
+                <i class="fas fa-fire"></i>
+              </div>
+              <div class="goal-content">
+                <h4>Study Streak</h4>
+                <div class="streak-display">
+                  <span class="streak-count" id="streakCount">0</span>
+                  <span class="streak-label">days</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Spaced Repetition Queue -->
+        <div class="spaced-repetition-section">
+          <div class="sr-header">
+            <h3>Spaced Repetition Queue</h3>
+            <div class="sr-stats">
+              <span class="sr-stat">
+                <i class="fas fa-clock"></i>
+                <span id="dueToday">0</span> due today
+              </span>
+              <span class="sr-stat">
+                <i class="fas fa-calendar"></i>
+                <span id="dueThisWeek">0</span> due this week
+              </span>
+            </div>
+          </div>
+          
+          <div class="sr-queue" id="srQueue">
+            <!-- Spaced repetition cards will be populated here -->
+          </div>
+        </div>
+
+        <!-- Achievements -->
+        <div class="achievements-section">
+          <div class="achievements-header">
+            <h3>Achievements</h3>
+            <span class="achievements-count" id="achievementsCount">0/12</span>
+          </div>
+          
+          <div class="achievements-grid" id="achievementsGrid">
+            <!-- Achievements will be populated here -->
           </div>
         </div>
       </section>
@@ -287,6 +658,7 @@
       <section class="dashboard-section" id="settings" style="display: none;">
         <div class="section-header">
           <h2>Settings</h2>
+          <p>Manage your dashboard preferences and data</p>
         </div>
         
         <div class="settings-content">
@@ -313,6 +685,94 @@
               <input type="number" id="cardsPerSession" value="20" min="5" max="50">
             </div>
           </div>
+
+          <div class="setting-group">
+            <h3>Export Data</h3>
+            <p>Export your study data in various formats</p>
+            
+            <div class="export-options">
+              <div class="export-option">
+                <h4>PDF Report</h4>
+                <p>Generate a comprehensive PDF report with your study progress and statistics</p>
+                <button id="exportPDF" class="btn btn-primary">
+                  <i class="fas fa-file-pdf"></i>
+                  Export as PDF
+                </button>
+              </div>
+              
+              <div class="export-option">
+                <h4>CSV Data</h4>
+                <p>Export all concepts and progress data in CSV format for analysis</p>
+                <button id="exportCSV" class="btn btn-secondary">
+                  <i class="fas fa-file-csv"></i>
+                  Export as CSV
+                </button>
+              </div>
+              
+              <div class="export-option">
+                <h4>Complete Backup</h4>
+                <p>Export all data including analytics, goals, and achievements</p>
+                <button id="exportAllData" class="btn btn-success">
+                  <i class="fas fa-download"></i>
+                  Export All Data
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div class="setting-group">
+            <h3>Import Data</h3>
+            <p>Import data from backup files or shared content</p>
+            
+            <div class="import-options">
+              <div class="import-option">
+                <h4>Import from File</h4>
+                <p>Import data from a previously exported backup file</p>
+                <button id="importData" class="btn btn-primary">
+                  <i class="fas fa-upload"></i>
+                  Choose File
+                </button>
+                <input type="file" id="importFileInput" accept=".json" style="display: none;">
+              </div>
+              
+              <div class="import-option">
+                <h4>Import Share Code</h4>
+                <p>Import data from a shared code (paste the code below)</p>
+                <div class="share-code-input">
+                  <textarea id="shareCodeInput" placeholder="Paste the share code here..." rows="3"></textarea>
+                  <button id="importShareCode" class="btn btn-secondary">
+                    <i class="fas fa-code"></i>
+                    Import Code
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="setting-group">
+            <h3>Share Concepts</h3>
+            <p>Share your concepts with other users</p>
+            
+            <div class="share-options">
+              <div class="share-option">
+                <h4>Share Current Concept</h4>
+                <p>Share the currently selected concept with others</p>
+                <button id="shareConcept" class="btn btn-primary">
+                  <i class="fas fa-share-alt"></i>
+                  Share Concept
+                </button>
+              </div>
+              
+              <div class="share-option">
+                <h4>Share All Concepts</h4>
+                <p>Share all your concepts and subjects with others</p>
+                <button id="shareAllConcepts" class="btn btn-secondary">
+                  <i class="fas fa-share"></i>
+                  Share All
+                </button>
+              </div>
+            </div>
+          </div>
           
           <div class="setting-group">
             <h3>Data Management</h3>
@@ -331,6 +791,22 @@
   </div>
 
   <!-- Modals -->
+  
+  <!-- Share Modal -->
+  <div class="modal" id="shareModal" style="display: none;">
+    <div class="modal-content large">
+      <div class="modal-header">
+        <h3>Share Data</h3>
+        <button class="modal-close" onclick="dashboard.hideModal('shareModal')">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body" id="shareModalBody">
+        <!-- Share content will be dynamically inserted here -->
+      </div>
+    </div>
+  </div>
+
   <div class="modal" id="subjectModal" style="display: none;">
     <div class="modal-content">
       <div class="modal-header">
@@ -377,10 +853,185 @@
           <label for="contentInput">Content/Notes</label>
           <textarea id="contentInput" placeholder="Content/Notes" rows="4"></textarea>
         </div>
+        <div class="form-group">
+          <label for="difficultyInput">Difficulty Level</label>
+          <select id="difficultyInput" class="difficulty-select">
+            <option value="1">Easy</option>
+            <option value="2" selected>Medium</option>
+            <option value="3">Hard</option>
+            <option value="4">Expert</option>
+          </select>
+        </div>
       </div>
       <div class="modal-footer">
         <button class="btn-secondary" id="cancelConcept">Cancel</button>
         <button class="btn-primary" id="saveConcept">Add Concept</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Study Goals Modal -->
+  <div class="modal" id="studyGoalsModal" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Edit Study Goals</h3>
+        <button class="modal-close" id="closeGoalsModal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="dailyGoalInput">Daily Study Goal (minutes)</label>
+          <input type="number" id="dailyGoalInput" value="60" min="15" max="480">
+        </div>
+        <div class="form-group">
+          <label for="weeklyGoalInput">Weekly Study Goal (minutes)</label>
+          <input type="number" id="weeklyGoalInput" value="420" min="105" max="3360">
+        </div>
+        <div class="form-group">
+          <label for="sessionLengthInput">Study Session Length (minutes)</label>
+          <input type="number" id="sessionLengthInput" value="25" min="10" max="120">
+        </div>
+        <div class="form-group">
+          <label for="breakLengthInput">Break Length (minutes)</label>
+          <input type="number" id="breakLengthInput" value="5" min="1" max="30">
+        </div>
+        <div class="form-group">
+          <label for="longBreakLengthInput">Long Break Length (minutes)</label>
+          <input type="number" id="longBreakLengthInput" value="15" min="5" max="60">
+        </div>
+        <div class="form-group">
+          <label for="sessionsBeforeLongBreakInput">Sessions Before Long Break</label>
+          <input type="number" id="sessionsBeforeLongBreakInput" value="4" min="1" max="8">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" id="cancelGoals">Cancel</button>
+        <button class="btn-primary" id="saveGoals">Save Goals</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Advanced Search Filters Modal -->
+  <div class="modal" id="searchFiltersModal" style="display: none;">
+    <div class="modal-content large">
+      <div class="modal-header">
+        <h3>Advanced Search & Filters</h3>
+        <button class="modal-close" id="closeSearchFiltersModal">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="filters-grid">
+          <!-- Subject Filter -->
+          <div class="filter-group">
+            <label>Subject</label>
+            <div class="filter-options" id="subjectFilterOptions">
+              <!-- Subject checkboxes will be populated here -->
+            </div>
+          </div>
+
+          <!-- Topic Filter -->
+          <div class="filter-group">
+            <label>Topic</label>
+            <div class="filter-options" id="topicFilterOptions">
+              <!-- Topic checkboxes will be populated here -->
+            </div>
+          </div>
+
+          <!-- Difficulty Filter -->
+          <div class="filter-group">
+            <label>Difficulty Level</label>
+            <div class="filter-options">
+              <label class="filter-checkbox">
+                <input type="checkbox" value="1" class="difficulty-filter">
+                <span class="checkmark"></span>
+                Easy
+              </label>
+              <label class="filter-checkbox">
+                <input type="checkbox" value="2" class="difficulty-filter" checked>
+                <span class="checkmark"></span>
+                Medium
+              </label>
+              <label class="filter-checkbox">
+                <input type="checkbox" value="3" class="difficulty-filter">
+                <span class="checkmark"></span>
+                Hard
+              </label>
+              <label class="filter-checkbox">
+                <input type="checkbox" value="4" class="difficulty-filter">
+                <span class="checkmark"></span>
+                Expert
+              </label>
+            </div>
+          </div>
+
+          <!-- Date Range Filter -->
+          <div class="filter-group">
+            <label>Date Range</label>
+            <div class="date-range-inputs">
+              <div class="date-input-group">
+                <label>From</label>
+                <input type="date" id="dateFrom" class="date-input">
+              </div>
+              <div class="date-input-group">
+                <label>To</label>
+                <input type="date" id="dateTo" class="date-input">
+              </div>
+            </div>
+          </div>
+
+          <!-- Mastery Status Filter -->
+          <div class="filter-group">
+            <label>Mastery Status</label>
+            <div class="filter-options">
+              <label class="filter-checkbox">
+                <input type="checkbox" value="mastered" class="mastery-filter">
+                <span class="checkmark"></span>
+                Mastered
+              </label>
+              <label class="filter-checkbox">
+                <input type="checkbox" value="learning" class="mastery-filter" checked>
+                <span class="checkmark"></span>
+                Learning
+              </label>
+              <label class="filter-checkbox">
+                <input type="checkbox" value="not_started" class="mastery-filter">
+                <span class="checkmark"></span>
+                Not Started
+              </label>
+            </div>
+          </div>
+
+          <!-- Sort Options -->
+          <div class="filter-group">
+            <label>Sort By</label>
+            <select id="sortBy" class="sort-select">
+              <option value="relevance">Relevance</option>
+              <option value="topic">Topic (A-Z)</option>
+              <option value="topic_desc">Topic (Z-A)</option>
+              <option value="difficulty">Difficulty (Low to High)</option>
+              <option value="difficulty_desc">Difficulty (High to Low)</option>
+              <option value="date_added">Date Added (Newest)</option>
+              <option value="date_added_old">Date Added (Oldest)</option>
+              <option value="last_reviewed">Last Reviewed</option>
+              <option value="mastery">Mastery Level</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Active Filters Display -->
+        <div class="active-filters" id="activeFilters">
+          <h4>Active Filters</h4>
+          <div class="active-filter-tags" id="activeFilterTags">
+            <!-- Active filter tags will be displayed here -->
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn-secondary" id="clearAllFilters">Clear All</button>
+        <button class="btn-secondary" id="cancelSearchFilters">Cancel</button>
+        <button class="btn-primary" id="applySearchFilters">Apply Filters</button>
       </div>
     </div>
   </div>
@@ -429,6 +1080,69 @@
         this.currentSubject = null;
         this.flashcards = [];
         this.currentFlashcardIndex = 0;
+        this.inlineFlashcards = [];
+        this.currentInlineFlashcardIndex = 0;
+        this.analytics = {
+          studySessions: [],
+          progressData: [],
+          learningCurve: [],
+          subjectTime: {},
+          performance: {
+            streakDays: 0,
+            weeklyGoal: 0,
+            accuracyRate: 0,
+            retentionRate: 0
+          }
+        };
+        this.charts = {};
+        
+        // Study Experience Properties
+        this.studyGoals = {
+          daily: 60,
+          weekly: 420,
+          sessionLength: 25,
+          breakLength: 5,
+          longBreakLength: 15,
+          sessionsBeforeLongBreak: 4
+        };
+        this.studySession = {
+          isActive: false,
+          isBreak: false,
+          isLongBreak: false,
+          currentTime: 0,
+          totalTime: 0,
+          sessionCount: 0,
+          startTime: null,
+          timer: null
+        };
+        this.spacedRepetition = {
+          queue: [],
+          intervals: [1, 3, 7, 14, 30, 90, 180, 365] // Days between reviews
+        };
+        this.achievements = {
+          unlocked: [],
+          total: 12
+        };
+        this.studyStreak = {
+          current: 0,
+          longest: 0,
+          lastStudyDate: null
+        };
+        
+        // Search & Filter Properties
+        this.searchFilters = {
+          query: '',
+          subjects: [],
+          topics: [],
+          difficulties: [2], // Default to Medium
+          dateFrom: null,
+          dateTo: null,
+          masteryStatus: ['learning'], // Default to Learning
+          sortBy: 'relevance'
+        };
+        this.searchResults = [];
+        this.searchIndex = {};
+        
         this.init();
       }
 
@@ -438,6 +1152,10 @@
         this.setupEventListeners();
         this.checkAuth();
         this.updateStats();
+        this.initializeAnalytics();
+        this.initializeStudyExperience();
+        this.initializeSearchSystem();
+        this.initializeExportImport();
       }
 
       checkAuth() {
@@ -454,7 +1172,11 @@
               this.updateUserInfo();
               this.loadUserData();
             } else {
-              window.location.href = 'resources.html';
+              // Set demo mode for testing
+              localStorage.setItem('demoMode', 'true');
+              this.currentUser = { displayName: 'Demo User', email: 'demo@eulss.com' };
+              this.updateUserInfo();
+              this.loadUserData();
             }
           }
         });
@@ -490,8 +1212,18 @@
           });
         });
 
+        // Back navigation
+        document.getElementById('backToSubjects').addEventListener('click', () => {
+          this.showSection('subjects');
+        });
+        document.getElementById('backToConcepts').addEventListener('click', () => {
+          this.showSection('concepts');
+        });
+
         // Quick actions
         document.getElementById('createSubjectBtn').addEventListener('click', () => this.showModal('subjectModal'));
+        document.getElementById('addSubjectBtn').addEventListener('click', () => this.showModal('subjectModal'));
+        document.getElementById('addConceptBtn').addEventListener('click', () => this.showModal('conceptModal'));
         document.getElementById('startStudyBtn').addEventListener('click', () => this.startStudySession());
 
         // User actions
@@ -512,6 +1244,42 @@
         document.getElementById('flipCard').addEventListener('click', () => this.flipCard());
         document.getElementById('shuffleCards').addEventListener('click', () => this.shuffleCards());
         document.getElementById('closeFlashcards').addEventListener('click', () => this.closeFlashcards());
+        document.getElementById('createFlashcardsBtn').addEventListener('click', () => this.createFlashcards());
+
+        // Inline Flashcard controls
+        document.getElementById('createInlineFlashcards').addEventListener('click', () => this.createInlineFlashcards());
+        document.getElementById('closeInlineFlashcards').addEventListener('click', () => this.closeInlineFlashcards());
+        document.getElementById('inlinePrevCard').addEventListener('click', () => this.inlinePreviousCard());
+        document.getElementById('inlineNextCard').addEventListener('click', () => this.inlineNextCard());
+        document.getElementById('inlineFlipCard').addEventListener('click', () => this.inlineFlipCard());
+        document.getElementById('inlineShuffleCards').addEventListener('click', () => this.inlineShuffleCards());
+        document.getElementById('inlineResetCards').addEventListener('click', () => this.inlineResetCards());
+        
+        // Add click event to flip card
+        document.getElementById('inlineFlashcard').addEventListener('click', () => this.inlineFlipCard());
+
+        // Study Experience controls
+        document.getElementById('startStudySession').addEventListener('click', () => this.startStudySession());
+        document.getElementById('pauseStudySession').addEventListener('click', () => this.pauseStudySession());
+        document.getElementById('resetTimer').addEventListener('click', () => this.resetTimer());
+        document.getElementById('skipBreak').addEventListener('click', () => this.skipBreak());
+        document.getElementById('editGoalsBtn').addEventListener('click', () => this.showModal('studyGoalsModal'));
+        document.getElementById('closeGoalsModal').addEventListener('click', () => this.hideModal('studyGoalsModal'));
+        document.getElementById('saveGoals').addEventListener('click', () => this.saveStudyGoals());
+        document.getElementById('cancelGoals').addEventListener('click', () => this.hideModal('studyGoalsModal'));
+
+        // Search & Filter controls
+        document.getElementById('globalSearch').addEventListener('input', (e) => this.handleGlobalSearch(e.target.value));
+        document.getElementById('searchFiltersBtn').addEventListener('click', () => this.showModal('searchFiltersModal'));
+        document.getElementById('closeSearchFiltersModal').addEventListener('click', () => this.hideModal('searchFiltersModal'));
+        document.getElementById('applySearchFilters').addEventListener('click', () => this.applySearchFilters());
+        document.getElementById('clearAllFilters').addEventListener('click', () => this.clearAllFilters());
+        document.getElementById('cancelSearchFilters').addEventListener('click', () => this.hideModal('searchFiltersModal'));
+
+        // Quick Finder controls
+        document.querySelectorAll('.finder-category').forEach(btn => {
+          btn.addEventListener('click', (e) => this.handleQuickFinder(e.currentTarget.dataset.category));
+        });
       }
 
       showSection(sectionName) {
@@ -538,11 +1306,22 @@
           this.renderSubjects();
         } else if (sectionName === 'concepts' && this.currentSubject) {
           this.renderConcepts();
+        } else if (sectionName === 'analytics') {
+          this.updateAnalyticsCharts();
+        } else if (sectionName === 'study') {
+          this.initializeStudyMode();
         }
       }
 
-      showModal(modalId) {
-        document.getElementById(modalId).style.display = 'flex';
+      showModal(modalId, content = null) {
+        const modal = document.getElementById(modalId);
+        if (content && modalId === 'shareModal') {
+          const modalBody = document.getElementById('shareModalBody');
+          if (modalBody) {
+            modalBody.innerHTML = content;
+          }
+        }
+        modal.style.display = 'flex';
       }
 
       hideModal(modalId) {
@@ -575,6 +1354,7 @@
         const subtopic = document.getElementById('subtopicInput').value.trim();
         const caseSection = document.getElementById('caseSectionInput').value.trim();
         const content = document.getElementById('contentInput').value.trim();
+        const difficulty = parseInt(document.getElementById('difficultyInput').value);
 
         if (topic && content && this.currentSubject) {
           const concept = {
@@ -582,13 +1362,17 @@
             topic,
             subtopic,
             caseSection,
-            content
+            content,
+            difficulty,
+            level: 0,
+            lastReviewed: null
           };
 
           this.subjects[this.currentSubject].push(concept);
           this.saveToLocalStorage();
           this.renderConcepts();
           this.updateStats();
+          this.initializeSpacedRepetition();
           this.hideModal('conceptModal');
           this.showNotification('Concept added successfully!', 'success');
         }
@@ -636,6 +1420,8 @@
         if (this.currentSubject && this.subjects[this.currentSubject]) {
           this.subjects[this.currentSubject].forEach(concept => {
             const row = document.createElement('tr');
+            row.className = 'concept-row';
+            row.setAttribute('data-concept-id', concept.id);
             row.innerHTML = `
               <td>${concept.topic}</td>
               <td>${concept.subtopic}</td>
@@ -652,6 +1438,14 @@
             `;
             tbody.appendChild(row);
           });
+
+          // Show inline flashcard section if there are concepts
+          const inlineFlashcardSection = document.getElementById('inlineFlashcardSection');
+          if (this.subjects[this.currentSubject].length > 0) {
+            inlineFlashcardSection.style.display = 'block';
+          } else {
+            inlineFlashcardSection.style.display = 'none';
+          }
         }
       }
 
@@ -767,15 +1561,137 @@
         this.showSection('overview');
       }
 
+      // Inline Flashcard Methods
+      createInlineFlashcards() {
+        if (!this.currentSubject || !this.subjects[this.currentSubject] || this.subjects[this.currentSubject].length === 0) {
+          this.showNotification('No concepts available to create flashcards!', 'error');
+          return;
+        }
+
+        this.inlineFlashcards = [];
+        this.subjects[this.currentSubject].forEach(concept => {
+          this.inlineFlashcards.push({
+            question: `${concept.topic}${concept.subtopic ? ` - ${concept.subtopic}` : ''}${concept.caseSection ? ` (${concept.caseSection})` : ''}`,
+            answer: concept.content,
+            conceptId: concept.id
+          });
+        });
+
+        this.currentInlineFlashcardIndex = 0;
+        this.showInlineFlashcard();
+        this.updateInlineFlashcardStats();
+        
+        document.getElementById('inlineFlashcardContainer').style.display = 'block';
+        document.getElementById('inlineFlashcardStats').style.display = 'block';
+        document.getElementById('createInlineFlashcards').style.display = 'none';
+        
+        this.showNotification(`Created ${this.inlineFlashcards.length} flashcards!`, 'success');
+      }
+
+      showInlineFlashcard() {
+        if (this.inlineFlashcards.length === 0) return;
+        
+        const flashcard = this.inlineFlashcards[this.currentInlineFlashcardIndex];
+        document.getElementById('inlineFlashcardQuestion').textContent = flashcard.question;
+        document.getElementById('inlineFlashcardAnswer').textContent = flashcard.answer;
+        document.getElementById('inlineCardCounter').textContent = `${this.currentInlineFlashcardIndex + 1} / ${this.inlineFlashcards.length}`;
+        
+        // Reset card to front
+        document.getElementById('inlineFlashcard').classList.remove('flipped');
+      }
+
+      inlinePreviousCard() {
+        if (this.currentInlineFlashcardIndex > 0) {
+          this.currentInlineFlashcardIndex--;
+          this.showInlineFlashcard();
+          this.updateInlineFlashcardStats();
+        }
+      }
+
+      inlineNextCard() {
+        if (this.currentInlineFlashcardIndex < this.inlineFlashcards.length - 1) {
+          this.currentInlineFlashcardIndex++;
+          this.showInlineFlashcard();
+          this.updateInlineFlashcardStats();
+        }
+      }
+
+      inlineFlipCard() {
+        document.getElementById('inlineFlashcard').classList.toggle('flipped');
+      }
+
+      inlineShuffleCards() {
+        for (let i = this.inlineFlashcards.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [this.inlineFlashcards[i], this.inlineFlashcards[j]] = [this.inlineFlashcards[j], this.inlineFlashcards[i]];
+        }
+        this.currentInlineFlashcardIndex = 0;
+        this.showInlineFlashcard();
+        this.updateInlineFlashcardStats();
+        this.showNotification('Cards shuffled!', 'success');
+      }
+
+      inlineResetCards() {
+        this.currentInlineFlashcardIndex = 0;
+        this.showInlineFlashcard();
+        this.updateInlineFlashcardStats();
+        this.showNotification('Cards reset to beginning!', 'success');
+      }
+
+      updateInlineFlashcardStats() {
+        document.getElementById('inlineTotalCards').textContent = this.inlineFlashcards.length;
+        document.getElementById('inlineCurrentPosition').textContent = this.currentInlineFlashcardIndex + 1;
+        const progress = this.inlineFlashcards.length > 0 ? Math.round(((this.currentInlineFlashcardIndex + 1) / this.inlineFlashcards.length) * 100) : 0;
+        document.getElementById('inlineStudyProgress').textContent = `${progress}%`;
+      }
+
+      closeInlineFlashcards() {
+        document.getElementById('inlineFlashcardContainer').style.display = 'none';
+        document.getElementById('inlineFlashcardStats').style.display = 'none';
+        document.getElementById('createInlineFlashcards').style.display = 'inline-flex';
+        this.inlineFlashcards = [];
+        this.currentInlineFlashcardIndex = 0;
+      }
+
       updateStats() {
         const totalSubjects = Object.keys(this.subjects).length;
         const totalConcepts = Object.values(this.subjects).reduce((sum, concepts) => sum + concepts.length, 0);
         const totalFlashcards = totalConcepts;
+        const totalStudyTime = this.calculateTotalStudyTime();
 
         document.getElementById('totalSubjects').textContent = totalSubjects;
         document.getElementById('totalConcepts').textContent = totalConcepts;
         document.getElementById('totalFlashcards').textContent = totalFlashcards;
-        document.getElementById('studyTime').textContent = '0h'; // Placeholder
+        document.getElementById('studyTime').textContent = totalStudyTime;
+        document.getElementById('totalStudyTime').textContent = totalStudyTime;
+        
+        // Update progress
+        this.updateProgress();
+      }
+
+      calculateTotalStudyTime() {
+        const totalMinutes = this.analytics.studySessions.reduce((total, session) => total + session.duration, 0);
+        const hours = Math.floor(totalMinutes / 60);
+        const minutes = totalMinutes % 60;
+        return hours > 0 ? `${hours}h ${minutes}m` : `${minutes}m`;
+      }
+
+      updateProgress() {
+        const totalConcepts = Object.values(this.subjects).reduce((sum, concepts) => sum + concepts.length, 0);
+        const masteredConcepts = this.analytics.progressData.filter(p => p.mastered).length;
+        const progressPercentage = totalConcepts > 0 ? Math.round((masteredConcepts / totalConcepts) * 100) : 0;
+        
+        document.getElementById('overallProgressFill').style.width = `${progressPercentage}%`;
+        document.getElementById('overallProgressText').textContent = `${progressPercentage}% Complete`;
+        document.getElementById('masteredConcepts').textContent = masteredConcepts;
+        document.getElementById('studySessions').textContent = this.analytics.studySessions.length;
+        document.getElementById('averageScore').textContent = `${this.calculateAverageScore()}%`;
+      }
+
+      calculateAverageScore() {
+        if (this.analytics.progressData.length === 0) return 0;
+        const totalScore = this.analytics.progressData.reduce((sum, data) => sum + data.score, 0);
+        return Math.round(totalScore / this.analytics.progressData.length);
       }
 
       getLastUpdated(subject) {
@@ -838,6 +1754,12 @@
 
       saveToLocalStorage() {
         localStorage.setItem('legalSubjects', JSON.stringify(this.subjects));
+      }
+
+      saveData() {
+        this.saveToLocalStorage();
+        this.saveAnalyticsData();
+        this.saveStudyData();
       }
 
       addSampleData() {
@@ -922,6 +1844,1723 @@
         setTimeout(() => {
           notification.remove();
         }, 3000);
+      }
+
+      // Analytics Methods
+      initializeAnalytics() {
+        this.loadAnalyticsData();
+        this.setupAnalyticsEventListeners();
+        this.generateSampleAnalyticsData();
+      }
+
+      loadAnalyticsData() {
+        const savedAnalytics = localStorage.getItem('hinduRecallAnalytics');
+        if (savedAnalytics) {
+          this.analytics = JSON.parse(savedAnalytics);
+        }
+      }
+
+      saveAnalyticsData() {
+        localStorage.setItem('hinduRecallAnalytics', JSON.stringify(this.analytics));
+      }
+
+      setupAnalyticsEventListeners() {
+        const timeRangeSelect = document.getElementById('timeRange');
+        if (timeRangeSelect) {
+          timeRangeSelect.addEventListener('change', () => {
+            this.updateAnalyticsCharts();
+          });
+        }
+      }
+
+      generateSampleAnalyticsData() {
+        if (this.analytics.studySessions.length === 0) {
+          // Generate sample study sessions for the last 30 days
+          const now = new Date();
+          for (let i = 29; i >= 0; i--) {
+            const date = new Date(now);
+            date.setDate(date.getDate() - i);
+            
+            if (Math.random() > 0.3) { // 70% chance of studying each day
+              this.analytics.studySessions.push({
+                date: date.toISOString().split('T')[0],
+                duration: Math.floor(Math.random() * 120) + 30, // 30-150 minutes
+                concepts: Math.floor(Math.random() * 10) + 5,
+                score: Math.floor(Math.random() * 40) + 60 // 60-100%
+              });
+            }
+          }
+
+          // Generate progress data
+          Object.keys(this.subjects).forEach(subject => {
+            this.subjects[subject].forEach(concept => {
+              this.analytics.progressData.push({
+                conceptId: concept.id,
+                subject: subject,
+                mastered: Math.random() > 0.5,
+                score: Math.floor(Math.random() * 40) + 60,
+                lastReviewed: new Date(Date.now() - Math.random() * 30 * 24 * 60 * 60 * 1000).toISOString()
+              });
+            });
+          });
+
+          // Generate learning curve data
+          for (let i = 0; i < 30; i++) {
+            this.analytics.learningCurve.push({
+              day: i + 1,
+              retention: Math.min(100, 20 + (i * 2.5) + (Math.random() * 10 - 5)),
+              speed: Math.max(50, 100 - (i * 1.5) + (Math.random() * 10 - 5))
+            });
+          }
+
+          // Generate subject time data
+          Object.keys(this.subjects).forEach(subject => {
+            this.analytics.subjectTime[subject] = Math.floor(Math.random() * 300) + 60; // 60-360 minutes
+          });
+
+          // Generate performance metrics
+          this.analytics.performance = {
+            streakDays: Math.floor(Math.random() * 15) + 5,
+            weeklyGoal: Math.floor(Math.random() * 40) + 60,
+            accuracyRate: Math.floor(Math.random() * 30) + 70,
+            retentionRate: Math.floor(Math.random() * 25) + 75
+          };
+
+          this.saveAnalyticsData();
+        }
+      }
+
+      updateAnalyticsCharts() {
+        this.createStudySessionsChart();
+        this.createProgressChart();
+        this.createLearningCurveChart();
+        this.createSubjectTimeChart();
+        this.updatePerformanceMetrics();
+        this.updateInsights();
+      }
+
+      createStudySessionsChart() {
+        const ctx = document.getElementById('studySessionsChart');
+        if (!ctx) return;
+
+        if (this.charts.studySessions) {
+          this.charts.studySessions.destroy();
+        }
+
+        try {
+          const timeRange = parseInt(document.getElementById('timeRange').value);
+          const filteredSessions = this.analytics.studySessions.slice(-timeRange);
+
+          const labels = filteredSessions.map(session => {
+            const date = new Date(session.date);
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+          });
+
+          const durations = filteredSessions.map(session => session.duration);
+          const scores = filteredSessions.map(session => session.score);
+
+          this.charts.studySessions = new Chart(ctx, {
+            type: 'line',
+            data: {
+              labels: labels,
+              datasets: [{
+                label: 'Study Duration (min)',
+                data: durations,
+                borderColor: '#4299e1',
+                backgroundColor: 'rgba(66, 153, 225, 0.1)',
+                tension: 0.4,
+                yAxisID: 'y'
+              }, {
+                label: 'Score (%)',
+                data: scores,
+                borderColor: '#48bb78',
+                backgroundColor: 'rgba(72, 187, 120, 0.1)',
+                tension: 0.4,
+                yAxisID: 'y1'
+              }]
+            },
+            options: {
+              responsive: true,
+              interaction: {
+                mode: 'index',
+                intersect: false,
+              },
+              scales: {
+                x: {
+                  display: true,
+                  title: {
+                    display: true,
+                    text: 'Date'
+                  }
+                },
+                y: {
+                  type: 'linear',
+                  display: true,
+                  position: 'left',
+                  title: {
+                    display: true,
+                    text: 'Duration (minutes)'
+                  }
+                },
+                y1: {
+                  type: 'linear',
+                  display: true,
+                  position: 'right',
+                  title: {
+                    display: true,
+                    text: 'Score (%)'
+                  },
+                  grid: {
+                    drawOnChartArea: false,
+                  },
+                }
+              }
+            }
+          });
+        } catch (error) {
+          console.error('Error creating study sessions chart:', error);
+        }
+      }
+
+      createProgressChart() {
+        const ctx = document.getElementById('progressChart');
+        if (!ctx) return;
+
+        if (this.charts.progress) {
+          this.charts.progress.destroy();
+        }
+
+        const subjects = Object.keys(this.subjects);
+        const masteredData = subjects.map(subject => {
+          const subjectConcepts = this.subjects[subject];
+          const mastered = this.analytics.progressData.filter(p => 
+            p.subject === subject && p.mastered
+          ).length;
+          return (mastered / subjectConcepts.length) * 100;
+        });
+
+        this.charts.progress = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: subjects,
+            datasets: [{
+              label: 'Progress (%)',
+              data: masteredData,
+              backgroundColor: subjects.map((_, i) => 
+                `hsl(${240 + i * 30}, 70%, 60%)`
+              ),
+              borderColor: subjects.map((_, i) => 
+                `hsl(${240 + i * 30}, 70%, 50%)`
+              ),
+              borderWidth: 1
+            }]
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {
+                beginAtZero: true,
+                max: 100,
+                title: {
+                  display: true,
+                  text: 'Progress (%)'
+                }
+              }
+            }
+          }
+        });
+      }
+
+      createLearningCurveChart() {
+        const ctx = document.getElementById('learningCurveChart');
+        if (!ctx) return;
+
+        if (this.charts.learningCurve) {
+          this.charts.learningCurve.destroy();
+        }
+
+        const labels = this.analytics.learningCurve.map(item => `Day ${item.day}`);
+        const retention = this.analytics.learningCurve.map(item => item.retention);
+        const speed = this.analytics.learningCurve.map(item => item.speed);
+
+        this.charts.learningCurve = new Chart(ctx, {
+          type: 'line',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Retention Rate (%)',
+              data: retention,
+              borderColor: '#ed8936',
+              backgroundColor: 'rgba(237, 137, 54, 0.1)',
+              tension: 0.4,
+              yAxisID: 'y'
+            }, {
+              label: 'Learning Speed (%)',
+              data: speed,
+              borderColor: '#9f7aea',
+              backgroundColor: 'rgba(159, 122, 234, 0.1)',
+              tension: 0.4,
+              yAxisID: 'y1'
+            }]
+          },
+          options: {
+            responsive: true,
+            interaction: {
+              mode: 'index',
+              intersect: false,
+            },
+            scales: {
+              x: {
+                display: true,
+                title: {
+                  display: true,
+                  text: 'Study Day'
+                }
+              },
+              y: {
+                type: 'linear',
+                display: true,
+                position: 'left',
+                title: {
+                  display: true,
+                  text: 'Retention Rate (%)'
+                }
+              },
+              y1: {
+                type: 'linear',
+                display: true,
+                position: 'right',
+                title: {
+                  display: true,
+                  text: 'Learning Speed (%)'
+                },
+                grid: {
+                  drawOnChartArea: false,
+                },
+              }
+            }
+          }
+        });
+      }
+
+      createSubjectTimeChart() {
+        const ctx = document.getElementById('subjectTimeChart');
+        if (!ctx) return;
+
+        if (this.charts.subjectTime) {
+          this.charts.subjectTime.destroy();
+        }
+
+        const subjects = Object.keys(this.analytics.subjectTime);
+        const times = subjects.map(subject => this.analytics.subjectTime[subject]);
+
+        this.charts.subjectTime = new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: subjects,
+            datasets: [{
+              data: times,
+              backgroundColor: subjects.map((_, i) => 
+                `hsl(${200 + i * 40}, 70%, 60%)`
+              ),
+              borderColor: subjects.map((_, i) => 
+                `hsl(${200 + i * 40}, 70%, 50%)`
+              ),
+              borderWidth: 2
+            }]
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'bottom',
+              },
+              tooltip: {
+                callbacks: {
+                  label: function(context) {
+                    const minutes = context.parsed;
+                    const hours = Math.floor(minutes / 60);
+                    const mins = minutes % 60;
+                    return `${context.label}: ${hours}h ${mins}m`;
+                  }
+                }
+              }
+            }
+          }
+        });
+      }
+
+      updatePerformanceMetrics() {
+        document.getElementById('streakDays').textContent = this.analytics.performance.streakDays;
+        document.getElementById('weeklyGoal').textContent = `${this.analytics.performance.weeklyGoal}%`;
+        document.getElementById('accuracyRate').textContent = `${this.analytics.performance.accuracyRate}%`;
+        document.getElementById('retentionRate').textContent = `${this.analytics.performance.retentionRate}%`;
+      }
+
+      updateInsights() {
+        const insightsList = document.getElementById('insightsList');
+        if (!insightsList) return;
+
+        const insights = this.generateInsights();
+        insightsList.innerHTML = insights.map(insight => `
+          <div class="insight-item">
+            <i class="fas fa-${insight.icon}"></i>
+            <span>${insight.text}</span>
+          </div>
+        `).join('');
+      }
+
+      generateInsights() {
+        const insights = [];
+        
+        if (this.analytics.studySessions.length > 0) {
+          const avgDuration = this.analytics.studySessions.reduce((sum, session) => sum + session.duration, 0) / this.analytics.studySessions.length;
+          
+          if (avgDuration < 45) {
+            insights.push({
+              icon: 'clock',
+              text: 'Try studying for longer sessions to improve retention'
+            });
+          } else if (avgDuration > 120) {
+            insights.push({
+              icon: 'brain',
+              text: 'Consider shorter, more frequent study sessions'
+            });
+          }
+
+          const recentSessions = this.analytics.studySessions.slice(-7);
+          if (recentSessions.length < 5) {
+            insights.push({
+              icon: 'calendar',
+              text: 'Study more consistently to maintain your streak'
+            });
+          }
+
+          const avgScore = this.calculateAverageScore();
+          if (avgScore < 70) {
+            insights.push({
+              icon: 'exclamation-triangle',
+              text: 'Focus on reviewing difficult concepts'
+            });
+          } else if (avgScore > 90) {
+            insights.push({
+              icon: 'star',
+              text: 'Excellent performance! Consider more challenging material'
+            });
+          }
+        }
+
+        if (insights.length === 0) {
+          insights.push({
+            icon: 'info-circle',
+            text: 'Start studying to see personalized insights'
+          });
+        }
+
+        return insights;
+      }
+
+      // Study Experience Methods
+      initializeStudyExperience() {
+        this.loadStudyData();
+        this.initializeSpacedRepetition();
+        this.initializeAchievements();
+        this.updateStudyGoals();
+      }
+
+      loadStudyData() {
+        const savedStudyData = localStorage.getItem('hinduRecallStudyData');
+        if (savedStudyData) {
+          const studyData = JSON.parse(savedStudyData);
+          this.studyGoals = { ...this.studyGoals, ...studyData.goals };
+          this.studyStreak = { ...this.studyStreak, ...studyData.streak };
+          this.achievements = { ...this.achievements, ...studyData.achievements };
+        }
+      }
+
+      saveStudyData() {
+        const studyData = {
+          goals: this.studyGoals,
+          streak: this.studyStreak,
+          achievements: this.achievements
+        };
+        localStorage.setItem('hinduRecallStudyData', JSON.stringify(studyData));
+      }
+
+      initializeStudyMode() {
+        this.updateStudyGoals();
+        this.updateSpacedRepetitionQueue();
+        this.updateAchievements();
+        this.updateStudyStreak();
+      }
+
+      startStudySession() {
+        if (this.studySession.isActive) return;
+
+        this.studySession.isActive = true;
+        this.studySession.isBreak = false;
+        this.studySession.isLongBreak = false;
+        this.studySession.startTime = new Date();
+        this.studySession.currentTime = this.studyGoals.sessionLength * 60; // Convert to seconds
+        this.studySession.totalTime = this.studyGoals.sessionLength * 60;
+
+        document.getElementById('studyTimerContainer').style.display = 'block';
+        document.getElementById('startStudySession').style.display = 'none';
+        document.getElementById('pauseStudySession').style.display = 'inline-flex';
+
+        this.updateTimerDisplay();
+        this.startTimer();
+        this.updateStudyStreak();
+      }
+
+      pauseStudySession() {
+        if (!this.studySession.isActive) return;
+
+        this.studySession.isActive = false;
+        clearInterval(this.studySession.timer);
+
+        document.getElementById('startStudySession').style.display = 'inline-flex';
+        document.getElementById('pauseStudySession').style.display = 'none';
+      }
+
+      resetTimer() {
+        this.studySession.isActive = false;
+        this.studySession.isBreak = false;
+        this.studySession.isLongBreak = false;
+        this.studySession.currentTime = this.studyGoals.sessionLength * 60;
+        this.studySession.totalTime = this.studyGoals.sessionLength * 60;
+
+        clearInterval(this.studySession.timer);
+        this.updateTimerDisplay();
+        this.updateTimerLabel('Study Time');
+
+        document.getElementById('studyTimerContainer').style.display = 'none';
+        document.getElementById('startStudySession').style.display = 'inline-flex';
+        document.getElementById('pauseStudySession').style.display = 'none';
+      }
+
+      skipBreak() {
+        if (this.studySession.isBreak || this.studySession.isLongBreak) {
+          this.startStudySession();
+        }
+      }
+
+      startTimer() {
+        this.studySession.timer = setInterval(() => {
+          if (this.studySession.currentTime > 0) {
+            this.studySession.currentTime--;
+            this.updateTimerDisplay();
+          } else {
+            this.handleTimerComplete();
+          }
+        }, 1000);
+      }
+
+      handleTimerComplete() {
+        clearInterval(this.studySession.timer);
+
+        if (this.studySession.isBreak || this.studySession.isLongBreak) {
+          // Break completed, start new study session
+          this.startStudySession();
+        } else {
+          // Study session completed, start break
+          this.studySession.sessionCount++;
+          this.recordStudySession();
+          
+          if (this.studySession.sessionCount % this.studyGoals.sessionsBeforeLongBreak === 0) {
+            this.startLongBreak();
+          } else {
+            this.startBreak();
+          }
+        }
+      }
+
+      startBreak() {
+        this.studySession.isActive = true;
+        this.studySession.isBreak = true;
+        this.studySession.isLongBreak = false;
+        this.studySession.currentTime = this.studyGoals.breakLength * 60;
+        this.studySession.totalTime = this.studyGoals.breakLength * 60;
+
+        this.updateTimerLabel('Break Time');
+        this.startTimer();
+        this.showNotification('Study session completed! Take a short break.', 'success');
+      }
+
+      startLongBreak() {
+        this.studySession.isActive = true;
+        this.studySession.isBreak = false;
+        this.studySession.isLongBreak = true;
+        this.studySession.currentTime = this.studyGoals.longBreakLength * 60;
+        this.studySession.totalTime = this.studyGoals.longBreakLength * 60;
+
+        this.updateTimerLabel('Long Break');
+        this.startTimer();
+        this.showNotification('Great work! Take a longer break.', 'success');
+      }
+
+      updateTimerDisplay() {
+        const minutes = Math.floor(this.studySession.currentTime / 60);
+        const seconds = this.studySession.currentTime % 60;
+        const display = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        document.getElementById('timerDisplay').textContent = display;
+        
+        // Update progress circle
+        const progress = ((this.studySession.totalTime - this.studySession.currentTime) / this.studySession.totalTime) * 100;
+        const circle = document.getElementById('timerProgress');
+        if (circle) {
+          circle.style.strokeDasharray = `${progress * 3.4} 340`;
+        }
+      }
+
+      updateTimerLabel(label) {
+        document.getElementById('timerLabel').textContent = label;
+      }
+
+      recordStudySession() {
+        const sessionData = {
+          date: new Date().toISOString().split('T')[0],
+          duration: this.studyGoals.sessionLength,
+          concepts: Math.floor(Math.random() * 10) + 5,
+          score: Math.floor(Math.random() * 40) + 60
+        };
+
+        this.analytics.studySessions.push(sessionData);
+        this.saveAnalyticsData();
+        this.updateStudyGoals();
+        this.checkAchievements();
+      }
+
+      updateStudyGoals() {
+        const today = new Date().toISOString().split('T')[0];
+        const todaySessions = this.analytics.studySessions.filter(s => s.date === today);
+        const todayMinutes = todaySessions.reduce((sum, session) => sum + session.duration, 0);
+        
+        const weekStart = new Date();
+        weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+        const weekSessions = this.analytics.studySessions.filter(s => {
+          const sessionDate = new Date(s.date);
+          return sessionDate >= weekStart;
+        });
+        const weekMinutes = weekSessions.reduce((sum, session) => sum + session.duration, 0);
+
+        // Update daily goal
+        const dailyProgress = (todayMinutes / this.studyGoals.daily) * 100;
+        document.getElementById('dailyGoalFill').style.width = `${Math.min(dailyProgress, 100)}%`;
+        document.getElementById('dailyGoalText').textContent = `${todayMinutes} / ${this.studyGoals.daily} min`;
+
+        // Update weekly goal
+        const weeklyProgress = (weekMinutes / this.studyGoals.weekly) * 100;
+        document.getElementById('weeklyGoalFill').style.width = `${Math.min(weeklyProgress, 100)}%`;
+        document.getElementById('weeklyGoalText').textContent = `${weekMinutes} / ${this.studyGoals.weekly} min`;
+
+        // Update streak
+        document.getElementById('streakCount').textContent = this.studyStreak.current;
+      }
+
+      saveStudyGoals() {
+        this.studyGoals.daily = parseInt(document.getElementById('dailyGoalInput').value);
+        this.studyGoals.weekly = parseInt(document.getElementById('weeklyGoalInput').value);
+        this.studyGoals.sessionLength = parseInt(document.getElementById('sessionLengthInput').value);
+        this.studyGoals.breakLength = parseInt(document.getElementById('breakLengthInput').value);
+        this.studyGoals.longBreakLength = parseInt(document.getElementById('longBreakLengthInput').value);
+        this.studyGoals.sessionsBeforeLongBreak = parseInt(document.getElementById('sessionsBeforeLongBreakInput').value);
+
+        this.saveStudyData();
+        this.updateStudyGoals();
+        this.hideModal('studyGoalsModal');
+        this.showNotification('Study goals updated successfully!', 'success');
+      }
+
+      updateStudyStreak() {
+        const today = new Date().toISOString().split('T')[0];
+        
+        if (this.studyStreak.lastStudyDate !== today) {
+          const yesterday = new Date();
+          yesterday.setDate(yesterday.getDate() - 1);
+          const yesterdayStr = yesterday.toISOString().split('T')[0];
+          
+          if (this.studyStreak.lastStudyDate === yesterdayStr) {
+            this.studyStreak.current++;
+          } else {
+            this.studyStreak.current = 1;
+          }
+          
+          this.studyStreak.lastStudyDate = today;
+          this.studyStreak.longest = Math.max(this.studyStreak.longest, this.studyStreak.current);
+          this.saveStudyData();
+        }
+      }
+
+      initializeSpacedRepetition() {
+        // Generate spaced repetition queue based on concepts
+        this.spacedRepetition.queue = [];
+        
+        Object.keys(this.subjects).forEach(subject => {
+          this.subjects[subject].forEach(concept => {
+            const lastReviewed = concept.lastReviewed ? new Date(concept.lastReviewed) : null;
+            const difficulty = concept.difficulty || 2;
+            const level = concept.level || 0;
+            
+            if (!lastReviewed || this.isDueForReview(lastReviewed, level)) {
+              this.spacedRepetition.queue.push({
+                conceptId: concept.id,
+                subject: subject,
+                concept: concept,
+                dueDate: this.calculateNextReview(lastReviewed, level),
+                priority: this.calculatePriority(lastReviewed, level, difficulty)
+              });
+            }
+          });
+        });
+
+        this.spacedRepetition.queue.sort((a, b) => a.priority - b.priority);
+      }
+
+      isDueForReview(lastReviewed, level) {
+        if (!lastReviewed) return true;
+        
+        const daysSinceReview = Math.floor((new Date() - lastReviewed) / (1000 * 60 * 60 * 24));
+        const interval = this.spacedRepetition.intervals[level] || this.spacedRepetition.intervals[this.spacedRepetition.intervals.length - 1];
+        
+        return daysSinceReview >= interval;
+      }
+
+      calculateNextReview(lastReviewed, level) {
+        const interval = this.spacedRepetition.intervals[level] || this.spacedRepetition.intervals[this.spacedRepetition.intervals.length - 1];
+        const nextDate = new Date();
+        nextDate.setDate(nextDate.getDate() + interval);
+        return nextDate;
+      }
+
+      calculatePriority(lastReviewed, level, difficulty) {
+        if (!lastReviewed) return 1; // Highest priority for new concepts
+        
+        const daysSinceReview = Math.floor((new Date() - lastReviewed) / (1000 * 60 * 60 * 24));
+        const interval = this.spacedRepetition.intervals[level] || this.spacedRepetition.intervals[this.spacedRepetition.intervals.length - 1];
+        const overdue = Math.max(0, daysSinceReview - interval);
+        
+        return overdue + (4 - difficulty); // Higher difficulty = higher priority
+      }
+
+      updateSpacedRepetitionQueue() {
+        const today = new Date();
+        const dueToday = this.spacedRepetition.queue.filter(item => {
+          const dueDate = new Date(item.dueDate);
+          return dueDate.toDateString() === today.toDateString();
+        }).length;
+
+        const weekEnd = new Date();
+        weekEnd.setDate(weekEnd.getDate() + 7);
+        const dueThisWeek = this.spacedRepetition.queue.filter(item => {
+          const dueDate = new Date(item.dueDate);
+          return dueDate <= weekEnd;
+        }).length;
+
+        document.getElementById('dueToday').textContent = dueToday;
+        document.getElementById('dueThisWeek').textContent = dueThisWeek;
+
+        this.renderSpacedRepetitionQueue();
+      }
+
+      renderSpacedRepetitionQueue() {
+        const queueContainer = document.getElementById('srQueue');
+        queueContainer.innerHTML = '';
+
+        const topItems = this.spacedRepetition.queue.slice(0, 5);
+        
+        topItems.forEach(item => {
+          const card = document.createElement('div');
+          card.className = 'sr-card';
+          card.innerHTML = `
+            <div class="sr-card-header">
+              <h4>${item.concept.topic}</h4>
+              <span class="sr-priority priority-${Math.min(Math.ceil(item.priority / 2), 3)}">${Math.ceil(item.priority)}</span>
+            </div>
+            <p class="sr-subject">${item.subject}</p>
+            <div class="sr-due-date">
+              <i class="fas fa-calendar"></i>
+              <span>${new Date(item.dueDate).toLocaleDateString()}</span>
+            </div>
+            <button class="sr-review-btn" onclick="dashboard.reviewConcept(${item.conceptId})">
+              <i class="fas fa-eye"></i>
+              Review
+            </button>
+          `;
+          queueContainer.appendChild(card);
+        });
+      }
+
+      reviewConcept(conceptId) {
+        // Find the concept and mark it as reviewed
+        Object.keys(this.subjects).forEach(subject => {
+          const concept = this.subjects[subject].find(c => c.id === conceptId);
+          if (concept) {
+            concept.lastReviewed = new Date().toISOString();
+            concept.level = (concept.level || 0) + 1;
+            this.showNotification(`Reviewed: ${concept.topic}`, 'success');
+            this.updateSpacedRepetitionQueue();
+          }
+        });
+      }
+
+      initializeAchievements() {
+        const achievementDefinitions = [
+          { id: 'first_session', name: 'First Steps', description: 'Complete your first study session', icon: 'fas fa-star', condition: () => this.analytics.studySessions.length >= 1 },
+          { id: 'week_streak', name: 'Week Warrior', description: 'Study for 7 consecutive days', icon: 'fas fa-calendar-week', condition: () => this.studyStreak.current >= 7 },
+          { id: 'month_streak', name: 'Monthly Master', description: 'Study for 30 consecutive days', icon: 'fas fa-calendar-alt', condition: () => this.studyStreak.current >= 30 },
+          { id: 'study_hours', name: 'Study Champion', description: 'Study for 10 hours total', icon: 'fas fa-clock', condition: () => this.analytics.studySessions.reduce((sum, s) => sum + s.duration, 0) >= 600 },
+          { id: 'concepts_mastered', name: 'Concept Master', description: 'Master 50 concepts', icon: 'fas fa-graduation-cap', condition: () => this.analytics.progressData.filter(p => p.mastered).length >= 50 },
+          { id: 'perfect_session', name: 'Perfect Score', description: 'Get 100% on a study session', icon: 'fas fa-trophy', condition: () => this.analytics.studySessions.some(s => s.score === 100) },
+          { id: 'early_bird', name: 'Early Bird', description: 'Study before 8 AM', icon: 'fas fa-sun', condition: () => this.analytics.studySessions.some(s => new Date(s.date + 'T06:00:00').getHours() < 8) },
+          { id: 'night_owl', name: 'Night Owl', description: 'Study after 10 PM', icon: 'fas fa-moon', condition: () => this.analytics.studySessions.some(s => new Date(s.date + 'T22:00:00').getHours() >= 22) },
+          { id: 'weekend_warrior', name: 'Weekend Warrior', description: 'Study on weekends', icon: 'fas fa-calendar-day', condition: () => this.analytics.studySessions.some(s => new Date(s.date).getDay() === 0 || new Date(s.date).getDay() === 6) },
+          { id: 'speed_learner', name: 'Speed Learner', description: 'Complete 5 sessions in one day', icon: 'fas fa-bolt', condition: () => this.analytics.studySessions.filter(s => s.date === new Date().toISOString().split('T')[0]).length >= 5 },
+          { id: 'consistency', name: 'Consistency King', description: 'Study for 14 consecutive days', icon: 'fas fa-crown', condition: () => this.studyStreak.current >= 14 },
+          { id: 'dedication', name: 'Dedication Master', description: 'Study for 100 hours total', icon: 'fas fa-medal', condition: () => this.analytics.studySessions.reduce((sum, s) => sum + s.duration, 0) >= 6000 }
+        ];
+
+        this.achievementDefinitions = achievementDefinitions;
+        this.checkAchievements();
+      }
+
+      checkAchievements() {
+        this.achievementDefinitions.forEach(achievement => {
+          if (!this.achievements.unlocked.includes(achievement.id) && achievement.condition()) {
+            this.achievements.unlocked.push(achievement.id);
+            this.showNotification(`Achievement Unlocked: ${achievement.name}!`, 'success');
+            this.saveStudyData();
+          }
+        });
+        
+        this.updateAchievements();
+      }
+
+      updateAchievements() {
+        document.getElementById('achievementsCount').textContent = `${this.achievements.unlocked.length}/${this.achievements.total}`;
+        
+        const grid = document.getElementById('achievementsGrid');
+        grid.innerHTML = '';
+
+        this.achievementDefinitions.forEach(achievement => {
+          const isUnlocked = this.achievements.unlocked.includes(achievement.id);
+          const card = document.createElement('div');
+          card.className = `achievement-card ${isUnlocked ? 'unlocked' : 'locked'}`;
+          card.innerHTML = `
+            <div class="achievement-icon">
+              <i class="${achievement.icon}"></i>
+            </div>
+            <div class="achievement-content">
+              <h4>${achievement.name}</h4>
+              <p>${achievement.description}</p>
+            </div>
+            <div class="achievement-status">
+              <i class="fas fa-${isUnlocked ? 'check-circle' : 'lock'}"></i>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+      }
+
+      // Search & Filter Methods
+      initializeSearchSystem() {
+        this.buildSearchIndex();
+        this.populateFilterOptions();
+        this.updateQuickFinder();
+      }
+
+      buildSearchIndex() {
+        this.searchIndex = {};
+        
+        Object.keys(this.subjects).forEach(subject => {
+          this.subjects[subject].forEach(concept => {
+            const searchableText = `${concept.topic} ${concept.subtopic} ${concept.caseSection} ${concept.content}`.toLowerCase();
+            const words = searchableText.split(/\s+/);
+            
+            words.forEach(word => {
+              if (word.length > 2) {
+                if (!this.searchIndex[word]) {
+                  this.searchIndex[word] = [];
+                }
+                this.searchIndex[word].push({
+                  conceptId: concept.id,
+                  subject: subject,
+                  concept: concept,
+                  relevance: this.calculateRelevance(word, concept)
+                });
+              }
+            });
+          });
+        });
+      }
+
+      calculateRelevance(word, concept) {
+        let relevance = 0;
+        if (concept.topic.toLowerCase().includes(word)) relevance += 10;
+        if (concept.subtopic.toLowerCase().includes(word)) relevance += 8;
+        if (concept.caseSection.toLowerCase().includes(word)) relevance += 6;
+        if (concept.content.toLowerCase().includes(word)) relevance += 2;
+        return relevance;
+      }
+
+      populateFilterOptions() {
+        const subjectOptions = document.getElementById('subjectFilterOptions');
+        if (subjectOptions) {
+          subjectOptions.innerHTML = '';
+          
+          Object.keys(this.subjects).forEach(subject => {
+            const label = document.createElement('label');
+            label.className = 'filter-checkbox';
+            label.innerHTML = `
+              <input type="checkbox" value="${subject}" class="subject-filter">
+              <span class="checkmark"></span>
+              ${subject}
+            `;
+            subjectOptions.appendChild(label);
+          });
+        }
+
+        const topicOptions = document.getElementById('topicFilterOptions');
+        if (topicOptions) {
+          topicOptions.innerHTML = '';
+          
+          const topics = new Set();
+          Object.values(this.subjects).forEach(concepts => {
+            concepts.forEach(concept => {
+              if (concept.topic) topics.add(concept.topic);
+            });
+          });
+          
+          topics.forEach(topic => {
+            const label = document.createElement('label');
+            label.className = 'filter-checkbox';
+            label.innerHTML = `
+              <input type="checkbox" value="${topic}" class="topic-filter">
+              <span class="checkmark"></span>
+              ${topic}
+            `;
+            topicOptions.appendChild(label);
+          });
+        }
+      }
+
+      handleGlobalSearch(query) {
+        this.searchFilters.query = query;
+        
+        if (query.length < 2) {
+          this.hideSearchResults();
+          return;
+        }
+
+        this.performSearch();
+        this.showSearchResults();
+      }
+
+      performSearch() {
+        const query = this.searchFilters.query.toLowerCase();
+        const words = query.split(/\s+/).filter(word => word.length > 2);
+        
+        if (words.length === 0) {
+          this.searchResults = [];
+          return;
+        }
+
+        const results = new Map();
+        
+        words.forEach(word => {
+          if (this.searchIndex[word]) {
+            this.searchIndex[word].forEach(item => {
+              const key = `${item.subject}-${item.conceptId}`;
+              if (!results.has(key)) {
+                results.set(key, { ...item, totalRelevance: 0 });
+              }
+              results.get(key).totalRelevance += item.relevance;
+            });
+          }
+        });
+
+        this.searchResults = Array.from(results.values())
+          .filter(item => this.applyFilters(item.concept))
+          .sort((a, b) => b.totalRelevance - a.totalRelevance);
+
+        this.renderSearchResults();
+      }
+
+      applyFilters(concept) {
+        if (this.searchFilters.subjects.length > 0 && !this.searchFilters.subjects.includes(concept.subject)) {
+          return false;
+        }
+        if (this.searchFilters.topics.length > 0 && !this.searchFilters.topics.includes(concept.topic)) {
+          return false;
+        }
+        if (this.searchFilters.difficulties.length > 0 && !this.searchFilters.difficulties.includes(concept.difficulty)) {
+          return false;
+        }
+        return true;
+      }
+
+      renderSearchResults() {
+        const resultsContainer = document.getElementById('searchResults');
+        if (!resultsContainer) return;
+        
+        resultsContainer.innerHTML = '';
+
+        if (this.searchResults.length === 0) {
+          resultsContainer.innerHTML = `
+            <div class="no-results">
+              <i class="fas fa-search"></i>
+              <p>No concepts found matching your search.</p>
+            </div>
+          `;
+          return;
+        }
+
+        this.searchResults.slice(0, 8).forEach(result => {
+          const resultItem = document.createElement('div');
+          resultItem.className = 'search-result-item';
+          resultItem.innerHTML = `
+            <div class="result-content">
+              <h4>${result.concept.topic}</h4>
+              <p class="result-subject">${result.subject}</p>
+              <p class="result-preview">${result.concept.content.substring(0, 100)}...</p>
+            </div>
+            <div class="result-actions">
+              <button class="result-btn" onclick="dashboard.openConceptFromSearch('${result.subject}', ${result.conceptId})">
+                <i class="fas fa-eye"></i>
+                View
+              </button>
+            </div>
+          `;
+          resultsContainer.appendChild(resultItem);
+        });
+      }
+
+      showSearchResults() {
+        const resultsContainer = document.getElementById('searchResults');
+        if (resultsContainer) {
+          resultsContainer.style.display = 'block';
+        }
+      }
+
+      hideSearchResults() {
+        const resultsContainer = document.getElementById('searchResults');
+        if (resultsContainer) {
+          resultsContainer.style.display = 'none';
+        }
+      }
+
+      openConceptFromSearch(subject, conceptId) {
+        this.currentSubject = subject;
+        this.showSection('concepts');
+        this.renderConcepts();
+        
+        setTimeout(() => {
+          const conceptRow = document.querySelector(`[data-concept-id="${conceptId}"]`);
+          if (conceptRow) {
+            conceptRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            conceptRow.classList.add('highlighted');
+            setTimeout(() => conceptRow.classList.remove('highlighted'), 3000);
+          }
+        }, 100);
+        
+        this.hideSearchResults();
+      }
+
+      updateQuickFinder() {
+        this.handleQuickFinder('all');
+      }
+
+      handleQuickFinder(category) {
+        document.querySelectorAll('.finder-category').forEach(btn => btn.classList.remove('active'));
+        const activeBtn = document.querySelector(`[data-category="${category}"]`);
+        if (activeBtn) {
+          activeBtn.classList.add('active');
+        }
+
+        let filteredConcepts = [];
+        switch (category) {
+          case 'all':
+            filteredConcepts = this.getAllConcepts();
+            break;
+          case 'recent':
+            filteredConcepts = this.getRecentConcepts();
+            break;
+          case 'difficult':
+            filteredConcepts = this.getDifficultConcepts();
+            break;
+          case 'mastered':
+            filteredConcepts = this.getMasteredConcepts();
+            break;
+          case 'due':
+            filteredConcepts = this.getDueConcepts();
+            break;
+        }
+
+        this.renderQuickFinderResults(filteredConcepts);
+      }
+
+      getAllConcepts() {
+        const concepts = [];
+        Object.keys(this.subjects).forEach(subject => {
+          this.subjects[subject].forEach(concept => {
+            concepts.push({ ...concept, subject });
+          });
+        });
+        return concepts;
+      }
+
+      getRecentConcepts() {
+        const concepts = this.getAllConcepts();
+        return concepts
+          .filter(concept => concept.lastReviewed)
+          .sort((a, b) => new Date(b.lastReviewed) - new Date(a.lastReviewed))
+          .slice(0, 10);
+      }
+
+      getDifficultConcepts() {
+        const concepts = this.getAllConcepts();
+        return concepts
+          .filter(concept => concept.difficulty >= 3)
+          .sort((a, b) => b.difficulty - a.difficulty);
+      }
+
+      getMasteredConcepts() {
+        const concepts = this.getAllConcepts();
+        return concepts.filter(concept => {
+          const progress = this.analytics.progressData.find(p => p.conceptId === concept.id);
+          return progress && progress.mastered;
+        });
+      }
+
+      getDueConcepts() {
+        return this.spacedRepetition.queue
+          .filter(item => {
+            const dueDate = new Date(item.dueDate);
+            const today = new Date();
+            return dueDate.toDateString() === today.toDateString();
+          })
+          .map(item => ({ ...item.concept, subject: item.subject }));
+      }
+
+      renderQuickFinderResults(concepts) {
+        const resultsContainer = document.getElementById('finderResults');
+        const countElement = document.getElementById('finderCount');
+        
+        if (countElement) {
+          countElement.textContent = `${concepts.length} concepts`;
+        }
+        
+        if (resultsContainer) {
+          resultsContainer.innerHTML = '';
+
+          concepts.slice(0, 6).forEach(concept => {
+            const resultItem = document.createElement('div');
+            resultItem.className = 'finder-result-item';
+            resultItem.innerHTML = `
+              <div class="finder-result-content">
+                <h4>${concept.topic}</h4>
+                <p class="finder-result-subject">${concept.subject}</p>
+                <div class="finder-result-meta">
+                  <span class="difficulty-badge difficulty-${concept.difficulty}">
+                    ${['Easy', 'Medium', 'Hard', 'Expert'][concept.difficulty - 1]}
+                  </span>
+                </div>
+              </div>
+              <div class="finder-result-actions">
+                <button class="finder-btn" onclick="dashboard.openConceptFromFinder('${concept.subject}', ${concept.id})">
+                  <i class="fas fa-eye"></i>
+                </button>
+              </div>
+            `;
+            resultsContainer.appendChild(resultItem);
+          });
+        }
+      }
+
+      openConceptFromFinder(subject, conceptId) {
+        this.currentSubject = subject;
+        this.showSection('concepts');
+        this.renderConcepts();
+        
+        setTimeout(() => {
+          const conceptRow = document.querySelector(`[data-concept-id="${conceptId}"]`);
+          if (conceptRow) {
+            conceptRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            conceptRow.classList.add('highlighted');
+            setTimeout(() => conceptRow.classList.remove('highlighted'), 3000);
+          }
+        }, 100);
+      }
+
+      applySearchFilters() {
+        // Collect filter values
+        this.searchFilters.subjects = Array.from(document.querySelectorAll('.subject-filter:checked')).map(cb => cb.value);
+        this.searchFilters.topics = Array.from(document.querySelectorAll('.topic-filter:checked')).map(cb => cb.value);
+        this.searchFilters.difficulties = Array.from(document.querySelectorAll('.difficulty-filter:checked')).map(cb => parseInt(cb.value));
+        this.searchFilters.dateFrom = document.getElementById('dateFrom')?.value || null;
+        this.searchFilters.dateTo = document.getElementById('dateTo')?.value || null;
+        this.searchFilters.masteryStatus = Array.from(document.querySelectorAll('.mastery-filter:checked')).map(cb => cb.value);
+        this.searchFilters.sortBy = document.getElementById('sortBy')?.value || 'relevance';
+
+        this.updateActiveFilterTags();
+        this.performSearch();
+        this.hideModal('searchFiltersModal');
+        
+        if (this.searchFilters.query) {
+          this.showSearchResults();
+        }
+      }
+
+      clearAllFilters() {
+        // Reset all filter inputs
+        document.querySelectorAll('.filter-checkbox input').forEach(cb => cb.checked = false);
+        const dateFrom = document.getElementById('dateFrom');
+        const dateTo = document.getElementById('dateTo');
+        const sortBy = document.getElementById('sortBy');
+        
+        if (dateFrom) dateFrom.value = '';
+        if (dateTo) dateTo.value = '';
+        if (sortBy) sortBy.value = 'relevance';
+        
+        // Reset search filters
+        this.searchFilters = {
+          query: this.searchFilters.query, // Keep the search query
+          subjects: [],
+          topics: [],
+          difficulties: [2],
+          dateFrom: null,
+          dateTo: null,
+          masteryStatus: ['learning'],
+          sortBy: 'relevance'
+        };
+        
+        this.updateActiveFilterTags();
+        this.performSearch();
+      }
+
+      updateActiveFilterTags() {
+        const tagsContainer = document.getElementById('activeFilterTags');
+        if (!tagsContainer) return;
+        
+        tagsContainer.innerHTML = '';
+
+        const activeFilters = [];
+        
+        if (this.searchFilters.subjects.length > 0) {
+          activeFilters.push(`Subjects: ${this.searchFilters.subjects.join(', ')}`);
+        }
+        if (this.searchFilters.topics.length > 0) {
+          activeFilters.push(`Topics: ${this.searchFilters.topics.join(', ')}`);
+        }
+        if (this.searchFilters.difficulties.length > 0 && this.searchFilters.difficulties.length < 4) {
+          const difficultyNames = this.searchFilters.difficulties.map(d => ['Easy', 'Medium', 'Hard', 'Expert'][d-1]);
+          activeFilters.push(`Difficulty: ${difficultyNames.join(', ')}`);
+        }
+        if (this.searchFilters.dateFrom || this.searchFilters.dateTo) {
+          const dateRange = `${this.searchFilters.dateFrom || 'Any'} to ${this.searchFilters.dateTo || 'Any'}`;
+          activeFilters.push(`Date: ${dateRange}`);
+        }
+        if (this.searchFilters.masteryStatus.length > 0 && this.searchFilters.masteryStatus.length < 3) {
+          activeFilters.push(`Status: ${this.searchFilters.masteryStatus.join(', ')}`);
+        }
+
+        activeFilters.forEach(filter => {
+          const tag = document.createElement('span');
+          tag.className = 'active-filter-tag';
+          tag.textContent = filter;
+          tagsContainer.appendChild(tag);
+        });
+      }
+
+      // Export/Import Methods
+      initializeExportImport() {
+        this.setupExportImportEventListeners();
+      }
+
+      setupExportImportEventListeners() {
+        // Export buttons
+        document.getElementById('exportPDF')?.addEventListener('click', () => this.exportAsPDF());
+        document.getElementById('exportCSV')?.addEventListener('click', () => this.exportAsCSV());
+        document.getElementById('exportAllData')?.addEventListener('click', () => this.exportAllData());
+        
+        // Import buttons
+        document.getElementById('importData')?.addEventListener('click', () => this.importData());
+        document.getElementById('importFileInput')?.addEventListener('change', (e) => this.handleFileImport(e));
+        
+        // Share buttons
+        document.getElementById('shareConcept')?.addEventListener('click', () => this.shareConcept());
+        document.getElementById('shareAllConcepts')?.addEventListener('click', () => this.shareAllConcepts());
+        
+        // Import share code
+        document.getElementById('importShareCode')?.addEventListener('click', () => {
+          const shareCode = document.getElementById('shareCodeInput')?.value.trim();
+          if (shareCode) {
+            this.importSharedData(shareCode);
+            document.getElementById('shareCodeInput').value = '';
+          } else {
+            this.showNotification('Please enter a share code.', 'error');
+          }
+        });
+      }
+
+      exportAsPDF() {
+        const { jsPDF } = window.jspdf;
+        if (!jsPDF) {
+          this.showNotification('PDF library not loaded. Please refresh the page.', 'error');
+          return;
+        }
+
+        const doc = new jsPDF();
+        const pageWidth = doc.internal.pageSize.width;
+        let yPosition = 20;
+
+        // Header
+        doc.setFontSize(20);
+        doc.setTextColor(0, 24, 81);
+        doc.text('Hindu Recall - Study Dashboard Report', pageWidth / 2, yPosition, { align: 'center' });
+        yPosition += 20;
+
+        // Date
+        doc.setFontSize(12);
+        doc.setTextColor(100);
+        doc.text(`Generated on: ${new Date().toLocaleDateString()}`, pageWidth / 2, yPosition, { align: 'center' });
+        yPosition += 20;
+
+        // Summary Statistics
+        doc.setFontSize(16);
+        doc.setTextColor(0, 24, 81);
+        doc.text('Summary Statistics', 20, yPosition);
+        yPosition += 15;
+
+        const totalConcepts = this.calculateTotalConcepts();
+        const masteredConcepts = this.calculateMasteredConcepts();
+        const totalStudyTime = this.calculateTotalStudyTime();
+        const currentStreak = this.studyStreak.current;
+
+        doc.setFontSize(10);
+        doc.setTextColor(50);
+        doc.text(`Total Concepts: ${totalConcepts}`, 30, yPosition);
+        yPosition += 8;
+        doc.text(`Mastered Concepts: ${masteredConcepts}`, 30, yPosition);
+        yPosition += 8;
+        doc.text(`Total Study Time: ${Math.round(totalStudyTime / 60)} minutes`, 30, yPosition);
+        yPosition += 8;
+        doc.text(`Current Streak: ${currentStreak} days`, 30, yPosition);
+        yPosition += 15;
+
+        // Concepts by Subject
+        Object.keys(this.subjects).forEach(subject => {
+          if (yPosition > 250) {
+            doc.addPage();
+            yPosition = 20;
+          }
+
+          doc.setFontSize(14);
+          doc.setTextColor(0, 24, 81);
+          doc.text(subject, 20, yPosition);
+          yPosition += 10;
+
+          doc.setFontSize(9);
+          doc.setTextColor(50);
+          
+          this.subjects[subject].forEach(concept => {
+            if (yPosition > 270) {
+              doc.addPage();
+              yPosition = 20;
+            }
+
+            const conceptText = `${concept.topic} - ${concept.subtopic}`;
+            const difficulty = ['Easy', 'Medium', 'Hard', 'Expert'][concept.difficulty - 1];
+            const progress = this.getConceptProgress(concept.id);
+            
+            doc.text(conceptText, 30, yPosition);
+            yPosition += 5;
+            doc.text(`Difficulty: ${difficulty} | Progress: ${progress}%`, 35, yPosition);
+            yPosition += 8;
+          });
+          yPosition += 5;
+        });
+
+        // Save the PDF
+        const fileName = `hindu-recall-report-${new Date().toISOString().split('T')[0]}.pdf`;
+        doc.save(fileName);
+        this.showNotification('PDF report exported successfully!', 'success');
+      }
+
+      exportAsCSV() {
+        let csvContent = 'Subject,Topic,Subtopic,Case Section,Difficulty,Progress,Last Reviewed,Mastered\n';
+        
+        Object.keys(this.subjects).forEach(subject => {
+          this.subjects[subject].forEach(concept => {
+            const progress = this.getConceptProgress(concept.id);
+            const difficulty = ['Easy', 'Medium', 'Hard', 'Expert'][concept.difficulty - 1];
+            const lastReviewed = concept.lastReviewed ? new Date(concept.lastReviewed).toLocaleDateString() : 'Never';
+            const mastered = this.isConceptMastered(concept.id) ? 'Yes' : 'No';
+            
+            const row = [
+              subject,
+              concept.topic,
+              concept.subtopic,
+              concept.caseSection,
+              difficulty,
+              `${progress}%`,
+              lastReviewed,
+              mastered
+            ].map(field => `"${field}"`).join(',');
+            
+            csvContent += row + '\n';
+          });
+        });
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', `hindu-recall-concepts-${new Date().toISOString().split('T')[0]}.csv`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        this.showNotification('CSV file exported successfully!', 'success');
+      }
+
+      exportAllData() {
+        const exportData = {
+          subjects: this.subjects,
+          analytics: this.analytics,
+          studyGoals: this.studyGoals,
+          studyStreak: this.studyStreak,
+          achievements: this.achievements,
+          spacedRepetition: this.spacedRepetition,
+          exportDate: new Date().toISOString(),
+          version: '1.0'
+        };
+
+        const dataStr = JSON.stringify(exportData, null, 2);
+        const blob = new Blob([dataStr], { type: 'application/json' });
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.setAttribute('href', url);
+        link.setAttribute('download', `hindu-recall-backup-${new Date().toISOString().split('T')[0]}.json`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        this.showNotification('Complete data backup exported successfully!', 'success');
+      }
+
+      calculateTotalConcepts() {
+        return Object.values(this.subjects).reduce((total, concepts) => total + concepts.length, 0);
+      }
+
+      calculateMasteredConcepts() {
+        return this.analytics.progressData.filter(p => p.mastered).length;
+      }
+
+      calculateTotalStudyTime() {
+        return this.analytics.studySessions.reduce((total, session) => total + session.duration, 0);
+      }
+
+      getConceptProgress(conceptId) {
+        const progress = this.analytics.progressData.find(p => p.conceptId === conceptId);
+        return progress ? Math.round(progress.progress) : 0;
+      }
+
+      isConceptMastered(conceptId) {
+        const progress = this.analytics.progressData.find(p => p.conceptId === conceptId);
+        return progress ? progress.mastered : false;
+      }
+
+      importData() {
+        document.getElementById('importFileInput').click();
+      }
+
+      handleFileImport(event) {
+        const file = event.target.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          try {
+            const data = JSON.parse(e.target.result);
+            
+            if (data.version && data.subjects) {
+              // Full backup import
+              this.importFullBackup(data);
+            } else if (data.subjects) {
+              // Subjects only import
+              this.importSubjects(data.subjects);
+            } else {
+              this.showNotification('Invalid file format. Please use a valid backup file.', 'error');
+            }
+          } catch (error) {
+            this.showNotification('Error reading file. Please check the file format.', 'error');
+          }
+        };
+        reader.readAsText(file);
+        
+        // Reset file input
+        event.target.value = '';
+      }
+
+      importFullBackup(data) {
+        if (confirm('This will replace all your current data. Are you sure you want to continue?')) {
+          this.subjects = data.subjects || {};
+          this.analytics = data.analytics || this.analytics;
+          this.studyGoals = data.studyGoals || this.studyGoals;
+          this.studyStreak = data.studyStreak || this.studyStreak;
+          this.achievements = data.achievements || this.achievements;
+          this.spacedRepetition = data.spacedRepetition || this.spacedRepetition;
+          
+          this.saveData();
+          this.renderSubjects();
+          this.updateStats();
+          this.initializeAnalytics();
+          this.initializeStudyExperience();
+          this.initializeSearchSystem();
+          
+          this.showNotification('Data imported successfully!', 'success');
+        }
+      }
+
+      importSubjects(subjects) {
+        const existingSubjects = Object.keys(this.subjects);
+        const newSubjects = Object.keys(subjects);
+        const conflicts = newSubjects.filter(subject => existingSubjects.includes(subject));
+        
+        if (conflicts.length > 0) {
+          const conflictMessage = `The following subjects already exist: ${conflicts.join(', ')}. Do you want to merge or replace them?`;
+          const choice = confirm(conflictMessage + '\n\nClick OK to merge, Cancel to replace all.');
+          
+          if (choice) {
+            // Merge subjects
+            Object.keys(subjects).forEach(subject => {
+              if (this.subjects[subject]) {
+                this.subjects[subject] = [...this.subjects[subject], ...subjects[subject]];
+              } else {
+                this.subjects[subject] = subjects[subject];
+              }
+            });
+          } else {
+            // Replace all
+            this.subjects = subjects;
+          }
+        } else {
+          // No conflicts, just add new subjects
+          this.subjects = { ...this.subjects, ...subjects };
+        }
+        
+        this.saveData();
+        this.renderSubjects();
+        this.updateStats();
+        this.initializeSearchSystem();
+        
+        this.showNotification('Subjects imported successfully!', 'success');
+      }
+
+      shareConcept() {
+        const currentConcept = this.getCurrentConcept();
+        if (!currentConcept) {
+          this.showNotification('Please select a concept to share.', 'error');
+          return;
+        }
+
+        const shareData = {
+          type: 'concept',
+          concept: currentConcept,
+          subject: this.currentSubject,
+          sharedBy: 'Hindu Recall User',
+          sharedDate: new Date().toISOString(),
+          version: '1.0'
+        };
+
+        this.generateShareLink(shareData);
+      }
+
+      shareAllConcepts() {
+        const shareData = {
+          type: 'all_concepts',
+          subjects: this.subjects,
+          sharedBy: 'Hindu Recall User',
+          sharedDate: new Date().toISOString(),
+          version: '1.0'
+        };
+
+        this.generateShareLink(shareData);
+      }
+
+      generateShareLink(shareData) {
+        const dataStr = JSON.stringify(shareData, null, 2);
+        const blob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        
+        // Create share modal content
+        const modalContent = `
+          <div class="share-modal-content">
+            <h3>Share ${shareData.type === 'concept' ? 'Concept' : 'All Concepts'}</h3>
+            <p>Your data has been prepared for sharing. Download the file and share it with others.</p>
+            
+            <div class="share-options">
+              <div class="share-option">
+                <h4>Download Share File</h4>
+                <p>Download a file that others can import into their Hindu Recall dashboard.</p>
+                <button class="btn btn-primary" onclick="dashboard.downloadShareFile('${url}', '${shareData.type}')">
+                  <i class="fas fa-download"></i>
+                  Download File
+                </button>
+              </div>
+              
+              <div class="share-option">
+                <h4>Share via Email</h4>
+                <p>Send the file directly via email (requires email client).</p>
+                <button class="btn btn-secondary" onclick="dashboard.shareViaEmail('${url}', '${shareData.type}')">
+                  <i class="fas fa-envelope"></i>
+                  Open Email Client
+                </button>
+              </div>
+              
+              <div class="share-option">
+                <h4>Copy Share Code</h4>
+                <p>Copy a text representation for sharing in messages or forums.</p>
+                <div class="share-code-container">
+                  <textarea id="shareCode" readonly rows="4" class="share-code-textarea"></textarea>
+                  <button class="btn btn-secondary" onclick="dashboard.copyShareCode()">
+                    <i class="fas fa-copy"></i>
+                    Copy Code
+                  </button>
+                </div>
+              </div>
+            </div>
+            
+            <div class="share-instructions">
+              <h4>Instructions for Recipients:</h4>
+              <ol>
+                <li>Download the shared file</li>
+                <li>Open Hindu Recall dashboard</li>
+                <li>Go to Settings → Import Data</li>
+                <li>Select the downloaded file</li>
+                <li>Choose to merge or replace existing data</li>
+              </ol>
+            </div>
+          </div>
+        `;
+
+        // Show share modal
+        this.showModal('shareModal', modalContent);
+        
+        // Generate share code
+        const shareCode = this.generateShareCode(shareData);
+        document.getElementById('shareCode').value = shareCode;
+      }
+
+      downloadShareFile(url, type) {
+        const link = document.createElement('a');
+        link.setAttribute('href', url);
+        link.setAttribute('download', `hindu-recall-shared-${type}-${new Date().toISOString().split('T')[0]}.json`);
+        link.style.visibility = 'hidden';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        this.showNotification('Share file downloaded successfully!', 'success');
+      }
+
+      shareViaEmail(url, type) {
+        const subject = encodeURIComponent(`Hindu Recall - Shared ${type === 'concept' ? 'Concept' : 'Concepts'}`);
+        const body = encodeURIComponent(`I'm sharing ${type === 'concept' ? 'a concept' : 'concepts'} from Hindu Recall with you.
+
+To import this data:
+1. Download the attached file
+2. Open Hindu Recall dashboard
+3. Go to Settings → Import Data
+4. Select the downloaded file
+5. Choose to merge or replace existing data
+
+Happy studying!`);
+        
+        window.open(`mailto:?subject=${subject}&body=${body}`);
+      }
+
+      copyShareCode() {
+        const shareCode = document.getElementById('shareCode');
+        shareCode.select();
+        document.execCommand('copy');
+        
+        this.showNotification('Share code copied to clipboard!', 'success');
+      }
+
+      generateShareCode(shareData) {
+        // Create a compressed, shareable text representation
+        const compressedData = {
+          t: shareData.type,
+          d: shareData.type === 'concept' ? shareData.concept : shareData.subjects,
+          s: shareData.sharedBy,
+          v: shareData.version
+        };
+        
+        return btoa(JSON.stringify(compressedData));
+      }
+
+      importSharedData(shareCode) {
+        try {
+          const decodedData = JSON.parse(atob(shareCode));
+          const shareData = {
+            type: decodedData.t,
+            concept: decodedData.t === 'concept' ? decodedData.d : null,
+            subjects: decodedData.t === 'all_concepts' ? decodedData.d : null,
+            sharedBy: decodedData.s,
+            version: decodedData.v
+          };
+          
+          if (shareData.type === 'concept' && shareData.concept) {
+            this.importSharedConcept(shareData.concept);
+          } else if (shareData.type === 'all_concepts' && shareData.subjects) {
+            this.importSubjects(shareData.subjects);
+          }
+          
+          this.showNotification('Shared data imported successfully!', 'success');
+        } catch (error) {
+          this.showNotification('Invalid share code. Please check the code and try again.', 'error');
+        }
+      }
+
+      importSharedConcept(concept) {
+        const subject = concept.subject || 'Shared Concepts';
+        
+        if (!this.subjects[subject]) {
+          this.subjects[subject] = [];
+        }
+        
+        // Check if concept already exists
+        const existingConcept = this.subjects[subject].find(c => 
+          c.topic === concept.topic && c.subtopic === concept.subtopic
+        );
+        
+        if (existingConcept) {
+          if (confirm('This concept already exists. Do you want to update it with the shared version?')) {
+            const index = this.subjects[subject].indexOf(existingConcept);
+            this.subjects[subject][index] = { ...concept, id: existingConcept.id };
+          }
+        } else {
+          this.subjects[subject].push({ ...concept, id: Date.now() });
+        }
+        
+        this.saveData();
+        this.renderSubjects();
+        this.updateStats();
+        this.initializeSearchSystem();
+      }
+
+      getCurrentConcept() {
+        const selectedRow = document.querySelector('.concept-row.selected');
+        if (selectedRow) {
+          const conceptId = parseInt(selectedRow.dataset.conceptId);
+          return this.subjects[this.currentSubject]?.find(c => c.id === conceptId);
+        }
+        return null;
       }
     }
 

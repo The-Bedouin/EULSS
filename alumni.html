@@ -19,6 +19,10 @@
       text-align: center;
       position: relative;
       overflow: hidden;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .alumni-hero::before {
@@ -37,6 +41,8 @@
       z-index: 2;
       max-width: 800px;
       margin: 0 auto;
+      padding: 0 2rem;
+      width: 100%;
     }
 
     .alumni-hero h1 {
@@ -48,6 +54,7 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
+      line-height: 1.1;
     }
 
     .alumni-hero p {
@@ -56,6 +63,9 @@
       opacity: 0.95;
       line-height: 1.6;
       font-weight: 300;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .alumni-stats {
@@ -369,13 +379,75 @@
       transform: translateY(-3px);
     }
 
+    /* Enhanced Responsive Styles for Alumni Page */
+    @media (max-width: 1200px) {
+      .alumni-hero h1 {
+        font-size: 3.5rem;
+      }
+      
+      .alumni-hero p {
+        font-size: 1.25rem;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .alumni-hero {
+        min-height: 90vh;
+        padding: 100px 0 70px;
+      }
+      
+      .alumni-hero-content {
+        padding: 0 1.5rem;
+      }
+      
+      .alumni-hero h1 {
+        font-size: 3.2rem;
+        line-height: 1.2;
+      }
+      
+      .alumni-hero p {
+        font-size: 1.2rem;
+        max-width: 550px;
+      }
+      
+      .stat-number {
+        font-size: 3rem;
+      }
+      
+      .showcase-text h2 {
+        font-size: 2.8rem;
+      }
+      
+      .cta-content h2 {
+        font-size: 2.8rem;
+      }
+    }
+
     @media (max-width: 768px) {
+      .alumni-hero {
+        min-height: 85vh;
+        padding: 80px 0 60px;
+      }
+      
+      .alumni-hero-content {
+        padding: 0 1.25rem;
+      }
+      
       .alumni-hero h1 {
         font-size: 2.8rem;
+        margin-bottom: 15px;
+        line-height: 1.2;
+      }
+      
+      .alumni-hero p {
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+        max-width: 500px;
       }
       
       .alumni-stats {
         margin: 60px 0;
+        padding: 0 15px;
       }
       
       .alumni-stats .container {
@@ -383,15 +455,58 @@
         gap: 25px;
       }
       
+      .stat-card {
+        padding: 40px 25px;
+      }
+      
+      .stat-number {
+        font-size: 2.8rem;
+        margin-bottom: 12px;
+      }
+      
+      .stat-label {
+        font-size: 1.1rem;
+      }
+      
+      .alumni-features {
+        padding: 80px 0;
+      }
+      
       .features-grid {
         grid-template-columns: 1fr;
         gap: 30px;
+        margin-top: 60px;
+        padding: 0 15px;
+      }
+      
+      .feature-card {
+        padding: 40px 30px;
+      }
+      
+      .feature-icon {
+        width: 80px;
+        height: 80px;
+        margin-bottom: 25px;
+      }
+      
+      .feature-icon i {
+        font-size: 2rem;
+      }
+      
+      .feature-card h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+      }
+      
+      .feature-card p {
+        font-size: 1rem;
       }
       
       .showcase-content {
         grid-template-columns: 1fr;
         gap: 50px;
         text-align: center;
+        padding: 0 15px;
       }
       
       .showcase-text {
@@ -400,6 +515,12 @@
       
       .showcase-text h2 {
         font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+      
+      .showcase-text p {
+        font-size: 1.1rem;
+        margin-bottom: 25px;
       }
       
       .showcase-image img {
@@ -407,42 +528,238 @@
         height: 450px;
       }
       
+      .image-caption {
+        padding: 12px 25px;
+        font-size: 1rem;
+        bottom: -15px;
+      }
+      
+      .cta-section {
+        padding: 80px 0;
+      }
+      
+      .cta-content h2 {
+        font-size: 2.5rem;
+        margin-bottom: 20px;
+      }
+      
+      .cta-content p {
+        font-size: 1.1rem;
+        margin-bottom: 40px;
+      }
+      
       .cta-buttons {
         flex-direction: column;
         align-items: center;
+        gap: 20px;
       }
       
       .btn-primary, .btn-secondary {
         width: 100%;
         max-width: 300px;
         justify-content: center;
+        padding: 16px 30px;
+        font-size: 1rem;
       }
       
       .section-title {
         font-size: 2.2rem;
+        margin-bottom: 15px;
       }
     }
 
     @media (max-width: 480px) {
-      .alumni-hero h1 {
-        font-size: 2.2rem;
+      .alumni-hero {
+        min-height: 80vh;
+        padding: 60px 0 40px;
       }
       
-      .stat-card, .feature-card {
+      .alumni-hero-content {
+        padding: 0 1rem;
+      }
+      
+      .alumni-hero h1 {
+        font-size: 2.2rem;
+        margin-bottom: 12px;
+        line-height: 1.3;
+      }
+      
+      .alumni-hero p {
+        font-size: 1rem;
+        margin-bottom: 25px;
+        line-height: 1.5;
+        max-width: 100%;
+      }
+      
+      .alumni-stats {
+        margin: 40px 0;
+        padding: 0 10px;
+      }
+      
+      .stat-card {
         padding: 30px 20px;
+      }
+      
+      .stat-number {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+      }
+      
+      .stat-label {
+        font-size: 1rem;
+      }
+      
+      .alumni-features {
+        padding: 60px 0;
+      }
+      
+      .features-grid {
+        gap: 25px;
+        margin-top: 50px;
+        padding: 0 10px;
+      }
+      
+      .feature-card {
+        padding: 30px 20px;
+      }
+      
+      .feature-icon {
+        width: 70px;
+        height: 70px;
+        margin-bottom: 20px;
+      }
+      
+      .feature-icon i {
+        font-size: 1.8rem;
+      }
+      
+      .feature-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 12px;
+      }
+      
+      .feature-card p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+      }
+      
+      .alumni-showcase {
+        padding: 60px 0;
+      }
+      
+      .showcase-content {
+        gap: 40px;
+        padding: 0 10px;
       }
       
       .showcase-text h2 {
         font-size: 2rem;
+        margin-bottom: 15px;
       }
       
-      .cta-content h2 {
-        font-size: 2.2rem;
+      .showcase-text p {
+        font-size: 1rem;
+        margin-bottom: 20px;
       }
       
       .showcase-image img {
         max-width: 250px;
         height: 375px;
+      }
+      
+      .image-caption {
+        padding: 10px 20px;
+        font-size: 0.9rem;
+        bottom: -12px;
+      }
+      
+      .cta-section {
+        padding: 60px 0;
+      }
+      
+      .cta-content h2 {
+        font-size: 2.2rem;
+        margin-bottom: 15px;
+      }
+      
+      .cta-content p {
+        font-size: 1rem;
+        margin-bottom: 30px;
+      }
+      
+      .btn-primary, .btn-secondary {
+        max-width: 280px;
+        padding: 14px 25px;
+        font-size: 0.95rem;
+      }
+      
+      .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 12px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .alumni-hero {
+        min-height: 75vh;
+        padding: 50px 0 30px;
+      }
+      
+      .alumni-hero-content {
+        padding: 0 0.75rem;
+      }
+      
+      .alumni-hero h1 {
+        font-size: 1.9rem;
+        line-height: 1.3;
+        margin-bottom: 10px;
+      }
+      
+      .alumni-hero p {
+        font-size: 0.9rem;
+        line-height: 1.4;
+        margin-bottom: 20px;
+      }
+      
+      .stat-number {
+        font-size: 2.2rem;
+      }
+      
+      .stat-label {
+        font-size: 0.9rem;
+      }
+      
+      .feature-card h3 {
+        font-size: 1.2rem;
+      }
+      
+      .feature-card p {
+        font-size: 0.9rem;
+      }
+      
+      .showcase-text h2 {
+        font-size: 1.8rem;
+      }
+      
+      .showcase-text p {
+        font-size: 0.9rem;
+      }
+      
+      .cta-content h2 {
+        font-size: 1.9rem;
+      }
+      
+      .cta-content p {
+        font-size: 0.9rem;
+      }
+      
+      .section-title {
+        font-size: 1.6rem;
+      }
+      
+      .showcase-image img {
+        max-width: 220px;
+        height: 330px;
       }
     }
   </style>
@@ -543,7 +860,7 @@
         <p>Join thousands of successful professionals who have walked the same halls and are now making a difference in the world.</p>
       </div>
       <div class="showcase-image">
-        <img src="naruto.jpeg" alt="EULSS Alumni Community" />
+        <img src="img src/alumni.jpg" alt="EULSS Alumni Community" />
         <div class="image-caption">Alumni for Life</div>
       </div>
     </div>
@@ -663,6 +980,34 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    // Mobile menu toggle
+    const burger = document.querySelector('.burger');
+    const navLinks = document.querySelector('.nav-links');
+    
+    burger.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      burger.classList.toggle('active');
+    });
+
+    // Close mobile menu when clicking on a link
+    const navLinksItems = document.querySelectorAll('.nav-links a');
+    navLinksItems.forEach(link => {
+      link.addEventListener('click', () => {
+        navLinks.classList.remove('open');
+        burger.classList.remove('active');
+      });
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!burger.contains(e.target) && !navLinks.contains(e.target)) {
+        navLinks.classList.remove('open');
+        burger.classList.remove('active');
+      }
+    });
+  </script>
 
 </body>
 </html>
