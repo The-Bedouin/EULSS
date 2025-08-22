@@ -1129,7 +1129,7 @@ html {
 /* ——— Employability Hub Hero ——— */
 .employability-hero {
   padding: 4rem 2rem;
-  background: #fff;
+  background: #ffffff;
 }
 
 .employability-hero h1 {
@@ -2983,7 +2983,7 @@ html {
 /* Employability Hero Modern */
 .employability-hero-modern {
   position: relative;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   padding: 120px 0 80px;
   overflow: hidden;
   min-height: 100vh;
@@ -3011,32 +3011,36 @@ html {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: linear-gradient(135deg, #001851, #003366);
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
   color: white;
   padding: 0.75rem 1.5rem;
   border-radius: 50px;
   font-size: 0.875rem;
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 2rem;
-  box-shadow: 0 8px 32px rgba(0, 24, 81, 0.2);
+  box-shadow: 0 8px 32px rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .hero-title {
   font-family: "Montserrat", sans-serif;
   font-size: 3.5rem;
   font-weight: 700;
-  color: #1e293b;
+  color: white;
   line-height: 1.2;
   margin-bottom: 1.5rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .hero-description {
   font-family: "Inter", sans-serif;
   font-size: 1.25rem;
-  color: #64748b;
+  color: rgba(255, 255, 255, 0.9);
   line-height: 1.6;
   margin-bottom: 2.5rem;
   max-width: 500px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .hero-cta {
@@ -3058,24 +3062,31 @@ html {
 }
 
 .cta-button.primary {
-  background: linear-gradient(135deg, #001851, #003366);
-  color: white;
+  background: rgba(255, 255, 255, 0.95);
+  color: #667eea;
+  border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 .cta-button.primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 48px rgba(0, 24, 81, 0.3);
+  background: white;
+  color: #667eea;
+  box-shadow: 0 12px 48px rgba(255, 255, 255, 0.3);
 }
 
 .cta-button.secondary {
-  background: white;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: #001851;
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  color: white;
+  backdrop-filter: blur(10px);
 }
 
 .cta-button.secondary:hover {
-  background: white;
-  color: #001851;
+  background: rgba(255, 255, 255, 0.1);
+  border-color: white;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(255, 255, 255, 0.2);
 }
 
 .hero-visual {
@@ -3133,12 +3144,10 @@ html {
   left: 0;
   right: 0;
   bottom: 0;
-  background-image: radial-gradient(
-      circle at 20% 20%,
-      rgba(78, 205, 196, 0.1) 0%,
-      transparent 50%
-    ),
-    radial-gradient(circle at 80% 80%, rgba(0, 24, 81, 0.1) 0%, transparent 50%);
+  background-image: 
+    radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
   z-index: 1;
 }
 
@@ -5362,8 +5371,13 @@ html {
   border-radius: 20px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
   padding: 2rem;
-  max-width: 500px;
+  width: 100%;
+  max-width: 600px;
   margin: 0 auto;
+  min-height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .hero-background {

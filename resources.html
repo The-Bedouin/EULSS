@@ -43,6 +43,33 @@
       padding: 60px 0;
     }
 
+    /* Enhanced Tool Section Responsiveness */
+    .tool-section {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* Hero Tool Layout Improvements */
+    .hero-tool-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      width: 100%;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+
     /* Authentication Styles */
     .auth-section {
       background: white;
@@ -337,6 +364,41 @@
             padding: 10px 16px;
             font-size: 0.9rem;
           }
+
+          /* Enhanced Tool Section Responsiveness */
+          .tool-section {
+            max-width: 600px;
+            padding: 2rem;
+            min-height: 500px;
+          }
+
+          .hero-tool-layout {
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            text-align: center;
+          }
+
+          /* Fix Navbar Overlap on Mobile */
+          .resources-hero-modern {
+            padding-top: 100px !important;
+            padding-bottom: 60px;
+            min-height: auto;
+          }
+
+          .hero-content {
+            padding-top: 10px;
+          }
+
+          .hero-title {
+            font-size: 2.5rem;
+            line-height: 1.3;
+            margin-bottom: 1rem;
+          }
+
+          .hero-description {
+            font-size: 1.1rem;
+            line-height: 1.5;
+          }
         }
 
         @media (max-width: 480px) {
@@ -357,6 +419,119 @@
           .auth-btn {
             padding: 14px 20px;
             font-size: 1rem;
+          }
+
+          /* Enhanced Tool Section Responsiveness */
+          .tool-section {
+            max-width: 500px;
+            padding: 1.5rem;
+            min-height: 450px;
+          }
+
+          .hero-tool-layout {
+            gap: 2rem;
+            padding: 0 1rem;
+          }
+
+          /* Fix Navbar Overlap on Small Mobile */
+          .resources-hero-modern {
+            padding-top: 90px !important;
+            padding-bottom: 40px;
+          }
+
+          .hero-content {
+            padding-top: 5px;
+          }
+
+          .hero-title {
+            font-size: 2rem;
+            line-height: 1.4;
+            margin-bottom: 0.8rem;
+          }
+
+          .hero-description {
+            font-size: 1rem;
+            line-height: 1.4;
+          }
+
+          .hero-badge {
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+            margin-bottom: 1.5rem;
+          }
+        }
+
+        /* Extra Small Mobile Devices */
+        @media (max-width: 375px) {
+          .resources-hero-modern {
+            padding-top: 85px !important;
+            padding-bottom: 30px;
+          }
+
+          .hero-title {
+            font-size: 1.8rem;
+            line-height: 1.4;
+          }
+
+          .hero-description {
+            font-size: 0.95rem;
+          }
+
+          .hero-badge {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.75rem;
+            margin-bottom: 1.2rem;
+          }
+        }
+
+        /* iPhone SE and Very Small Screens */
+        @media (max-width: 320px) {
+          .resources-hero-modern {
+            padding-top: 80px !important;
+            padding-bottom: 25px;
+          }
+
+          .hero-title {
+            font-size: 1.6rem;
+            line-height: 1.3;
+          }
+
+          .hero-description {
+            font-size: 0.9rem;
+          }
+
+          .hero-badge {
+            padding: 0.3rem 0.6rem;
+            font-size: 0.7rem;
+            margin-bottom: 1rem;
+          }
+        }
+
+        /* Large Screen Optimizations */
+        @media (min-width: 1200px) {
+          .tool-section {
+            max-width: 800px;
+            padding: 3rem;
+            min-height: 700px;
+          }
+
+          .hero-tool-layout {
+            gap: 5rem;
+            max-width: 1600px;
+          }
+        }
+
+        /* Extra Large Screen Optimizations */
+        @media (min-width: 1600px) {
+          .tool-section {
+            max-width: 900px;
+            padding: 3.5rem;
+            min-height: 800px;
+          }
+
+          .hero-tool-layout {
+            gap: 6rem;
+            max-width: 1800px;
           }
         }
 
@@ -846,6 +1021,71 @@
 
     .table-container {
       overflow-x: auto;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .table-scroll-hint {
+      display: none;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(102, 126, 234, 0.9);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      z-index: 20;
+      animation: fadeInOut 3s ease-in-out;
+      pointer-events: none;
+    }
+
+    .table-scroll-hint i {
+      margin-right: 6px;
+      animation: slideLeftRight 2s ease-in-out infinite;
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0; }
+      20%, 80% { opacity: 1; }
+    }
+
+    @keyframes slideLeftRight {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(5px); }
+    }
+
+    .table-scroll-hint {
+      display: none;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background: rgba(102, 126, 234, 0.9);
+      color: white;
+      padding: 8px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      z-index: 20;
+      animation: fadeInOut 3s ease-in-out;
+      pointer-events: none;
+    }
+
+    .table-scroll-hint i {
+      margin-right: 6px;
+      animation: slideLeftRight 2s ease-in-out infinite;
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0; }
+      20%, 80% { opacity: 1; }
+    }
+
+    @keyframes slideLeftRight {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(5px); }
     }
 
     .concepts-table {
@@ -867,10 +1107,230 @@
       color: #2d3748;
       position: sticky;
       top: 0;
+      z-index: 10;
     }
 
     .concepts-table tr:hover {
       background: #f7fafc;
+    }
+
+    /* Mobile-first table redesign */
+    @media (max-width: 768px) {
+      .concepts-table {
+        display: none;
+      }
+
+      .concepts-table-mobile {
+        display: block;
+      }
+
+      .concept-item {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        margin-bottom: 16px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .concept-header {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 12px 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .concept-title {
+        font-weight: 700;
+        font-size: 1rem;
+        flex: 1;
+      }
+
+      .concept-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .concept-btn {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .concept-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .concept-content {
+        padding: 16px;
+      }
+
+      .concept-field {
+        margin-bottom: 12px;
+      }
+
+      .concept-field:last-child {
+        margin-bottom: 0;
+      }
+
+      .concept-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #718096;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+      }
+
+      .concept-value {
+        font-size: 0.9rem;
+        color: #2d3748;
+        line-height: 1.4;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+
+      .concept-value.content {
+        background: #f7fafc;
+        padding: 12px;
+        border-radius: 8px;
+        border-left: 4px solid #667eea;
+        margin-top: 4px;
+      }
+
+      .concept-value.subtopic {
+        color: #667eea;
+        font-weight: 500;
+      }
+
+      .concept-value.case-section {
+        font-weight: 600;
+        color: #4a5568;
+      }
+
+      /* Additional optimizations for very small screens */
+      @media (max-width: 480px) {
+        .concept-header {
+          padding: 10px 12px;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+        }
+
+        .concept-title {
+          font-size: 0.9rem;
+        }
+
+        .concept-actions {
+          width: 100%;
+          justify-content: space-between;
+        }
+
+        .concept-btn {
+          padding: 5px 8px;
+          font-size: 0.75rem;
+        }
+
+        .concept-content {
+          padding: 12px;
+        }
+
+        .concept-field {
+          margin-bottom: 10px;
+        }
+
+        .concept-label {
+          font-size: 0.7rem;
+        }
+
+        .concept-value {
+          font-size: 0.85rem;
+        }
+
+        .concept-value.content {
+          padding: 10px;
+          max-height: 100px;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .concept-header {
+          padding: 8px 10px;
+        }
+
+        .concept-title {
+          font-size: 0.85rem;
+        }
+
+        .concept-btn {
+          padding: 4px 6px;
+          font-size: 0.7rem;
+        }
+
+        .concept-content {
+          padding: 10px;
+        }
+
+        .concept-value {
+          font-size: 0.8rem;
+        }
+
+        .concept-value.content {
+          padding: 8px;
+          max-height: 80px;
+        }
+      }
+    }
+
+    /* Desktop table styles */
+    @media (min-width: 769px) {
+      .concepts-table {
+        display: table;
+      }
+
+      .concepts-table-mobile {
+        display: none;
+      }
+
+      .concepts-table th,
+      .concepts-table td {
+        white-space: nowrap;
+      }
+
+      .concepts-table td:nth-child(4) {
+        white-space: normal;
+        max-width: 300px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+    }
+
+    /* Scroll indicator for mobile */
+    .table-container::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 20px;
+      background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.8));
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .table-container.has-overflow::after {
+      opacity: 1;
     }
 
     .action-buttons {
@@ -1162,6 +1622,13 @@
         height: 240px;
         max-width: 420px;
       }
+
+      /* Enhanced table responsiveness for tablets */
+      .table-container {
+        margin: 0 -25px;
+        border-radius: 0;
+        box-shadow: none;
+      }
     }
 
     /* Responsive Design */
@@ -1263,7 +1730,53 @@
         flex-direction: column;
         gap: 5px;
       }
+
+      /* Mobile table container adjustments */
+      .table-container {
+        margin: 0 -20px;
+        border-radius: 0;
+        box-shadow: none;
+      }
+
+      /* Show scroll hint on mobile */
+      .table-scroll-hint {
+        display: block !important;
+        font-size: 0.7rem;
+        padding: 6px 10px;
+        top: 5px;
+        right: 5px;
+      }
     }
+
+    /* Mobile-first card layout for very small screens */
+    @media (max-width: 400px) {
+      .table-container {
+        margin: 0;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Hide scroll hint on mobile */
+      .table-scroll-hint {
+        display: none !important;
+      }
+
+      /* Empty state for mobile */
+      .concepts-table-mobile:empty::after {
+        content: '📚 No concepts yet. Add your first concept to get started!';
+        text-align: center;
+        padding: 40px 20px;
+        color: #718096;
+        font-size: 0.9rem;
+        background: #f7fafc;
+        border: 2px dashed #e2e8f0;
+        border-radius: 10px;
+        margin: 20px 0;
+        display: block;
+      }
+    }
+
+
 
     /* Enhanced Mobile Responsiveness for Modern Phones */
     @media (max-width: 414px) {
@@ -1893,6 +2406,68 @@
       .flashcard-section {
         padding: 15px 10px;
       }
+
+      /* Enhanced table responsiveness for very small screens */
+      .table-container {
+        margin: 0 -10px;
+        border-radius: 0;
+        box-shadow: none;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      .concepts-table {
+        min-width: 400px;
+        font-size: 0.7rem;
+      }
+
+      .concepts-table th,
+      .concepts-table td {
+        padding: 6px 4px;
+        font-size: 0.65rem;
+      }
+
+      .concepts-table th {
+        font-size: 0.7rem;
+        padding: 8px 4px;
+        white-space: nowrap;
+      }
+
+      .concepts-table td:nth-child(1),
+      .concepts-table td:nth-child(2),
+      .concepts-table td:nth-child(3) {
+        white-space: nowrap;
+        max-width: 60px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .concepts-table td:nth-child(4) {
+        max-width: 100px;
+        font-size: 0.6rem;
+        line-height: 1.1;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+        white-space: normal;
+      }
+
+      .action-buttons {
+        flex-direction: row;
+        gap: 2px;
+        justify-content: center;
+      }
+
+      .edit-btn,
+      .delete-btn {
+        padding: 2px 4px;
+        font-size: 0.6rem;
+        min-width: 40px;
+      }
+
+      .edit-btn i,
+      .delete-btn i {
+        font-size: 0.6rem;
+      }
       
       .input-section h3,
       .table-section h3,
@@ -2233,6 +2808,24 @@
         margin-bottom: 3px;
       }
     }
+
+    /* Fix Navbar Overlap Issue */
+    .resources-hero-modern {
+      padding-top: 120px !important;
+      padding-bottom: 80px;
+      min-height: calc(100vh - 80px);
+    }
+
+    .hero-content {
+      padding-top: 20px;
+    }
+
+    .hero-title {
+      margin-top: 0;
+      line-height: 1.2;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
   </style>
 </head>
 <body>
@@ -2496,6 +3089,10 @@
           </div>
           
           <div class="table-container">
+            <div class="table-scroll-hint" id="tableScrollHint">
+              <i class="fas fa-arrows-alt-h"></i>
+              <span>Swipe left/right to view all columns</span>
+            </div>
             <table id="conceptsTable" class="concepts-table">
               <thead>
                 <tr>
@@ -2510,6 +3107,9 @@
                 <!-- Concepts will be populated here -->
               </tbody>
             </table>
+            <div id="conceptsTableMobile" class="concepts-table-mobile" style="display: none;">
+              <!-- Mobile cards will be populated here -->
+            </div>
           </div>
         </div>
       </div>
@@ -3189,13 +3789,16 @@
 
         renderTable() {
           const tbody = document.getElementById('conceptsTableBody');
+          const mobileContainer = document.getElementById('conceptsTableMobile');
           tbody.innerHTML = '';
+          mobileContainer.innerHTML = '';
 
           if (!this.currentSubject || !this.subjects[this.currentSubject]) {
             return;
           }
 
           this.subjects[this.currentSubject].forEach(concept => {
+            // Render table row
             const row = document.createElement('tr');
             row.innerHTML = `
               <td>${concept.topic}</td>
@@ -3212,7 +3815,95 @@
               </td>
             `;
             tbody.appendChild(row);
+
+            // Render mobile concept item
+            const conceptItem = document.createElement('div');
+            conceptItem.className = 'concept-item';
+            conceptItem.innerHTML = `
+              <div class="concept-header">
+                <div class="concept-title">${concept.topic}</div>
+                <div class="concept-actions">
+                  <button class="concept-btn" onclick="activeRecallTool.editConcept(${concept.id})">
+                    <i class="fas fa-edit"></i>
+                    Edit
+                  </button>
+                  <button class="concept-btn" onclick="activeRecallTool.deleteConcept(${concept.id})">
+                    <i class="fas fa-trash"></i>
+                    Delete
+                  </button>
+                </div>
+              </div>
+              <div class="concept-content">
+                <div class="concept-field">
+                  <div class="concept-label">Sub Topic</div>
+                  <div class="concept-value subtopic">${concept.subtopic || 'N/A'}</div>
+                </div>
+                <div class="concept-field">
+                  <div class="concept-label">Case/Section</div>
+                  <div class="concept-value case-section">${concept.caseSection}</div>
+                </div>
+                <div class="concept-field">
+                  <div class="concept-label">Content</div>
+                  <div class="concept-value content">${concept.content}</div>
+                </div>
+              </div>
+            `;
+            mobileContainer.appendChild(conceptItem);
           });
+
+          // Show/hide appropriate view based on screen size
+          this.toggleTableViews();
+        }
+
+        checkTableOverflow() {
+          // Only check overflow on desktop
+          if (window.innerWidth <= 768) return;
+          
+          const tableContainer = document.querySelector('.table-container');
+          const table = document.querySelector('.concepts-table');
+          const scrollHint = document.getElementById('tableScrollHint');
+          
+          if (tableContainer && table) {
+            // Check if table is wider than container
+            const hasOverflow = table.scrollWidth > tableContainer.clientWidth;
+            
+            if (hasOverflow) {
+              tableContainer.classList.add('has-overflow');
+              if (scrollHint) {
+                scrollHint.style.display = 'block';
+                // Hide hint after 5 seconds
+                setTimeout(() => {
+                  if (scrollHint) {
+                    scrollHint.style.display = 'none';
+                  }
+                }, 5000);
+              }
+            } else {
+              tableContainer.classList.remove('has-overflow');
+              if (scrollHint) {
+                scrollHint.style.display = 'none';
+              }
+            }
+          }
+        }
+
+        toggleTableViews() {
+          const table = document.querySelector('.concepts-table');
+          const mobileView = document.getElementById('conceptsTableMobile');
+          const scrollHint = document.getElementById('tableScrollHint');
+          
+          if (window.innerWidth <= 768) {
+            // Show mobile view
+            if (table) table.style.display = 'none';
+            if (mobileView) mobileView.style.display = 'block';
+            if (scrollHint) scrollHint.style.display = 'none';
+          } else {
+            // Show table view
+            if (table) table.style.display = 'table';
+            if (mobileView) mobileView.style.display = 'none';
+            // Check if scroll hint should be shown
+            this.checkTableOverflow();
+          }
         }
 
         filterConcepts(searchTerm) {
@@ -3443,6 +4134,14 @@
       document.addEventListener('DOMContentLoaded', () => {
         activeRecallTool = new ActiveRecallTool();
         authManager = new AuthManager();
+        
+        // Add window resize listener for table overflow detection
+        window.addEventListener('resize', () => {
+          if (activeRecallTool) {
+            activeRecallTool.checkTableOverflow();
+            activeRecallTool.toggleTableViews();
+          }
+        });
       });
 
       // Add CSS animation for notifications

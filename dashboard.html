@@ -15,6 +15,879 @@
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore-compat.js"></script>
+  
+  <style>
+    /* Mobile Navigation Styles */
+    .mobile-nav-toggle {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      padding: 10px;
+      z-index: 1001;
+    }
+
+    .burger {
+      width: 25px;
+      height: 20px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .burger div {
+      width: 100%;
+      height: 3px;
+      background-color: #333;
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    .burger.active div:nth-child(1) {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .burger.active div:nth-child(2) {
+      opacity: 0;
+    }
+
+    .burger.active div:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.95);
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+    }
+
+    .mobile-nav.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mobile-nav-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    .mobile-nav-links li {
+      margin: 10px 0;
+    }
+
+    .mobile-nav-link {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      padding: 15px 20px;
+      color: white;
+      text-decoration: none;
+      font-size: 1.1rem;
+      font-weight: 500;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    .mobile-nav-link:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateX(10px);
+    }
+
+    .mobile-nav-link i {
+      font-size: 1.2rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    .mobile-nav-divider {
+      height: 1px;
+      background: rgba(255, 255, 255, 0.2);
+      margin: 20px 0;
+    }
+
+    /* Dashboard Header Mobile Responsiveness */
+    @media (max-width: 768px) {
+      .dashboard-header-content {
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 15px;
+      }
+
+      .mobile-nav-toggle {
+        display: flex;
+        order: 2;
+      }
+
+      .dashboard-brand {
+        order: 1;
+        flex: 1;
+      }
+
+      .global-search-container {
+        order: 3;
+        width: 100%;
+        max-width: none;
+      }
+
+      .dashboard-user-menu {
+        order: 4;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .dashboard-sidebar {
+        display: none;
+      }
+
+      .dashboard-main {
+        margin-left: 0;
+        padding: 20px;
+      }
+
+      .dashboard-layout {
+        flex-direction: column;
+      }
+
+      .overview-stats {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+
+      .stat-card {
+        padding: 15px;
+      }
+
+      .quick-actions {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .quick-action-btn {
+        width: 100%;
+        padding: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .dashboard-header-content {
+        padding: 10px;
+      }
+
+      .dashboard-badge {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+      }
+
+      .dashboard-badge span {
+        display: none;
+      }
+
+      .overview-stats {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-card {
+        padding: 12px;
+      }
+
+      .mobile-nav-link {
+        padding: 12px 15px;
+        font-size: 1rem;
+      }
+
+      .mobile-nav-link i {
+        font-size: 1.1rem;
+      }
+    }
+
+    /* Hide sidebar on mobile */
+    @media (max-width: 768px) {
+      .dashboard-sidebar {
+        display: none !important;
+      }
+    }
+
+    /* Fix Dashboard Navbar Overlap */
+    .dashboard-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .dashboard-layout {
+      padding-top: 80px;
+      min-height: calc(100vh - 80px);
+    }
+
+    .dashboard-main {
+      padding-top: 20px;
+    }
+
+    .dashboard-overview {
+      padding-top: 20px;
+    }
+
+    .overview-header h1 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+
+    /* Mobile Responsive Dashboard Spacing */
+    @media (max-width: 768px) {
+      .dashboard-layout {
+        padding-top: 120px;
+      }
+
+      .dashboard-main {
+        padding: 20px;
+        padding-top: 10px;
+      }
+
+      .dashboard-overview {
+        padding-top: 10px;
+      }
+
+      .overview-header h1 {
+        font-size: 2rem;
+        line-height: 1.3;
+        margin-bottom: 0.8rem;
+      }
+
+      .overview-header p {
+        font-size: 1rem;
+        line-height: 1.4;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .dashboard-layout {
+        padding-top: 110px;
+      }
+
+      .dashboard-main {
+        padding: 15px;
+        padding-top: 5px;
+      }
+
+      .overview-header h1 {
+        font-size: 1.8rem;
+        line-height: 1.3;
+        margin-bottom: 0.6rem;
+      }
+
+      .overview-header p {
+        font-size: 0.95rem;
+        line-height: 1.4;
+      }
+    }
+
+    @media (max-width: 375px) {
+      .dashboard-layout {
+        padding-top: 100px;
+      }
+
+      .overview-header h1 {
+        font-size: 1.6rem;
+        line-height: 1.3;
+      }
+
+      .overview-header p {
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .dashboard-layout {
+        padding-top: 90px;
+      }
+
+      .overview-header h1 {
+        font-size: 1.4rem;
+        line-height: 1.3;
+      }
+
+      .overview-header p {
+        font-size: 0.85rem;
+      }
+    }
+
+    /* Mobile-First Table Design for Dashboard */
+    .concepts-table-container {
+      overflow-x: auto;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .concepts-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+    }
+
+    .concepts-table th,
+    .concepts-table td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .concepts-table th {
+      background: #f7fafc;
+      font-weight: 700;
+      color: #2d3748;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .concepts-table tr:hover {
+      background: #f7fafc;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .edit-btn,
+    .delete-btn {
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      transition: all 0.3s ease;
+    }
+
+    .edit-btn {
+      background: #4299e1;
+      color: white;
+    }
+
+    .delete-btn {
+      background: #f56565;
+      color: white;
+    }
+
+    .edit-btn:hover,
+    .delete-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    /* Mobile-first table redesign */
+    @media (max-width: 768px) {
+      .concepts-table {
+        display: none;
+      }
+
+      .concepts-table-mobile {
+        display: block;
+      }
+
+      .concept-item {
+        background: white;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        margin-bottom: 16px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      }
+
+      .concept-header {
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        padding: 12px 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .concept-title {
+        font-weight: 700;
+        font-size: 1rem;
+        flex: 1;
+      }
+
+      .concept-actions {
+        display: flex;
+        gap: 8px;
+      }
+
+      .concept-btn {
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: none;
+        padding: 6px 10px;
+        border-radius: 6px;
+        font-size: 0.8rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .concept-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+      }
+
+      .concept-content {
+        padding: 16px;
+      }
+
+      .concept-field {
+        margin-bottom: 12px;
+      }
+
+      .concept-field:last-child {
+        margin-bottom: 0;
+      }
+
+      .concept-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: #718096;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+      }
+
+      .concept-value {
+        font-size: 0.9rem;
+        color: #2d3748;
+        line-height: 1.4;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+
+      .concept-value.content {
+        background: #f7fafc;
+        padding: 12px;
+        border-radius: 8px;
+        border-left: 4px solid #667eea;
+        margin-top: 4px;
+      }
+
+      .concept-value.subtopic {
+        color: #667eea;
+        font-weight: 500;
+      }
+
+      .concept-value.case-section {
+        font-weight: 600;
+        color: #4a5568;
+      }
+
+      /* Additional optimizations for very small screens */
+      @media (max-width: 480px) {
+        .concept-header {
+          padding: 10px 12px;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 8px;
+        }
+
+        .concept-title {
+          font-size: 0.9rem;
+        }
+
+        .concept-actions {
+          width: 100%;
+          justify-content: space-between;
+        }
+
+        .concept-btn {
+          padding: 5px 8px;
+          font-size: 0.75rem;
+        }
+
+        .concept-content {
+          padding: 12px;
+        }
+
+        .concept-field {
+          margin-bottom: 10px;
+        }
+
+        .concept-label {
+          font-size: 0.7rem;
+        }
+
+        .concept-value {
+          font-size: 0.85rem;
+        }
+
+        .concept-value.content {
+          padding: 10px;
+          max-height: 100px;
+          overflow-y: auto;
+        }
+      }
+
+      @media (max-width: 360px) {
+        .concept-header {
+          padding: 8px 10px;
+        }
+
+        .concept-title {
+          font-size: 0.85rem;
+        }
+
+        .concept-btn {
+          padding: 4px 6px;
+          font-size: 0.7rem;
+        }
+
+        .concept-content {
+          padding: 10px;
+        }
+
+        .concept-value {
+          font-size: 0.8rem;
+        }
+
+        .concept-value.content {
+          padding: 8px;
+          max-height: 80px;
+        }
+      }
+    }
+
+    /* Desktop table styles */
+    @media (min-width: 769px) {
+      .concepts-table {
+        display: table;
+      }
+
+      .concepts-table-mobile {
+        display: none;
+      }
+
+      .concepts-table th,
+      .concepts-table td {
+        white-space: nowrap;
+      }
+
+      .concepts-table td:nth-child(4) {
+        white-space: normal;
+        max-width: 300px;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+      }
+    }
+
+    /* Empty state for mobile */
+    .concepts-table-mobile:empty::after {
+      content: '📚 No concepts yet. Add your first concept to get started!';
+      text-align: center;
+      padding: 40px 20px;
+      color: #718096;
+      font-size: 0.9rem;
+      background: #f7fafc;
+      border: 2px dashed #e2e8f0;
+      border-radius: 10px;
+      margin: 20px 0;
+      display: block;
+    }
+
+    /* Mobile-Responsive Flashcard Styles */
+    .flashcard-container {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+    }
+
+    .flashcard {
+      width: 100%;
+      max-width: 500px;
+      height: 300px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+
+    .flashcard-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .flashcard.flipped .flashcard-inner {
+      transform: rotateY(180deg);
+    }
+
+    .flashcard-front,
+    .flashcard-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 20px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    .flashcard-front {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+    }
+
+    .flashcard-back {
+      background: linear-gradient(135deg, #48bb78, #38a169);
+      color: white;
+      transform: rotateY(180deg);
+    }
+
+    .flashcard-front h3,
+    .flashcard-back p {
+      font-size: 1.5rem;
+      margin: 0;
+      line-height: 1.4;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      hyphens: auto;
+      max-width: 100%;
+      text-align: center;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    /* Inline Flashcard Styles */
+    .inline-flashcard {
+      width: 100%;
+      max-width: 400px;
+      height: 250px;
+      perspective: 1000px;
+      cursor: pointer;
+      margin: 0 auto;
+    }
+
+    .inline-flashcard .flashcard-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.8s;
+      transform-style: preserve-3d;
+    }
+
+    .inline-flashcard.flipped .flashcard-inner {
+      transform: rotateY(180deg);
+    }
+
+    .inline-flashcard .flashcard-front,
+    .inline-flashcard .flashcard-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 15px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
+
+    .inline-flashcard .flashcard-front {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+    }
+
+    .inline-flashcard .flashcard-back {
+      background: linear-gradient(135deg, #48bb78, #38a169);
+      color: white;
+      transform: rotateY(180deg);
+    }
+
+    .inline-flashcard .flashcard-front h4,
+    .inline-flashcard .flashcard-back p {
+      font-size: 1.2rem;
+      margin: 0;
+      line-height: 1.3;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      hyphens: auto;
+      max-width: 100%;
+      text-align: center;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    /* Mobile Responsive Flashcard Adjustments */
+    @media (max-width: 768px) {
+      .flashcard {
+        max-width: 400px;
+        height: 250px;
+      }
+
+      .flashcard-front,
+      .flashcard-back {
+        padding: 20px;
+      }
+
+      .flashcard-front h3,
+      .flashcard-back p {
+        font-size: 1.3rem;
+        line-height: 1.3;
+      }
+
+      .inline-flashcard {
+        max-width: 350px;
+        height: 200px;
+      }
+
+      .inline-flashcard .flashcard-front,
+      .inline-flashcard .flashcard-back {
+        padding: 15px;
+      }
+
+      .inline-flashcard .flashcard-front h4,
+      .inline-flashcard .flashcard-back p {
+        font-size: 1.1rem;
+        line-height: 1.2;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .flashcard {
+        max-width: 350px;
+        height: 220px;
+      }
+
+      .flashcard-front,
+      .flashcard-back {
+        padding: 15px;
+      }
+
+      .flashcard-front h3,
+      .flashcard-back p {
+        font-size: 1.1rem;
+        line-height: 1.2;
+      }
+
+      .inline-flashcard {
+        max-width: 300px;
+        height: 180px;
+      }
+
+      .inline-flashcard .flashcard-front,
+      .inline-flashcard .flashcard-back {
+        padding: 12px;
+      }
+
+      .inline-flashcard .flashcard-front h4,
+      .inline-flashcard .flashcard-back p {
+        font-size: 1rem;
+        line-height: 1.2;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .flashcard {
+        max-width: 300px;
+        height: 200px;
+      }
+
+      .flashcard-front,
+      .flashcard-back {
+        padding: 12px;
+      }
+
+      .flashcard-front h3,
+      .flashcard-back p {
+        font-size: 1rem;
+        line-height: 1.2;
+      }
+
+      .inline-flashcard {
+        max-width: 280px;
+        height: 160px;
+      }
+
+      .inline-flashcard .flashcard-front,
+      .inline-flashcard .flashcard-back {
+        padding: 10px;
+      }
+
+      .inline-flashcard .flashcard-front h4,
+      .inline-flashcard .flashcard-back p {
+        font-size: 0.9rem;
+        line-height: 1.1;
+      }
+    }
+
+    @media (max-width: 320px) {
+      .flashcard {
+        max-width: 280px;
+        height: 180px;
+      }
+
+      .flashcard-front,
+      .flashcard-back {
+        padding: 10px;
+      }
+
+      .flashcard-front h3,
+      .flashcard-back p {
+        font-size: 0.9rem;
+        line-height: 1.1;
+      }
+
+      .inline-flashcard {
+        max-width: 260px;
+        height: 140px;
+      }
+
+      .inline-flashcard .flashcard-front,
+      .inline-flashcard .flashcard-back {
+        padding: 8px;
+      }
+
+      .inline-flashcard .flashcard-front h4,
+      .inline-flashcard .flashcard-back p {
+        font-size: 0.8rem;
+        line-height: 1.1;
+      }
+    }
+  </style>
 </head>
 <body class="dashboard-body">
   <!-- Dashboard Header -->
@@ -24,6 +897,15 @@
         <div class="dashboard-badge">
           <i class="fas fa-brain"></i>
           <span>Hindu Recall Technology</span>
+        </div>
+      </div>
+      
+      <!-- Mobile Navigation Toggle -->
+      <div class="mobile-nav-toggle">
+        <div class="burger">
+          <div></div>
+          <div></div>
+          <div></div>
         </div>
       </div>
       
@@ -61,6 +943,45 @@
         </div>
       </div>
     </div>
+    
+    <!-- Mobile Navigation Menu -->
+    <nav class="mobile-nav" id="mobileNav">
+      <ul class="mobile-nav-links">
+        <li><a href="#subjects" class="mobile-nav-link" data-section="subjects">
+          <i class="fas fa-book"></i>
+          <span>Subjects</span>
+        </a></li>
+        <li><a href="#concepts" class="mobile-nav-link" data-section="concepts">
+          <i class="fas fa-lightbulb"></i>
+          <span>Concepts</span>
+        </a></li>
+        <li><a href="#flashcards" class="mobile-nav-link" data-section="flashcards">
+          <i class="fas fa-cards-blank"></i>
+          <span>Flashcards</span>
+        </a></li>
+        <li><a href="#progress" class="mobile-nav-link" data-section="progress">
+          <i class="fas fa-chart-line"></i>
+          <span>Progress</span>
+        </a></li>
+        <li><a href="#analytics" class="mobile-nav-link" data-section="analytics">
+          <i class="fas fa-chart-bar"></i>
+          <span>Analytics</span>
+        </a></li>
+        <li><a href="#study" class="mobile-nav-link" data-section="study">
+          <i class="fas fa-graduation-cap"></i>
+          <span>Study Mode</span>
+        </a></li>
+        <li><a href="#settings" class="mobile-nav-link" data-section="settings">
+          <i class="fas fa-cog"></i>
+          <span>Settings</span>
+        </a></li>
+        <li class="mobile-nav-divider"></li>
+        <li><a href="/resources.html" class="mobile-nav-link">
+          <i class="fas fa-arrow-left"></i>
+          <span>Back to Resources</span>
+        </a></li>
+      </ul>
+    </nav>
   </header>
 
   <!-- Dashboard Layout -->
@@ -257,6 +1178,9 @@
               <!-- Concepts will be dynamically added here -->
             </tbody>
           </table>
+          <div id="conceptsTableMobile" class="concepts-table-mobile" style="display: none;">
+            <!-- Mobile cards will be populated here -->
+          </div>
         </div>
 
         <!-- Inline Flashcard Section -->
@@ -1415,10 +2339,13 @@
 
       renderConcepts() {
         const tbody = document.getElementById('conceptsTableBody');
+        const mobileContainer = document.getElementById('conceptsTableMobile');
         tbody.innerHTML = '';
+        mobileContainer.innerHTML = '';
 
         if (this.currentSubject && this.subjects[this.currentSubject]) {
           this.subjects[this.currentSubject].forEach(concept => {
+            // Render table row
             const row = document.createElement('tr');
             row.className = 'concept-row';
             row.setAttribute('data-concept-id', concept.id);
@@ -1437,6 +2364,41 @@
               </td>
             `;
             tbody.appendChild(row);
+
+            // Render mobile concept item
+            const conceptItem = document.createElement('div');
+            conceptItem.className = 'concept-item';
+            conceptItem.setAttribute('data-concept-id', concept.id);
+            conceptItem.innerHTML = `
+              <div class="concept-header">
+                <div class="concept-title">${concept.topic}</div>
+                <div class="concept-actions">
+                  <button class="concept-btn" onclick="dashboard.editConcept(${concept.id})">
+                    <i class="fas fa-edit"></i>
+                    Edit
+                  </button>
+                  <button class="concept-btn" onclick="dashboard.deleteConcept(${concept.id})">
+                    <i class="fas fa-trash"></i>
+                    Delete
+                  </button>
+                </div>
+              </div>
+              <div class="concept-content">
+                <div class="concept-field">
+                  <div class="concept-label">Subtopic</div>
+                  <div class="concept-value subtopic">${concept.subtopic || 'N/A'}</div>
+                </div>
+                <div class="concept-field">
+                  <div class="concept-label">Case Section</div>
+                  <div class="concept-value case-section">${concept.caseSection}</div>
+                </div>
+                <div class="concept-field">
+                  <div class="concept-label">Content</div>
+                  <div class="concept-value content">${concept.content}</div>
+                </div>
+              </div>
+            `;
+            mobileContainer.appendChild(conceptItem);
           });
 
           // Show inline flashcard section if there are concepts
@@ -1446,7 +2408,78 @@
           } else {
             inlineFlashcardSection.style.display = 'none';
           }
+
+          // Show/hide appropriate view based on screen size
+          this.toggleTableViews();
         }
+      }
+
+      toggleTableViews() {
+        const table = document.querySelector('.concepts-table');
+        const mobileView = document.getElementById('conceptsTableMobile');
+        
+        if (window.innerWidth <= 768) {
+          // Show mobile view
+          if (table) table.style.display = 'none';
+          if (mobileView) mobileView.style.display = 'block';
+        } else {
+          // Show table view
+          if (table) table.style.display = 'table';
+          if (mobileView) mobileView.style.display = 'none';
+        }
+      }
+
+      adjustFlashcardFontSize(elementId) {
+        const element = document.getElementById(elementId);
+        if (!element) return;
+
+        // Get the container dimensions
+        const container = element.closest('.flashcard-front, .flashcard-back');
+        if (!container) return;
+        
+        const containerRect = container.getBoundingClientRect();
+        const maxWidth = containerRect.width - 40; // Account for padding
+        const maxHeight = containerRect.height - 40; // Account for padding
+        
+        // Set maximum font sizes based on card type
+        const maxFontSize = elementId.includes('inline') ? 2.0 : 2.5; // Maximum font size
+        const minFontSize = 0.5; // Minimum font size in rem
+        
+        let optimalFontSize = minFontSize;
+        
+        // Use binary search for efficiency, but start from maximum size
+        let low = minFontSize;
+        let high = maxFontSize;
+        let tolerance = 0.05; // Tolerance for font size precision
+        
+        while (high - low > tolerance) {
+          const mid = (low + high) / 2;
+          element.style.fontSize = mid + 'rem';
+          
+          // Force a reflow to get accurate measurements
+          element.offsetHeight;
+          
+          // Check if text fits within the container
+          const elementRect = element.getBoundingClientRect();
+          const textFits = elementRect.width <= maxWidth && elementRect.height <= maxHeight;
+          
+          if (textFits) {
+            // Text fits, try a larger font size
+            low = mid;
+            optimalFontSize = mid;
+          } else {
+            // Text doesn't fit, try a smaller font size
+            high = mid;
+          }
+        }
+        
+        // Apply the optimal font size
+        element.style.fontSize = optimalFontSize + 'rem';
+        
+        // Add a small delay to ensure the font size is applied before any animations
+        setTimeout(() => {
+          element.style.fontSize = optimalFontSize + 'rem';
+        }, 10);
       }
 
       deleteSubject(subject) {
@@ -1527,6 +2560,10 @@
         
         // Reset card to front
         document.getElementById('flashcard').classList.remove('flipped');
+        
+        // Adjust font sizes for the flashcard
+        this.adjustFlashcardFontSize('flashcardQuestion');
+        this.adjustFlashcardFontSize('flashcardAnswer');
       }
 
       previousCard() {
@@ -1544,7 +2581,19 @@
       }
 
       flipCard() {
-        document.getElementById('flashcard').classList.toggle('flipped');
+        const flashcard = document.getElementById('flashcard');
+        flashcard.classList.toggle('flipped');
+        
+        // Adjust font size after flip animation
+        setTimeout(() => {
+          if (flashcard.classList.contains('flipped')) {
+            // Card is showing back side (answer)
+            this.adjustFlashcardFontSize('flashcardAnswer');
+          } else {
+            // Card is showing front side (question)
+            this.adjustFlashcardFontSize('flashcardQuestion');
+          }
+        }, 400); // Wait for flip animation to complete
       }
 
       shuffleCards() {
@@ -1598,6 +2647,10 @@
         
         // Reset card to front
         document.getElementById('inlineFlashcard').classList.remove('flipped');
+        
+        // Adjust font sizes for the inline flashcard
+        this.adjustFlashcardFontSize('inlineFlashcardQuestion');
+        this.adjustFlashcardFontSize('inlineFlashcardAnswer');
       }
 
       inlinePreviousCard() {
@@ -1617,7 +2670,19 @@
       }
 
       inlineFlipCard() {
-        document.getElementById('inlineFlashcard').classList.toggle('flipped');
+        const flashcard = document.getElementById('inlineFlashcard');
+        flashcard.classList.toggle('flipped');
+        
+        // Adjust font size after flip animation
+        setTimeout(() => {
+          if (flashcard.classList.contains('flipped')) {
+            // Card is showing back side (answer)
+            this.adjustFlashcardFontSize('inlineFlashcardAnswer');
+          } else {
+            // Card is showing front side (question)
+            this.adjustFlashcardFontSize('inlineFlashcardQuestion');
+          }
+        }, 400); // Wait for flip animation to complete
       }
 
       inlineShuffleCards() {
@@ -3568,6 +4633,82 @@ Happy studying!`);
     let dashboard;
     document.addEventListener('DOMContentLoaded', () => {
       dashboard = new Dashboard();
+      
+      // Mobile Navigation Functionality
+      const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+      const mobileNav = document.getElementById('mobileNav');
+      const burger = document.querySelector('.burger');
+      const mobileNavLinks = document.querySelectorAll('.mobile-nav-link');
+
+      // Toggle mobile navigation
+      mobileNavToggle.addEventListener('click', () => {
+        mobileNav.classList.toggle('active');
+        burger.classList.toggle('active');
+        document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+      });
+
+      // Close mobile navigation when clicking on a link
+      mobileNavLinks.forEach(link => {
+        link.addEventListener('click', () => {
+          mobileNav.classList.remove('active');
+          burger.classList.remove('active');
+          document.body.style.overflow = '';
+        });
+      });
+
+      // Close mobile navigation when clicking outside
+      mobileNav.addEventListener('click', (e) => {
+        if (e.target === mobileNav) {
+          mobileNav.classList.remove('active');
+          burger.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+
+      // Close mobile navigation on escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && mobileNav.classList.contains('active')) {
+          mobileNav.classList.remove('active');
+          burger.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      });
+
+      // Handle mobile navigation section switching
+      mobileNavLinks.forEach(link => {
+        if (link.dataset.section) {
+          link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const section = link.dataset.section;
+            
+            // Update active state
+            document.querySelectorAll('.mobile-nav-link').forEach(l => l.classList.remove('active'));
+            link.classList.add('active');
+            
+            // Switch to the corresponding section
+            dashboard.switchSection(section);
+          });
+        }
+      });
+
+      // Add window resize listener for table view switching and flashcard font adjustment
+      window.addEventListener('resize', () => {
+        if (dashboard) {
+          dashboard.toggleTableViews();
+          
+          // Re-adjust flashcard font sizes after resize
+          setTimeout(() => {
+            if (dashboard.flashcards && dashboard.flashcards.length > 0) {
+              dashboard.adjustFlashcardFontSize('flashcardQuestion');
+              dashboard.adjustFlashcardFontSize('flashcardAnswer');
+            }
+            if (dashboard.inlineFlashcards && dashboard.inlineFlashcards.length > 0) {
+              dashboard.adjustFlashcardFontSize('inlineFlashcardQuestion');
+              dashboard.adjustFlashcardFontSize('inlineFlashcardAnswer');
+            }
+          }, 100);
+        }
+      });
     });
 
     // Add CSS animation for notifications
